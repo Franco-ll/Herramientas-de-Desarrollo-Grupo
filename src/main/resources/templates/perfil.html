@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Perfil Académico</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- CSS PROPIO -->
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+    </head>
+    <body>
+
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <div class="container mt-5">
+
+            <div class="card-custom">
+                <h2 class="titulo mb-4">Perfil Académico</h2>
+
+                <form th:action="@{/perfil}" method="post" th:object="${perfil}">
+
+                    <h5>Datos personales</h5>
+
+                    <input type="text" class="form-control mb-3"
+                           th:field="*{nombre}" placeholder="Nombre completo" required>
+
+                    <input type="email" class="form-control mb-3"
+                           th:field="*{correo}" placeholder="Correo" required>
+
+                    <textarea class="form-control mb-4"
+                              th:field="*{biografia}" placeholder="Biografía"></textarea>
+
+                    <h5>Información académica</h5>
+
+                    <input type="text" class="form-control mb-3"
+                           th:field="*{universidad}" placeholder="Universidad">
+
+                    <input type="text" class="form-control mb-4"
+                           th:field="*{carrera}" placeholder="Carrera">
+
+                    <h5>Hábitos</h5>
+
+                    <select class="form-select mb-3" th:field="*{nivelRuido}">
+                        <option value="">Nivel de ruido</option>
+                        <option value="silencio">Silencio</option>
+                        <option value="medio">Medio</option>
+                        <option value="alto">Alto</option>
+                    </select>
+
+                    <select class="form-select mb-3" th:field="*{horarioEstudio}">
+                        <option value="">Horario</option>
+                        <option value="mañana">Mañana</option>
+                        <option value="tarde">Tarde</option>
+                        <option value="noche">Noche</option>
+                    </select>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" th:field="*{fuma}">
+                        <label>Fuma</label>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" th:field="*{mascotas}">
+                        <label>Mascotas</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom w-100">
+                        Guardar Perfil
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+    </body>
+</html>
