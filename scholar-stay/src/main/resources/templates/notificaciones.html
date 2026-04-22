@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#46674b",
+                    "on-secondary": "#e8ffe7",
+                    "surface-tint": "#3d637e",
+                    "primary-fixed": "#b8dffe",
+                    "tertiary-dim": "#5d523b",
+                    "tertiary": "#6a5e46",
+                    "primary-dim": "#305771",
+                    "on-surface": "#2c3435",
+                    "surface-container-high": "#e3e9ea",
+                    "on-error-container": "#6e0a12",
+                    "on-tertiary": "#fff8f1",
+                    "surface-container-highest": "#dde4e4",
+                    "inverse-on-surface": "#9b9d9e",
+                    "outline-variant": "#acb3b4",
+                    "on-secondary-fixed": "#26462d",
+                    "primary-fixed-dim": "#aad1ef",
+                    "tertiary-fixed-dim": "#efdec0",
+                    "background": "#f8fafa",
+                    "secondary-dim": "#3a5a40",
+                    "error-container": "#fa746f",
+                    "on-primary-fixed-variant": "#335a74",
+                    "on-primary": "#f5f9ff",
+                    "error-dim": "#67040d",
+                    "error": "#a83836",
+                    "secondary-container": "#c7ecc9",
+                    "on-error": "#fff7f6",
+                    "surface": "#f8fafa",
+                    "on-tertiary-container": "#635740",
+                    "secondary-fixed-dim": "#b9debc",
+                    "primary": "#3d637e",
+                    "inverse-primary": "#b8dffe",
+                    "secondary-fixed": "#c7ecc9",
+                    "surface-dim": "#d4dbdc",
+                    "surface-container-low": "#f0f4f4",
+                    "surface-container": "#eaefef",
+                    "on-secondary-fixed-variant": "#426348",
+                    "inverse-surface": "#0b0f0f",
+                    "on-surface-variant": "#596061",
+                    "on-tertiary-fixed": "#50452f",
+                    "on-primary-container": "#29506a",
+                    "primary-container": "#b8dffe",
+                    "surface-bright": "#f8fafa",
+                    "on-background": "#2c3435",
+                    "surface-variant": "#dde4e4",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#39593f",
+                    "tertiary-container": "#feecce",
+                    "on-tertiary-fixed-variant": "#6d614a",
+                    "tertiary-fixed": "#feecce",
+                    "outline": "#757c7d",
+                    "on-primary-fixed": "#123e56"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(248, 250, 250, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-slate-50/80 backdrop-blur-xl w-full sticky top-0 z-50">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold text-blue-900 font-headline tracking-tight">Scholarly Sanctuary</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-headline font-semibold text-blue-900 border-b-2 border-blue-800 pb-1 transition-all duration-300 ease-in-out hover:opacity-80" href="#">Discover</a>
+<a class="font-headline font-semibold text-slate-600 hover:text-blue-800 transition-all duration-300 ease-in-out hover:opacity-80" href="#">Matches</a>
+<a class="font-headline font-semibold text-slate-600 hover:text-blue-800 transition-all duration-300 ease-in-out hover:opacity-80" href="#">Bookings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-background"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</button>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="Close-up portrait of a professional student with a kind smile, soft studio lighting, high-end editorial photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgsf4BAz-b-J7PzcWmpCqRuL0WTjJ0AIYwEpp1mRBvuPSuNiKmcMRfChCTZ2rVZbZiEWrKMifU54H90TA2rPGvfdT7Qj6_s98VVzI4xxb530ZWKZhzUXG3SOuoGHIx8P4gdSNNU4lyL2ZPQatD4KAtYLN1QYCVos5IbN_Tk1HPoE3Hz8mbxYKGu8-CtMyyUKzcwSsGB9tktzYPmim1tzVttRkLv5gokRU5SoYJKbX0jyLEI822yIFwpCk8HKeeMCAWwWI3XIdHY50"/>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-12">
+<!-- Notification Panel Shell -->
+<section class="bg-surface-container-lowest rounded-xl shadow-xl shadow-blue-900/5 overflow-hidden">
+<!-- Header -->
+<div class="px-8 py-6 flex flex-row justify-between items-end bg-surface-container-low">
+<div>
+<h1 class="text-4xl font-headline font-extrabold text-primary tracking-tight mb-1">Notificaciones</h1>
+<p class="text-on-surface-variant text-sm font-medium">Mantente al tanto de tus solicitudes acadÃ©micas.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200 Active:scale-98x">
+                    Marcar todo como leÃ­do
+                </button>
+</div>
+<!-- Notification List -->
+<div class="divide-y divide-outline-variant/10">
+<!-- Today Group -->
+<div class="px-8 py-4 bg-surface-container-lowest">
+<span class="text-xs font-bold uppercase tracking-widest text-tertiary mb-4 block">Hoy</span>
+<!-- Notification Item: New Reservation -->
+<div class="group relative flex gap-4 p-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-on-surface">Nueva solicitud de reserva</h3>
+<span class="text-xs font-medium text-on-surface-variant">10:45 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Un estudiante de IngenierÃ­a ha solicitado plaza en tu habitaciÃ³n compartida para el semestre de otoÃ±o.</p>
+<div class="mt-3 flex gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Pendiente</span>
+</div>
+</div>
+<div class="flex-shrink-0 self-center">
+<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Notification Item: User Message -->
+<div class="group relative flex gap-4 p-4 -mx-4 mt-2 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="mail" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-on-surface">Mensaje de Mateo GarcÃ­a</h3>
+<span class="text-xs font-medium text-on-surface-variant">Hace 2 horas</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">"Hola, Â¿estarÃ­as disponible para una breve videollamada y conocernos antes de confirmar?"</p>
+</div>
+<div class="flex-shrink-0 self-center">
+<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Yesterday Group -->
+<div class="px-8 py-4 bg-surface-container-lowest">
+<span class="text-xs font-bold uppercase tracking-widest text-tertiary mb-4 block">Ayer</span>
+<!-- Notification Item: System Alert -->
+<div class="group relative flex gap-4 p-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer opacity-70">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="shield_person" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-on-surface">VerificaciÃ³n de perfil completada</h3>
+<span class="text-xs font-medium text-on-surface-variant">Ayer, 4:20 PM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Tu identidad ha sido verificada con Ã©xito. Ahora tienes el sello de confianza en tu perfil.</p>
+</div>
+</div>
+<!-- Notification Item: Confirmation -->
+<div class="group relative flex gap-4 p-4 -mx-4 mt-2 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer opacity-70">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-on-surface">Reserva confirmada</h3>
+<span class="text-xs font-medium text-on-surface-variant">Ayer, 9:15 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">La estancia en "Biblioteca Suite" ha sido confirmada por el anfitriÃ³n. Â¡PrepÃ¡rate para mudarte!</p>
+</div>
+</div>
+</div>
+<!-- Earlier Group -->
+<div class="px-8 py-4 bg-surface-container-lowest">
+<span class="text-xs font-bold uppercase tracking-widest text-tertiary mb-4 block">Anteriores</span>
+<!-- Notification Item: Compatibility Request -->
+<div class="group relative flex gap-4 p-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer opacity-70">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="diversity_3" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-bold text-on-surface">Nueva coincidencia del 92%</h3>
+<span class="text-xs font-medium text-on-surface-variant">3 de Oct</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Hemos encontrado un nuevo scholar con hÃ¡bitos de estudio similares a los tuyos en Madrid.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="p-6 bg-surface-container-low text-center">
+<button class="text-primary font-label font-bold text-sm hover:underline">
+                    Ver historial completo de actividades
+                </button>
+</div>
+</section>
+<!-- Contextual Help (Bento Grid Style) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="col-span-2 bg-secondary/5 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="text-secondary font-headline font-extrabold text-2xl mb-2">Personaliza tus alertas</h4>
+<p class="text-on-surface-variant text-sm max-w-md">Elige quÃ© notificaciones recibir en tu mÃ³vil y cuÃ¡les prefieres ver solo en la plataforma.</p>
+</div>
+<div class="mt-6 relative z-10">
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-full text-sm font-bold">Configurar ajustes</button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-secondary/10 text-9xl transform group-hover:scale-110 transition-transform duration-500" data-icon="settings">settings</span>
+</div>
+<div class="bg-tertiary/5 rounded-xl p-8 flex flex-col items-center text-center justify-center">
+<div class="w-16 h-16 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary mb-4">
+<span class="material-symbols-outlined text-3xl" data-icon="support_agent">support_agent</span>
+</div>
+<h4 class="font-headline font-bold text-on-surface">Â¿Necesitas ayuda?</h4>
+<p class="text-xs text-on-surface-variant mt-2 leading-relaxed">Nuestro equipo de soporte estÃ¡ disponible 24/7 para dudas sobre reservas.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md flex justify-around items-center pt-2 pb-6 px-4 md:hidden border-t border-slate-100 z-50">
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-semibold font-label">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-semibold font-label">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span class="text-[10px] font-semibold font-label">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-50 text-blue-900 rounded-2xl px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="text-[10px] font-semibold font-label">Alertas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-semibold font-label">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editar Perfil | Scholar Stay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eaefef",
+                        "on-surface": "#2c3435",
+                        "primary": "#3d637e",
+                        "on-tertiary": "#fff8f1",
+                        "surface-container-high": "#e3e9ea",
+                        "secondary-fixed": "#c7ecc9",
+                        "on-secondary-container": "#39593f",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "on-primary-fixed": "#123e56",
+                        "secondary-dim": "#3a5a40",
+                        "on-surface-variant": "#596061",
+                        "tertiary-fixed": "#feecce",
+                        "outline-variant": "#acb3b4",
+                        "error": "#a83836",
+                        "surface-tint": "#3d637e",
+                        "on-primary": "#f5f9ff",
+                        "surface-dim": "#d4dbdc",
+                        "secondary-fixed-dim": "#b9debc",
+                        "on-tertiary-fixed": "#50452f",
+                        "surface": "#f8fafa",
+                        "inverse-primary": "#b8dffe",
+                        "primary-container": "#b8dffe",
+                        "on-background": "#2c3435",
+                        "secondary": "#46674b",
+                        "surface-container-highest": "#dde4e4",
+                        "primary-fixed": "#b8dffe",
+                        "on-tertiary-container": "#635740",
+                        "surface-container-low": "#f0f4f4",
+                        "tertiary-dim": "#5d523b",
+                        "tertiary-container": "#feecce",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "secondary-container": "#c7ecc9",
+                        "tertiary": "#6a5e46",
+                        "background": "#f8fafa",
+                        "on-secondary-fixed-variant": "#426348",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-secondary-fixed": "#26462d",
+                        "outline": "#757c7d",
+                        "surface-bright": "#f8fafa",
+                        "on-secondary": "#e8ffe7",
+                        "primary-fixed-dim": "#aad1ef",
+                        "on-error-container": "#6e0a12",
+                        "inverse-surface": "#0b0f0f",
+                        "on-primary-fixed-variant": "#335a74",
+                        "error-dim": "#67040d",
+                        "surface-variant": "#dde4e4",
+                        "error-container": "#fa746f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#29506a",
+                        "primary-dim": "#305771"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+        }
+        h1, h2, h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+        .editorial-asymmetry {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr;
+            gap: 3rem;
+        }
+        @media (max-width: 1024px) {
+            .editorial-asymmetry {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full font-manrope text-base tracking-tight">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-sky-900 dark:text-sky-100">Scholar Stay</span>
+<div class="hidden md:flex gap-8">
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-sky-700 dark:hover:text-sky-300 transition-colors" href="#">Alojamiento</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-sky-700 dark:hover:text-sky-300 transition-colors" href="#">Comunidad</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-sky-700 dark:hover:text-sky-300 transition-colors" href="#">Eventos</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-slate-500">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="chat_bubble">chat_bubble</span>
+</div>
+<button class="text-sky-800 dark:text-sky-400 font-bold border-b-2 border-sky-800 dark:border-sky-400 pb-1">Mi Perfil</button>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img alt="Avatar del estudiante" data-alt="close-up portrait of a young college student with a friendly expression in a brightly lit library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhqHys5mxH78lrfYmEwyf0Z2Mw4hTi_0DjG8NSpFdsjQBVA5U3nNnjgfLd-7RF-e7OEMQAk4ye6UJx04Hqgd0KqoeP7xNAXKuSQJL9PRbZJq3RavcdDG53c6tfgQilnqQhIWsmA3g_DWM5Db-s3PoalaP3YmnMekZiGaiuP4wdC0NW0Mu-qmi3-HdsgT_zVBGCsQOY8sC_eAJ2VAHVDjJ8xnU6GiMIzChf5oNuJRJPy43WU8FRkGujzhereUuiEtTcHMQhMFdXL8k"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 pb-24 px-8 max-w-7xl mx-auto">
+<header class="mb-16">
+<div class="flex items-center gap-2 text-primary font-semibold mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+<span class="text-sm tracking-wide uppercase">Volver al Dashboard</span>
+</div>
+<h1 class="text-5xl font-extrabold tracking-tighter text-on-surface">Configurar Perfil AcadÃ©mico</h1>
+<p class="text-lg text-on-surface-variant mt-4 max-w-2xl font-body">Personaliza tu presencia en la comunidad de Scholar Stay. Tus preferencias nos ayudan a conectarte con los compaÃ±eros de piso ideales.</p>
+</header>
+<div class="editorial-asymmetry">
+<!-- Sidebar: Identity -->
+<aside class="space-y-8">
+<div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center text-center shadow-sm">
+<div class="relative group">
+<div class="w-48 h-64 rounded-xl overflow-hidden mb-6 bg-surface-container-high transform rotate-2 transition-transform hover:rotate-0">
+<img class="w-full h-full object-cover" data-alt="artistic portrait of a young woman with glasses looking thoughtful, soft natural window light, grainy film aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
+</div>
+<button class="absolute -bottom-2 -right-2 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-dim transition-colors">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+<h3 class="text-xl font-bold text-on-surface">SofÃ­a MartÃ­nez</h3>
+<p class="text-on-surface-variant text-sm mb-6">Estudiante de Arquitectura, 4to AÃ±o</p>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-secondary"></div>
+</div>
+<p class="text-xs font-semibold text-secondary mt-2 tracking-wider uppercase">85% Perfil Completado</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6">
+<h4 class="font-bold text-on-surface mb-4">Consejo Pro</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Los estudiantes con descripciones de biografÃ­a detalladas reciben un 40% mÃ¡s de solicitudes de co-living compatibles.</p>
+</div>
+</aside>
+<!-- Main Form Canvas -->
+<div class="space-y-12">
+<!-- Section 1: Personal Data -->
+<section class="bg-surface-container-lowest rounded-xl p-10">
+<h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+                        Datos Personales
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">Nombre Completo</label>
+<input class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all outline-none" type="text" value="SofÃ­a MartÃ­nez"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">Correo ElectrÃ³nico AcadÃ©mico</label>
+<input class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all outline-none" type="email" value="s.martinez@university.edu"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">BiografÃ­a AcadÃ©mica y Personal</label>
+<textarea class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all outline-none" rows="4">Estudiante de Ãºltimo aÃ±o apasionada por el urbanismo sostenible. Busco un ambiente tranquilo para estudiar pero sociable para las cenas de fin de semana. Â¡Me encanta cocinar!</textarea>
+</div>
+</div>
+</section>
+<!-- Section 2: Academic Info -->
+<section class="bg-surface-container-low rounded-xl p-10">
+<h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+                        InformaciÃ³n de Carrera
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">Universidad</label>
+<select class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all outline-none appearance-none">
+<option>Universidad PolitÃ©cnica</option>
+<option>Universidad Central</option>
+<option>Instituto de Artes</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">Carrera / Grado</label>
+<input class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all outline-none" type="text" value="Arquitectura Superior"/>
+</div>
+</div>
+</section>
+<!-- Section 3: Preferences & Habits (Match Chips) -->
+<section class="bg-surface-container-lowest rounded-xl p-10">
+<h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+                        HÃ¡bitos y Preferencias
+                    </h2>
+<div class="space-y-10">
+<div>
+<h4 class="font-bold text-on-surface-variant text-sm uppercase tracking-widest mb-6">Nivel de Ruido Preferido</h4>
+<div class="flex flex-wrap gap-4">
+<button class="px-6 py-3 rounded-full bg-secondary text-on-secondary font-semibold text-sm transition-all hover:bg-secondary-dim">Silencio Absoluto</button>
+<button class="px-6 py-3 rounded-full bg-surface-container-high text-on-surface font-semibold text-sm transition-all hover:bg-surface-container-highest">Moderado / MÃºsica</button>
+<button class="px-6 py-3 rounded-full bg-surface-container-high text-on-surface font-semibold text-sm transition-all hover:bg-surface-container-highest">Ambiente Animado</button>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface-variant text-sm uppercase tracking-widest mb-6">Horario de Estudio</h4>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col items-center gap-2 cursor-pointer border-2 border-transparent hover:border-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary" data-icon="wb_sunny">wb_sunny</span>
+<span class="text-sm font-bold">MaÃ±anas</span>
+</div>
+<div class="p-4 rounded-xl bg-primary-container flex flex-col items-center gap-2 cursor-pointer border-2 border-primary/40 transition-all">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="dark_mode">dark_mode</span>
+<span class="text-sm font-bold text-on-primary-container">NoctÃ¡mbulo</span>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col items-center gap-2 cursor-pointer border-2 border-transparent hover:border-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary" data-icon="schedule">schedule</span>
+<span class="text-sm font-bold">Flexible</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-bold">Humo y Vapeo</span>
+<span class="text-xs text-on-surface-variant">Â¿Se permite en zonas comunes?</span>
+</div>
+<div class="w-14 h-8 bg-surface-container-highest rounded-full p-1 cursor-pointer">
+<div class="w-6 h-6 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-bold">Mascotas Scholar</span>
+<span class="text-xs text-on-surface-variant">Â¿Abierto a vivir con animales?</span>
+</div>
+<div class="w-14 h-8 bg-secondary-container rounded-full p-1 cursor-pointer flex justify-end">
+<div class="w-6 h-6 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Actions -->
+<footer class="flex items-center justify-end gap-6 pt-8 border-t border-surface-container">
+<button class="text-on-surface font-bold px-8 py-4 hover:text-primary transition-colors">Descartar Cambios</button>
+<button class="bg-primary text-on-primary font-bold px-12 py-4 rounded-full shadow-lg shadow-primary/20 hover:bg-primary-dim transition-all transform active:scale-95">
+                        Guardar Perfil AcadÃ©mico
+                    </button>
+</footer>
+</div>
+</div>
+</main>
+<!-- Background Decoration Elements (Subtle Editorial Shifts) -->
+<div class="fixed top-0 right-0 -z-10 w-1/3 h-screen bg-surface-container-low/50 pointer-events-none"></div>
+<div class="fixed bottom-12 left-12 -z-10 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+</body></html>

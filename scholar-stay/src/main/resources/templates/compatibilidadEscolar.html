@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AnÃ¡lisis de Compatibilidad - Scholar Stay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#eaefef",
+                      "on-surface": "#2c3435",
+                      "primary": "#3d637e",
+                      "on-tertiary": "#fff8f1",
+                      "surface-container-high": "#e3e9ea",
+                      "secondary-fixed": "#c7ecc9",
+                      "on-secondary-container": "#39593f",
+                      "on-error": "#fff7f6",
+                      "on-tertiary-fixed-variant": "#6d614a",
+                      "on-primary-fixed": "#123e56",
+                      "secondary-dim": "#3a5a40",
+                      "on-surface-variant": "#596061",
+                      "tertiary-fixed": "#feecce",
+                      "outline-variant": "#acb3b4",
+                      "error": "#a83836",
+                      "surface-tint": "#3d637e",
+                      "on-primary": "#f5f9ff",
+                      "surface": "#f8fafa",
+                      "inverse-primary": "#b8dffe",
+                      "primary-container": "#b8dffe",
+                      "on-background": "#2c3435",
+                      "secondary": "#46674b",
+                      "surface-container-highest": "#dde4e4",
+                      "primary-fixed": "#b8dffe",
+                      "on-tertiary-container": "#635740",
+                      "surface-container-low": "#f0f4f4",
+                      "tertiary-dim": "#5d523b",
+                      "tertiary-container": "#feecce",
+                      "tertiary-fixed-dim": "#efdec0",
+                      "secondary-container": "#c7ecc9",
+                      "tertiary": "#6a5e46",
+                      "background": "#f8fafa",
+                      "on-secondary-fixed-variant": "#426348",
+                      "inverse-on-surface": "#9b9d9e",
+                      "on-secondary-fixed": "#26462d",
+                      "outline": "#757c7d",
+                      "surface-bright": "#f8fafa",
+                      "on-secondary": "#e8ffe7",
+                      "primary-fixed-dim": "#aad1ef",
+                      "on-error-container": "#6e0a12",
+                      "inverse-surface": "#0b0f0f",
+                      "on-primary-fixed-variant": "#335a74",
+                      "error-dim": "#67040d",
+                      "surface-variant": "#dde4e4",
+                      "error-container": "#fa746f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-container": "#29506a",
+                      "primary-dim": "#305771"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container">
+<!-- TopNavBar: Standard Platform Shell -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md px-8 h-20 flex justify-between items-center max-w-full">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-sky-900 dark:text-sky-100">Scholar Stay</span>
+<nav class="hidden md:flex gap-8 items-center font-manrope text-base tracking-tight">
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-sky-700 dark:hover:text-sky-300 transition-colors" href="#">Alojamiento</a>
+<a class="text-sky-800 dark:text-sky-400 font-bold border-b-2 border-sky-800 dark:border-sky-400 pb-1" href="#">Comunidad</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-sky-700 dark:hover:text-sky-300 transition-colors" href="#">Eventos</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">chat_bubble</button>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Avatar del estudiante" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVRkqVb1D1KB2EiF-UIs2ohoAjKVShT37WrvJ-Eces3dDNlg8kY_EV3uWYu3wkQ8Ue2mMVFxLBAw-zjjMjs-eLO150tOJqkYkHv26wym-3rlFdaJ98-swnowzA1iii8YcQdTT4saiIpN8913Nl1u3BALF2iSw5sbwm3ejpjrfLhZGjNvm4fNu4Ah5QQ7iu15CQ59DoDXcscGt0Ytb6HyYKwpQtlxhE9AnpOazCMsQZNsqi9B99bh3MNFvU0KCXYS7eSyWgLvCimiM"/>
+<span class="font-manrope text-sm font-semibold text-sky-800 dark:text-sky-400">Mi Perfil</span>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+<!-- Breadcrumb & Back Action -->
+<div class="mb-12 flex items-center gap-4">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-semibold text-sm">Volver al detalle</span>
+</a>
+</div>
+<!-- Hero: Asymmetric Header -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-20">
+<div class="lg:col-span-8">
+<h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-on-surface mb-6 leading-[1.1]">
+                    Tu Futuro Hogar:<br/>
+<span class="text-primary">AnÃ¡lisis de ArmonÃ­a</span>
+</h1>
+<p class="text-xl text-on-surface-variant leading-relaxed max-w-2xl">
+                    Hemos comparado tus rutinas con el ecosistema de la residencia "Casa Academicum". El resultado es una convivencia de alto rendimiento diseÃ±ada para tu Ã©xito acadÃ©mico.
+                </p>
+</div>
+<div class="lg:col-span-4 flex flex-col items-center lg:items-end">
+<div class="bg-secondary-container p-8 rounded-xl flex flex-col items-center gap-2 shadow-sm">
+<span class="text-secondary font-headline text-5xl font-extrabold">94%</span>
+<span class="text-on-secondary-container font-semibold uppercase tracking-widest text-xs">Afinidad Total</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid: The Comparison Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-20">
+<!-- New Comparative Affinity Bars Card -->
+<div class="md:col-span-2 lg:col-span-2 row-span-2 bg-surface-container-lowest rounded-xl p-8 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span class="text-sm font-bold text-on-surface uppercase tracking-tight">Espectro de HÃ¡bitos</span>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">TÃº</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Residentes</span>
+</div>
+</div>
+</div>
+<div class="flex-grow flex flex-col justify-around space-y-8">
+<!-- Study Category -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm font-bold text-on-surface">Foco y Estudio</span>
+<span class="text-xs font-bold text-secondary">98% Afinidad</span>
+</div>
+<div class="relative h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary opacity-30 w-[95%] rounded-full"></div>
+<div class="absolute top-0 left-0 h-full bg-primary w-[98%] rounded-full"></div>
+</div>
+</div>
+<!-- Noise Category -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm font-bold text-on-surface">Nivel de Ruido</span>
+<span class="text-xs font-bold text-secondary">92% Afinidad</span>
+</div>
+<div class="relative h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary opacity-30 w-[90%] rounded-full"></div>
+<div class="absolute top-0 left-0 h-full bg-primary w-[92%] rounded-full"></div>
+</div>
+</div>
+<!-- Sleep Category -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm font-bold text-on-surface">Ciclo de SueÃ±o</span>
+<span class="text-xs font-bold text-secondary">85% Afinidad</span>
+</div>
+<div class="relative h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary opacity-30 w-[80%] rounded-full"></div>
+<div class="absolute top-0 left-0 h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+</div>
+<!-- Cleanliness Category -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm font-bold text-on-surface">Orden y Limpieza</span>
+<span class="text-xs font-bold text-secondary">90% Afinidad</span>
+</div>
+<div class="relative h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary opacity-30 w-[92%] rounded-full"></div>
+<div class="absolute top-0 left-0 h-full bg-primary w-[90%] rounded-full"></div>
+</div>
+</div>
+</div>
+<p class="mt-8 text-[11px] text-on-surface-variant italic border-t border-outline-variant/20 pt-4 text-center">
+                    Comparativa basada en tus tests psicomÃ©tricos y el historial de la comunidad.
+                </p>
+</div>
+<!-- Habit Card: Study -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary">auto_stories</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Foco y Estudio</h3>
+<p class="text-sm text-on-surface-variant">Priorizas el silencio por la maÃ±ana. Los residentes actuales comparten un horario de biblioteca similar de 9:00 a 13:00.</p>
+</div>
+<div class="mt-6">
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[98%]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] font-bold text-secondary">Compatibilidad</span>
+<span class="text-[10px] font-bold text-secondary">98%</span>
+</div>
+</div>
+</div>
+<!-- Habit Card: Noise/Social -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary">volume_down</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Nivel de Ruido</h3>
+<p class="text-sm text-on-surface-variant">Tu preferencia por ambientes tranquilos coincide con la polÃ­tica de "Quiet Hours" que el grupo respeta estrictamente.</p>
+</div>
+<div class="mt-6">
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[92%]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] font-bold text-secondary">Compatibilidad</span>
+<span class="text-[10px] font-bold text-secondary">92%</span>
+</div>
+</div>
+</div>
+<!-- Habit Card: Sleep -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary">bedtime</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Ciclo de SueÃ±o</h3>
+<p class="text-sm text-on-surface-variant">Eres una persona matutina. Dos de los residentes son "Early Birds", asegurando luz y movimiento en sintonÃ­a contigo.</p>
+</div>
+<div class="mt-6">
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[85%]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] font-bold text-secondary">Compatibilidad</span>
+<span class="text-[10px] font-bold text-secondary">85%</span>
+</div>
+</div>
+</div>
+<!-- editorial Insight Card -->
+<div class="md:col-span-2 lg:col-span-1 bg-primary text-on-primary rounded-xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+<h3 class="text-lg font-headline font-bold mb-4 italic">"El Silencio Compartido"</h3>
+<p class="text-sm leading-relaxed opacity-90">
+                    Tu perfil indica que valoras el "Deep Work". Este hogar tiene el Ã­ndice de interrupciones mÃ¡s bajo de nuestra red este semestre.
+                </p>
+<div class="mt-6 w-full border-t border-on-primary/20 pt-6 flex justify-center">
+<div class="flex -space-x-2">
+<img alt="Resident 1" class="w-8 h-8 rounded-full border-2 border-primary object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCub5t8Rw71jb2jpY38MwLHQSjj_C_HmdVZm4hlLYk-2KhOu-wBxIe6FzUtoEgUZALQaVjyCo0xHuttqwuDqN2qvUUmbutMeMh1gQX4Foe_o21mH6XrYB0LsUuZ-hxRQrAk-B6NrHpPBBQU661_8UNCdZ0foxzQErGNntx9ijtPBDEtJG9SafUbqrJUflPt0eNPhvL4ArG_UCqiizEX_xi_F7F8DGUVd7gcZaAUKDEtCih-LCcsoYH7WO6OkKfuYs8Wlpcre_tvZsg"/>
+<img alt="Resident 2" class="w-8 h-8 rounded-full border-2 border-primary object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXT_WdleLwqryRpm3PEzHk-s_9rozJbsOHIG55R3YZTwkx_J2GwM4r1XFWMuI1zXNgWxY-lXIAHI2J6Qel67uU0vWKl6naiIOzp7VsEDzEEqNJc5WRRdu4fLwQKe2v7-fqWXF7tLgUcev4L04NqRSAiCi4bAO6eu_-iLoOYiZ8EEuo0BTbNjYEjM5ZwPYGtS-D-74_rFWlFl0kyhE7QbUBhZZFfCMbBin9L_Rb0y2WMFLzM9Xcxzo0KGSBFrcY0fYtTBh38ty2phI"/>
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">+1</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Breakdown -->
+<div class="bg-surface-container-low rounded-xl p-10 lg:p-16 mb-20 relative overflow-hidden">
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<span class="text-tertiary font-bold tracking-[0.2em] uppercase text-xs">Veredicto Scholar Stay</span>
+<h2 class="text-4xl font-extrabold leading-tight">Â¿Por quÃ© es una excelente combinaciÃ³n?</h2>
+<div class="space-y-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-on-surface-variant font-medium">SincronÃ­a en el uso de zonas comunes para el estudio silencioso.</p>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-on-surface-variant font-medium">Afinidad en la gestiÃ³n de visitas y eventos sociales los fines de semana.</p>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-on-surface-variant font-medium">Consenso sobre la limpieza profunda semanal de la cocina y baÃ±os.</p>
+</div>
+</div>
+</div>
+<div class="relative">
+<img class="rounded-xl shadow-lg w-full h-[400px] object-cover grayscale-[20%]" data-alt="students studying together in a modern bright lounge with wooden furniture and soft natural lighting editorial style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFW9goeQrHbO6waTmxqM7l2YQMLsQFONbRBUMZri4VcgeOOEwuG2G8FJH33gPSbBOtBcNVWhJhB367E7NIFDmTTknSA0J4Gw4y5W5PuZtoXKgorcBnoA0YMuakC_uXYkHgbwyW7imB52OqFUhkZPwB2Rw4_t5BdiIW9RWrqVMzpmg9OBjTGOXuw5AwLJXWkoSzwj-ACYLXP7p9FBmTwWIOVeFOCQhQ4XUmAtF4fePobLYF7fGiDpIY3hqKWYlNV4oAMlz289e7rfo"/>
+<div class="absolute -bottom-6 -left-6 bg-surface-container-lowest p-6 rounded-lg shadow-xl max-w-xs">
+<p class="text-sm font-bold text-primary mb-2">Comunidad Activa</p>
+<p class="text-xs text-on-surface-variant italic">"AquÃ­ encontrÃ© el equilibrio perfecto entre mi carrera de Medicina y tener vida social los sÃ¡bados." â€” Marc, Residente.</p>
+</div>
+</div>
+</div>
+<!-- Background Shape -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-secondary-container/20 -skew-x-12 transform translate-x-24 pointer-events-none"></div>
+</div>
+<!-- Sticky Bottom Action Bar -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-outline-variant/15 pt-12">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold text-lg">Casa Academicum</span>
+<span class="text-on-surface-variant text-sm">HabitaciÃ³n 4B â€¢ Disponible desde Septiembre</span>
+</div>
+<div class="flex gap-4">
+<button class="px-8 py-4 rounded-full bg-surface-container-high text-on-surface font-bold hover:bg-surface-dim transition-all active:scale-95">
+                    Guardar para despuÃ©s
+                </button>
+<button class="px-10 py-4 rounded-full bg-primary text-on-primary font-bold shadow-md hover:bg-primary-dim transition-all active:scale-95 flex items-center gap-2">
+                    Continuar reserva
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer Space -->
+<footer class="h-32 bg-surface"></footer>
+</body></html>

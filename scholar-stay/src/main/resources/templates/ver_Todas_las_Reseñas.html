@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .headline {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3d637e",
+                        "secondary": "#46674b",
+                        "surface-container-highest": "#dde4e4",
+                        "on-primary-fixed": "#123e56",
+                        "surface-container-low": "#f0f4f4",
+                        "outline": "#757c7d",
+                        "on-primary": "#f5f9ff",
+                        "on-secondary-fixed": "#26462d",
+                        "error-dim": "#67040d",
+                        "secondary-container": "#c7ecc9",
+                        "on-surface-variant": "#596061",
+                        "on-error": "#fff7f6",
+                        "tertiary-dim": "#5d523b",
+                        "error-container": "#fa746f",
+                        "primary": "#3d637e",
+                        "error": "#a83836",
+                        "surface-variant": "#dde4e4",
+                        "primary-fixed": "#b8dffe",
+                        "surface": "#f8fafa",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "on-primary-container": "#29506a",
+                        "on-primary-fixed-variant": "#335a74",
+                        "on-secondary-fixed-variant": "#426348",
+                        "tertiary": "#6a5e46",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "secondary-dim": "#3a5a40",
+                        "surface-container-high": "#e3e9ea",
+                        "surface-container": "#eaefef",
+                        "on-secondary-container": "#39593f",
+                        "tertiary-fixed": "#feecce",
+                        "on-tertiary": "#fff8f1",
+                        "on-tertiary-container": "#635740",
+                        "surface-dim": "#d4dbdc",
+                        "outline-variant": "#acb3b4",
+                        "on-tertiary-fixed": "#50452f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#6e0a12",
+                        "primary-fixed-dim": "#aad1ef",
+                        "on-secondary": "#e8ffe7",
+                        "on-surface": "#2c3435",
+                        "on-background": "#2c3435",
+                        "inverse-surface": "#0b0f0f",
+                        "tertiary-container": "#feecce",
+                        "secondary-fixed": "#c7ecc9",
+                        "background": "#f8fafa",
+                        "surface-bright": "#f8fafa",
+                        "primary-dim": "#305771",
+                        "primary-container": "#b8dffe",
+                        "inverse-primary": "#b8dffe",
+                        "secondary-fixed-dim": "#b9debc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 z-50 shadow-sm shadow-blue-900/5 sticky">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-blue-900 dark:text-blue-100 font-['Manrope']">
+                Scholar Stay
+            </div>
+<nav class="hidden md:flex items-center gap-8 font-['Manrope'] tracking-tight font-bold">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" href="#">Explore</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" href="#">Community</a>
+<a class="text-blue-700 dark:text-blue-300 border-b-2 border-blue-700 dark:border-blue-300 pb-1" href="#">Bookings</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" href="#">Saved</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all">
+<span class="material-symbols-outlined text-blue-800 dark:text-blue-300">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-primary-container">
+<img alt="User profile avatar" data-alt="professional headshot of a smiling young male student in a bright minimalist indoor setting with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUNmMhNx_Tb2JpnGaIaVUr1jt-RW7lbmJD0EaJ47yvw4IAd02UP3Z2u2pLo7s4kcrOzCtBdtO90skN1ouMrPNE1prIWP23ex_No6iWrfHJZwwv-8TLofzuXr6Jp-quu_65wfuW_pA7FJQk0lc-FByWsz02EZY-b1n70DjXOm_kO2DApbmntNKkyvloqzjWqjLMQ6Cc8CRvIrBm6suFpMrS0RJ-E9zVtEmY9oq-OH9Gdyp1sqDdMvLn_BcQcYkgG4XaOSvkqW4hxCE"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12 pb-32">
+<!-- Header & Stats Section (Intentional Asymmetry) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-16">
+<div class="lg:col-span-7 space-y-4">
+<nav class="flex items-center gap-2 text-on-surface-variant text-sm mb-6">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span>Volver a la propiedad</span>
+</nav>
+<h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-on-surface leading-none">
+                    Voz de la <span class="text-primary italic">Comunidad</span>
+</h1>
+<p class="text-body-lg text-on-surface-variant max-w-xl">
+                    Descubre las experiencias de otros becarios y estudiantes en esta residencia acadÃ©mica curada para el Ã©xito.
+                </p>
+</div>
+<div class="lg:col-span-5 bg-surface-container-low rounded-xl p-8 flex items-center justify-between shadow-[0_4px_24px_rgba(44,52,53,0.04)]">
+<div>
+<div class="flex items-baseline gap-1">
+<span class="text-6xl font-extrabold text-primary">4.9</span>
+<span class="text-on-surface-variant font-semibold">/ 5</span>
+</div>
+<div class="flex text-secondary gap-0.5 mt-2">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<p class="text-sm font-semibold text-on-surface-variant mt-1">Basado en 128 reseÃ±as</p>
+</div>
+<div class="hidden sm:block h-24 w-24 relative">
+<!-- Gauge Mockup -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-secondary-container" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="25" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-secondary">98%</div>
+</div>
+</div>
+</section>
+<!-- Filters Section (No-Line Rule) -->
+<section class="bg-surface-container-low rounded-xl p-6 mb-12 sticky top-24 z-40 backdrop-blur-md bg-opacity-90">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex flex-wrap gap-3">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-primary-dim">Todas</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">5 estrellas</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">4 estrellas</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">3 estrellas</button>
+</div>
+<div class="flex items-center gap-4 text-sm font-semibold">
+<span class="text-on-surface-variant">Ordenar por:</span>
+<select class="bg-transparent border-none focus:ring-0 text-primary cursor-pointer font-bold">
+<option>MÃ¡s recientes</option>
+<option>Mejor valoradas</option>
+<option>CrÃ­ticas</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Reviews List (Tonal Layering) -->
+<section class="space-y-8 bg-surface-container-low p-8 rounded-xl">
+<!-- Review Card 1 -->
+<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xl overflow-hidden">
+<img alt="Student profile" data-alt="portrait of a young female university student with glasses smiling warmly in a library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEiYFdZ1uVBwsegsFTG-iHDyoLCU-KN5h5BZnxv13Y2gfCPiQMXNDOO4A8piyijJ4aVt5GTyeTeLoqRzMBsR9ixWWugQSrGJO7-za80cC6NhhnqmhdbsHfU70fi7KgaY1o0cz2bTfhj6rRTcx5HhimH0Bm_5TK5RXEcplIrct65Z5x5b9a4mLVW4ajnqCRNUgvqkcYln1kBZwOwhYhhX7JZCDwXi3Dc9Kq4gQd8EMlV59Fy9DKeGoEZ_BnlO3DsmxsiapeltJFt3k"/>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">LucÃ­a FernÃ¡ndez</h3>
+<p class="text-on-surface-variant text-sm font-medium">Arquitectura â€¢ 3er AÃ±o</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end">
+<div class="flex text-secondary mb-1">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<time class="text-xs text-outline font-medium uppercase tracking-wider">12 de Octubre, 2023</time>
+</div>
+</div>
+<div class="mt-6">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm">verified_user</span> 
+                        98% Compatibilidad
+                    </span>
+<p class="text-on-surface leading-relaxed text-lg">
+                        La atmÃ³sfera es perfecta para concentrarse. Las zonas comunes estÃ¡n siempre impecables y el diseÃ±o de las habitaciones realmente ayuda a mantener el orden mental. He conocido a compaÃ±eros de master increÃ­bles aquÃ­. El sistema de emparejamiento de Scholar Stay realmente funciona; mi compaÃ±era de piso es encantadora y compartimos horarios de estudio similares.
+                    </p>
+</div>
+</article>
+<!-- Review Card 2 -->
+<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-xl overflow-hidden">
+<img alt="Student profile" data-alt="close up of a confident young male medical student in a modern workspace with soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTZLTJtWI5dHCuuCxl25Gn5GIoxrguRnol63i2DiI8GapLrLf6t7fc1OTvlFNokcl2exnbLUq779aKYOll6D8gnB6IKni2wVGRQmJ0aqX68qLneQbZJgKN0w4txZM3R5x2XYo_jQmXEimCEd3CrNGVIFkzDTZd6y0Ot_n9DcrfOXfMK3CwLUU0LELCqCiDLc2uQDYTMWoDQZaftNiJMKlwvjGYt6ibjJCU2zTxKaiFjbwz1SmeEWwzpMGmgo2FV0LyGE_f6gJ883o"/>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">Mateo Rossi</h3>
+<p class="text-on-surface-variant text-sm font-medium">Medicina â€¢ 5to AÃ±o</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end">
+<div class="flex text-secondary mb-1">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<time class="text-xs text-outline font-medium uppercase tracking-wider">05 de Septiembre, 2023</time>
+</div>
+</div>
+<div class="mt-6">
+<span class="inline-flex items-center gap-1 bg-surface-container-high text-on-surface-variant text-xs font-bold px-3 py-1 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm">handshake</span> 
+                        85% Compatibilidad
+                    </span>
+<p class="text-on-surface leading-relaxed text-lg">
+                        Como estudiante de medicina, valoro mucho el silencio por las noches y aquÃ­ se respeta enormemente. La conexiÃ³n a internet es ultra-rÃ¡pida, ideal para las clases online y descargar recursos pesados. Solo le darÃ­a 5 estrellas si el gimnasio fuera un poco mÃ¡s grande, pero el resto es excepcional.
+                    </p>
+</div>
+</article>
+<!-- Review Card 3 -->
+<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary font-bold text-xl overflow-hidden">
+<img alt="Student profile" data-alt="candid portrait of a creative female student with artistic style in a sun-drenched modern studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxOrALfbWFXNY6rFaYEZmEp1x5LkYMwI_1QtwQiT-S_UZUWE82KVsctTxW7G1kmI4eL9-DSG5aDbrU3V2R2pV55JY4mG_03Y_Psv88_joLfh_FFC8xOpTx6lklGJJvG-g9RFLtMu-ORxDQrpx-6m6UYE6QUs3fpeu1vDcUvKl5IRfXhz2O5bPdTfyDJmR2slyeRHBOZgf-QnAagvs1vuj6oUvc9sWgWHjMwzTD01VQunoa5C7rNkMYNWTn33pAnS9wIJiCFGNjjXc"/>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">Elena Sobrino</h3>
+<p class="text-on-surface-variant text-sm font-medium">Bellas Artes â€¢ 2do AÃ±o</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end">
+<div class="flex text-secondary mb-1">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<time class="text-xs text-outline font-medium uppercase tracking-wider">28 de Agosto, 2023</time>
+</div>
+</div>
+<div class="mt-6">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm">bolt</span> 
+                        94% Compatibilidad
+                    </span>
+<p class="text-on-surface leading-relaxed text-lg">
+                        Lo que mÃ¡s me gusta es la luz natural en las habitaciones. Para alguien que dibuja, esto es vital. El santuario acadÃ©mico no es solo un nombre, realmente se siente como un refugio. Las cenas comunitarias organizadas por los gestores son una delicia para desconectar un poco de la carga acadÃ©mica.
+                    </p>
+</div>
+</article>
+<!-- Load More (Asymmetrical Button) -->
+<div class="flex justify-center pt-8">
+<button class="group flex items-center gap-3 bg-surface-container-highest text-on-surface font-bold px-10 py-4 rounded-full transition-all hover:bg-primary hover:text-on-primary">
+                    Cargar mÃ¡s historias
+                    <span class="material-symbols-outlined group-hover:translate-y-1 transition-transform">expand_more</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only via JSON classes) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg rounded-t-[24px] border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_24px_rgba(44,52,53,0.04)] font-['Inter'] text-xs font-semibold">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span>Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span>Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-100 rounded-2xl px-5 py-2 transition-transform duration-300 ease-out active:scale-95" href="#">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">person</span>
+<span>Profile</span>
+</a>
+</nav>
+</body></html>

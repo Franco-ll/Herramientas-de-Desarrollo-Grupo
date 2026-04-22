@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#46674b",
+                        "on-secondary": "#e8ffe7",
+                        "surface-tint": "#3d637e",
+                        "primary-fixed": "#b8dffe",
+                        "tertiary-dim": "#5d523b",
+                        "tertiary": "#6a5e46",
+                        "primary-dim": "#305771",
+                        "on-surface": "#2c3435",
+                        "surface-container-high": "#e3e9ea",
+                        "on-error-container": "#6e0a12",
+                        "on-tertiary": "#fff8f1",
+                        "surface-container-highest": "#dde4e4",
+                        "inverse-on-surface": "#9b9d9e",
+                        "outline-variant": "#acb3b4",
+                        "on-secondary-fixed": "#26462d",
+                        "primary-fixed-dim": "#aad1ef",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "background": "#f8fafa",
+                        "secondary-dim": "#3a5a40",
+                        "error-container": "#fa746f",
+                        "on-primary-fixed-variant": "#335a74",
+                        "on-primary": "#f5f9ff",
+                        "error-dim": "#67040d",
+                        "error": "#a83836",
+                        "secondary-container": "#c7ecc9",
+                        "on-error": "#fff7f6",
+                        "surface": "#f8fafa",
+                        "on-tertiary-container": "#635740",
+                        "secondary-fixed-dim": "#b9debc",
+                        "primary": "#3d637e",
+                        "inverse-primary": "#b8dffe",
+                        "secondary-fixed": "#c7ecc9",
+                        "surface-dim": "#d4dbdc",
+                        "surface-container-low": "#f0f4f4",
+                        "surface-container": "#eaefef",
+                        "on-secondary-fixed-variant": "#426348",
+                        "inverse-surface": "#0b0f0f",
+                        "on-surface-variant": "#596061",
+                        "on-tertiary-fixed": "#50452f",
+                        "on-primary-container": "#29506a",
+                        "primary-container": "#b8dffe",
+                        "surface-bright": "#f8fafa",
+                        "on-background": "#2c3435",
+                        "surface-variant": "#dde4e4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#39593f",
+                        "tertiary-container": "#feecce",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "tertiary-fixed": "#feecce",
+                        "outline": "#757c7d",
+                        "on-primary-fixed": "#123e56"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #2c3435;
+        }
+        .editorial-shadow {
+            box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04);
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar (JSON Immutable Content & Styles) -->
+<header class="w-full sticky top-0 z-50 bg-slate-50/80 backdrop-blur-xl border-none">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold text-blue-900 font-['Manrope'] tracking-tight">Scholarly Sanctuary</span>
+<!-- Search Mockup -->
+<div class="hidden md:flex items-center bg-surface-container px-4 py-2 rounded-full gap-3">
+<span class="material-symbols-outlined text-outline">search</span>
+<span class="text-on-surface-variant text-sm">Buscar destinos acadÃ©micos...</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 font-['Manrope'] text-sm hover:opacity-80 transition-all" href="#">Discover</a>
+<a class="text-slate-600 font-['Manrope'] text-sm hover:opacity-80 transition-all" href="#">Matches</a>
+<a class="text-slate-600 font-['Manrope'] text-sm hover:opacity-80 transition-all" href="#">Bookings</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant transition-all hover:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant transition-all hover:opacity-80">chat_bubble</button>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a young professional student with a warm expression against a blurred library background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0N-ilUgrowcYP-bCwSwm8x5Kan2fAdgUeEmUVEsbjiEEyoeAQnRu_SvEdoZY_NiW8BCiZkLR0qKsZLHyRHiOteaqAXC312ihS8-x4E_YZxRnRz62cYsNDu6Yx59Fys_y5USZ2U8TwFPTej4qkesIciI9GZDIeMp_tQvcpplFHlPXRduh2yFLBL40lzXEMxwGUPZuSQJ5FB2KxaTe9EEU-0EfgDZGWr74HN6iOaXlwlEuoRoocBKF9WkrpKvZn9VVypfORyo7tfyE"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 py-12 lg:py-20">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Payment Form Column -->
+<div class="lg:col-span-7">
+<div class="mb-12">
+<h1 class="font-headline text-5xl font-extrabold text-primary tracking-tight mb-4 leading-tight">Completar pago seguro</h1>
+<p class="text-on-surface-variant text-lg max-w-xl">Tu viaje acadÃ©mico comienza aquÃ­. Procesa tu reserva en un entorno totalmente encriptado.</p>
+</div>
+<!-- Payment Method Toggle (Visual Only) -->
+<div class="flex gap-4 mb-10">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full flex items-center gap-2 editorial-shadow transition-transform hover:scale-[0.98]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">credit_card</span>
+<span class="font-medium">Tarjeta</span>
+</button>
+<button class="bg-surface-container-high text-on-surface px-8 py-3 rounded-full flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-medium">Transferencia</span>
+</button>
+</div>
+<!-- Form Section -->
+<section class="space-y-8">
+<div class="grid grid-cols-1 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Nombre del titular</label>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="Como aparece en la tarjeta" type="text"/>
+</div>
+<div class="space-y-2 relative">
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">NÃºmero de tarjeta</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+<div class="w-8 h-5 bg-white/20 flex items-center justify-center">
+<img alt="Visa Logo" class="h-3 opacity-80" data-alt="the official visa logo in blue on a clean transparent background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTxOdg2-g3ZBB2cjwVAXw52_64b5CBJbuiVL5wg1vXTj6CCZlnQBOkCZZXPjhOxCJ2ZFCXletsu_WwCj6DpzVg-BFWZ0CcWV1x5JYib-y0Nhq6PVa6E6cYbwKUU3NqRvvrviQji-7jPyjToGR3xw0-CewPBwRc4YHS07tad-amFa0YwcVqInuJ3yovIU9aBBFS9Mn9UQdheLPuWsTjJ4x8TYLimmSqMA6kk168Fp1fWvO4AFj6i33E1cEw7-tN93oSXY91ywK6wE"/>
+</div>
+<div class="w-8 h-5 bg-white/20 flex items-center justify-center">
+<img alt="Mastercard Logo" class="h-5 opacity-80" data-alt="the official mastercard logo showing two interlocking circles in red and orange" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApPNCRj9obbyotsm-xfimE9X4oO2J1T5cwkZqZhJxZPzy_NtDtrTHGIIVpOS4_iWGrH0E0vtq55Oeb6SXuJrnSKdsPd8yz70N-BB7RHlDXpUH533wa-OQ4kOKAqrENt01RLb8npxAuoihKjwz3QCASmEXLCykf087FaQci7zGKup8C_O9i9EkGkXZ-NzxdzZ6v8Ld19F2F0c8TDNDh_bP1uCjAtBPpDiwGVKSeR0SD49dSIzs4XvG7TNqzvaJOZ3i3MWJobknPVeE"/>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Fecha expiraciÃ³n</label>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="MM / AA" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">CVV</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="***" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-sm cursor-help">help</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6">
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-5 rounded-full font-headline text-lg font-bold editorial-shadow hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-3">
+                            Pagar ahora
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-3 py-4 bg-secondary-container/30 rounded-xl">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-secondary font-medium text-sm">TransacciÃ³n Encriptada: Tu seguridad es nuestra prioridad.</span>
+</div>
+</section>
+</div>
+<!-- Sidebar Column: Reservation Details -->
+<aside class="lg:col-span-5 space-y-8">
+<div class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow border-none">
+<div class="mb-8 overflow-hidden rounded-lg aspect-video">
+<img alt="Reserva Propiedad" class="w-full h-full object-cover" data-alt="interior of a modern minimalist student apartment with a large window, wooden desk, and soft morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaQiNEMuQOB6OdRC9ii6LRGV3G6OE6mD3d2D0gY4qSc_0podT41rff_h2p4ZJQQiYQaq595tcPFEv5Rs8pNjHua4rmLRpO_uJ39XDo1c8qsqyvyqg5F6-je5LGWDgqmMNfo_98btcR-blGDhu-thFC8FYtlE81l3tvVW5lwiyUXlWvik9uf7lanndeWvmG6VF_yCyZcxA8rGK67sDBJtXTbQ1cXCCrtsSa4EnaVj10r4FJVN5j159zqwCS9pPalRFWhBUusv1V_vk"/>
+</div>
+<div class="space-y-6">
+<div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3 inline-block">Scholar Suite Premium</span>
+<h3 class="font-headline text-2xl font-bold text-on-surface">The Oxford Collective</h3>
+<p class="text-on-surface-variant text-sm flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                Bloomsbury, London, UK
+                            </p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl space-y-4">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<div>
+<p class="text-outline text-[10px] uppercase font-bold">Entrada</p>
+<p class="font-semibold">01 Sep, 2024</p>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">event_upcoming</span>
+<div>
+<p class="text-outline text-[10px] uppercase font-bold">Salida</p>
+<p class="font-semibold">20 Dic, 2024</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-on-surface-variant">
+<span>Alquiler Mensual</span>
+<span>580.00â‚¬</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Gastos de gestiÃ³n</span>
+<span>70.00â‚¬</span>
+</div>
+<div class="flex justify-between text-primary font-headline text-2xl font-extrabold pt-4">
+<span>Total</span>
+<span>650.00â‚¬</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Match Compatibility Reward -->
+<div class="bg-secondary/5 rounded-xl p-6 flex items-center gap-6">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle cx="32" cy="32" fill="transparent" r="28" stroke="#c7ecc9" stroke-width="6"></circle>
+<circle cx="32" cy="32" fill="transparent" r="28" stroke="#46674b" stroke-dasharray="175" stroke-dashoffset="35" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<span class="absolute text-xs font-bold text-secondary">85%</span>
+</div>
+<div>
+<h4 class="font-bold text-secondary">Compatibilidad Ideal</h4>
+<p class="text-sm text-secondary-dim/80">Tus futuros compaÃ±eros comparten tus hÃ¡bitos de estudio.</p>
+</div>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline leading-relaxed">Al pulsar "Pagar ahora", aceptas nuestros <a class="underline hover:text-primary" href="#">TÃ©rminos de Servicio</a> y la polÃ­tica de reserva para estudiantes internacionales.</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Support FAB (Contextual for Payment) -->
+<button class="fixed bottom-8 right-8 bg-white text-on-surface p-4 rounded-full editorial-shadow flex items-center gap-3 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<span class="text-sm font-semibold pr-2">Â¿Necesitas ayuda?</span>
+</button>
+</body></html>
