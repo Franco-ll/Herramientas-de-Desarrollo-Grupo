@@ -1,78 +1,178 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Perfil Académico</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- CSS PROPIO -->
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
-    </head>
-    <body>
+<head>
+    <title>Perfil Académico</title>
+    <meta charset="UTF-8">
 
-        <div th:replace="fragments/navbar :: navbar"></div>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-        <div class="container mt-5">
+<div th:replace="fragments/navbar :: navbar"></div>
 
-            <div class="card-custom">
-                <h2 class="titulo mb-4">Perfil Académico</h2>
+<div class="main-container">
+    <div class="content-grid">
 
-                <form th:action="@{/perfil}" method="post" th:object="${perfil}">
+        <!-- Panel izquierdo -->
+        <aside class="left-panel">
+            <div class="profile-card">
+                <div class="profile-image-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil">
+                </div>
 
-                    <h5>Datos personales</h5>
+                <h3 class="profile-name"
+                    th:text="${perfil.nombre != null and !#strings.isEmpty(perfil.nombre) ? perfil.nombre : 'Tu nombre'}">
+                    Tu nombre
+                </h3>
 
-                    <input type="text" class="form-control mb-3"
-                           th:field="*{nombre}" placeholder="Nombre completo" required>
+                <p class="profile-career"
+                   th:text="${perfil.carrera != null and !#strings.isEmpty(perfil.carrera) ? perfil.carrera : 'Tu carrera'}">
+                    Tu carrera
+                </p>
 
-                    <input type="email" class="form-control mb-3"
-                           th:field="*{correo}" placeholder="Correo" required>
+                <div class="profile-info-block">
+                    <p><strong>Universidad:</strong>
+                        <span th:text="${perfil.universidad != null and !#strings.isEmpty(perfil.universidad) ? perfil.universidad : 'No registrada'}">
+                            No registrada
+                        </span>
+                    </p>
+                    <p><strong>Correo:</strong>
+                        <span th:text="${perfil.correo != null and !#strings.isEmpty(perfil.correo) ? perfil.correo : 'No registrado'}">
+                            No registrado
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </aside>
 
-                    <textarea class="form-control mb-4"
-                              th:field="*{biografia}" placeholder="Biografía"></textarea>
-
-                    <h5>Información académica</h5>
-
-                    <input type="text" class="form-control mb-3"
-                           th:field="*{universidad}" placeholder="Universidad">
-
-                    <input type="text" class="form-control mb-4"
-                           th:field="*{carrera}" placeholder="Carrera">
-
-                    <h5>Hábitos</h5>
-
-                    <select class="form-select mb-3" th:field="*{nivelRuido}">
-                        <option value="">Nivel de ruido</option>
-                        <option value="silencio">Silencio</option>
-                        <option value="medio">Medio</option>
-                        <option value="alto">Alto</option>
-                    </select>
-
-                    <select class="form-select mb-3" th:field="*{horarioEstudio}">
-                        <option value="">Horario</option>
-                        <option value="mañana">Mañana</option>
-                        <option value="tarde">Tarde</option>
-                        <option value="noche">Noche</option>
-                    </select>
-
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" th:field="*{fuma}">
-                        <label>Fuma</label>
-                    </div>
-
-                    <div class="form-check mb-4">
-                        <input type="checkbox" class="form-check-input" th:field="*{mascotas}">
-                        <label>Mascotas</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-custom w-100">
-                        Guardar Perfil
-                    </button>
-
-                </form>
+        <!-- Panel derecho -->
+        <section class="right-panel">
+            <div class="header-box">
+                <h1>Perfil Académico</h1>
+                <p>Completa tu información para mejorar la compatibilidad en el coliving académico.</p>
             </div>
 
-        </div>
+            <form th:action="@{/perfil}" method="post" th:object="${perfil}">
 
-    </body>
+                <!-- Datos personales -->
+                <div class="section-card">
+                    <h2>Datos personales</h2>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ej. Richard Chamba" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" th:field="*{correo}" placeholder="Ej. correo@ejemplo.com" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Biografía</label>
+                            <textarea class="form-control" rows="4" th:field="*{biografia}"
+                                      placeholder="Cuéntanos un poco sobre ti, tus intereses y tu forma de convivir."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información académica -->
+                <div class="section-card">
+                    <h2>Información académica</h2>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Universidad</label>
+                            <input type="text" class="form-control" th:field="*{universidad}" placeholder="Ej. UTP">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Carrera</label>
+                            <input type="text" class="form-control" th:field="*{carrera}" placeholder="Ej. Ingeniería de Sistemas">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hábitos -->
+                <div class="section-card">
+                    <h2>Hábitos y preferencias</h2>
+
+                    <div class="mb-4">
+                        <label class="form-label section-label">Nivel de ruido</label>
+                        <div class="option-group">
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{nivelRuido}" value="Silencio">
+                                <span>Silencio</span>
+                            </label>
+
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{nivelRuido}" value="Moderado">
+                                <span>Moderado</span>
+                            </label>
+
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{nivelRuido}" value="Activo">
+                                <span>Activo</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label section-label">Horario de estudio</label>
+                        <div class="option-group">
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{horarioEstudio}" value="Mañana">
+                                <span>Mañana</span>
+                            </label>
+
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{horarioEstudio}" value="Tarde">
+                                <span>Tarde</span>
+                            </label>
+
+                            <label class="option-pill">
+                                <input type="radio" th:field="*{horarioEstudio}" value="Noche">
+                                <span>Noche</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="switch-row">
+                        <div class="switch-card">
+                            <div>
+                                <h5>¿Fumas?</h5>
+                                <p>Indica si tienes este hábito en tu rutina diaria.</p>
+                            </div>
+                            <label class="custom-switch">
+                                <input type="checkbox" th:field="*{fuma}">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="switch-card">
+                            <div>
+                                <h5>¿Tienes mascotas?</h5>
+                                <p>Indica si convivirías con una mascota en el alojamiento.</p>
+                            </div>
+                            <label class="custom-switch">
+                                <input type="checkbox" th:field="*{mascotas}">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn-save">Guardar perfil académico</button>
+                    <button type="reset" class="btn-cancel">Cancelar cambios</button>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+
+</body>
 </html>
