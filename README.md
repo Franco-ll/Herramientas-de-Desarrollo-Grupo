@@ -44,7 +44,7 @@ Actualmente el sistema cuenta con:
 - Identificación de los campos del perfil
 - Diseño inicial del formulario
 - Configuración del entorno en Spring Boot
-- Creación de la estructura base del módulo (modelo, controlador y vista preliminar
+- Creación de la estructura base del módulo (modelo, controlador y vista preliminar)
 
 ---
 
@@ -54,15 +54,15 @@ Actualmente el sistema cuenta con:
 - Implementación del guardado temporal en memoria
 - Mejora de la interfaz del perfil académico
 - Separación de estilos en archivos CSS
-- Organización del código para una mejor estructura del proyecto 
+- Organización del código para una mejor estructura del proyecto
 
 ---
 
 ### Semana 6
-- Mejora de la interfaz gráfica (más cercana al diseño propuesto)
 - Implementación de validaciones en el formulario
-- Optimización de la experiencia de usuario
-- Preparación del primer avance formal del sistema 
+- Mejora de la experiencia de usuario (mensajes y usabilidad)
+- Ajustes finales en la interfaz para mayor claridad visual
+- Preparación del primer avance formal del sistema
 
 ---
 
