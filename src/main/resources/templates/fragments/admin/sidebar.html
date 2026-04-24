@@ -1,0 +1,56 @@
+<aside th:fragment="sidebar(active)"
+       xmlns:th="http://www.thymeleaf.org"
+       class="col-lg-2 d-none d-lg-flex sidebar flex-column">
+
+    <div>
+        <div class="brand">
+            <i class="bi bi-building"></i>
+            <div>
+                <h4>Scholar Stay</h4>
+                <span>Admin Portal</span>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a th:href="@{/admin/dashboard}"
+               th:classappend="${active == 'dashboard'} ? 'active'">
+                <i class="bi bi-grid-fill"></i> Dashboard
+            </a>
+
+            <a th:href="@{/admin/residentes}"
+               th:classappend="${active == 'residentes'} ? 'active'">
+                <i class="bi bi-people-fill"></i> Residentes
+            </a>
+
+            <a th:href="@{/admin/propiedades}"
+               th:classappend="${active == 'propiedades'} ? 'active'">
+                <i class="bi bi-buildings-fill"></i> Propiedades
+            </a>
+
+            <a th:href="@{/admin/finanzas}"
+               th:classappend="${active == 'finanzas'} ? 'active'">
+                <i class="bi bi-cash-stack"></i> Finanzas
+            </a>
+
+            <a th:href="@{/admin/configuracion}"
+               th:classappend="${active == 'configuracion'} ? 'active'">
+                <i class="bi bi-gear-fill"></i> Configuración
+            </a>
+        </nav>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="admin-user">
+            <div class="avatar">A</div>
+            <div>
+                <strong>Admin Principal</strong>
+                <small>Gestionar cuenta</small>
+            </div>
+        </div>
+
+        <a href="#" class="logout">
+            <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+        </a>
+    </div>
+
+</aside>
