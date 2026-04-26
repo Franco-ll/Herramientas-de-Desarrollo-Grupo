@@ -15,8 +15,12 @@ public class AlojamientoService {
         this.alojamientoRepository = alojamientoRepository;
     }
 
-    public List<Alojamiento> getAllAlojamientos() {
+    public List<Alojamiento> listar() {
         return alojamientoRepository.findAll();
+    }
+    
+    public Alojamiento obtenerPorId(Long id) {
+        return alojamientoRepository.findById(id).orElse(null);
     }
     
     public Alojamiento save(Alojamiento alojamiento) {

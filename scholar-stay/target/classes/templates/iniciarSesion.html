@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Scholar Stay - Iniciar SesiÃ³n</title>
+<title>Scholar Stay - Iniciar Sesión</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -102,7 +102,7 @@
 <div class="absolute bottom-12 left-12 right-12 glass-effect p-8 rounded-xl">
 <h2 class="font-headline text-display-lg text-4xl font-extrabold tracking-tighter text-primary mb-4">Scholar Stay</h2>
 <p class="font-body text-lg text-on-surface-variant leading-relaxed max-w-md">
-                    Bienvenido a tu santuario acadÃ©mico. Un espacio diseÃ±ado para el enfoque, la colaboraciÃ³n y el crecimiento profesional.
+                    Bienvenido a tu santuario académico. Un espacio diseñado para el enfoque, la colaboración y el crecimiento profesional.
                 </p>
 </div>
 </div>
@@ -118,13 +118,30 @@
 </header>
 <!-- Role Selector (Student/Host) -->
 <div class="flex p-1 bg-surface-container-high rounded-full mb-8">
-<button class="flex-1 py-3 px-6 rounded-full text-sm font-semibold transition-all duration-300 bg-surface-container-lowest text-primary shadow-sm">
+<button id="role-estudiante" class="flex-1 py-3 px-6 rounded-full text-sm font-semibold transition-all duration-300 bg-surface-container-lowest text-primary shadow-sm" onclick="setRole('estudiante')">
                     Estudiante
                 </button>
-<button class="flex-1 py-3 px-6 rounded-full text-sm font-semibold transition-all duration-300 text-on-surface-variant hover:text-on-surface">
-                    AnfitriÃ³n
+<button id="role-anfitrion" class="flex-1 py-3 px-6 rounded-full text-sm font-semibold transition-all duration-300 text-on-surface-variant hover:text-on-surface" onclick="setRole('anfitrion')">
+                    Anfitrión
                 </button>
 </div>
+<script>
+    function setRole(role) {
+        const estBtn = document.getElementById('role-estudiante');
+        const anfBtn = document.getElementById('role-anfitrion');
+        if (role === 'estudiante') {
+            estBtn.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            estBtn.classList.remove('text-on-surface-variant', 'hover:text-on-surface');
+            anfBtn.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            anfBtn.classList.add('text-on-surface-variant', 'hover:text-on-surface');
+        } else {
+            anfBtn.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            anfBtn.classList.remove('text-on-surface-variant', 'hover:text-on-surface');
+            estBtn.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            estBtn.classList.add('text-on-surface-variant', 'hover:text-on-surface');
+        }
+    }
+</script>
 <!-- Login Form -->
 <!-- Error message -->
 <div th:if="${error}" class="p-4 mb-4 text-sm text-on-error bg-error rounded-lg" role="alert">
@@ -143,9 +160,9 @@
 </div>
 <!-- Password Field -->
 <div>
-<label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 ml-1" for="password">ContraseÃ±a</label>
+<label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 ml-1" for="password">Contraseña</label>
 <div class="relative group">
-<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-200 outline-none placeholder:text-outline" id="password" name="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" type="password" required/>
+<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-200 outline-none placeholder:text-outline" id="password" name="password" placeholder="••••••••••••" type="password" required/>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">
                             lock
                         </span>
@@ -157,17 +174,17 @@
 <input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 transition-all" type="checkbox"/>
 <span class="text-on-surface-variant group-hover:text-on-surface transition-colors">Recordarme</span>
 </label>
-<a class="text-primary font-semibold hover:text-primary-dim transition-colors" href="#">Â¿Olvidaste tu contraseÃ±a?</a>
+<a class="text-primary font-semibold hover:text-primary-dim transition-colors" href="#">¿Olvidaste tu contraseña?</a>
 </div>
 <!-- Submit Button -->
 <button class="w-full py-4 bg-gradient-to-r from-primary to-primary-dim text-on-primary rounded-full font-bold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg shadow-primary/20" type="submit">
-                    Iniciar SesiÃ³n
+                    Iniciar Sesión
                 </button>
 </form>
 <!-- Footer Links -->
 <footer class="mt-12 pt-8 border-t border-surface-container-high text-center">
 <p class="text-on-surface-variant text-sm">
-                    Â¿AÃºn no eres parte de la comunidad? 
+                    ¿Aún no eres parte de la comunidad? 
                     <a class="text-secondary font-bold hover:underline underline-offset-4 ml-1" th:href="@{/register}">Crea tu cuenta</a>
 </p>
 <div class="mt-8 flex justify-center gap-6">

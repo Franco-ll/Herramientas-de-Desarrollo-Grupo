@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Scholar Stay - Detalle de Alojamiento</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -93,45 +93,45 @@
 <nav class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full font-manrope text-base tracking-tight">
 <div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
 <div class="hidden md:flex items-center gap-8">
-<a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1" href="#">Alojamiento</a>
+<a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1" th:href="@{/explorar-residencias}">Alojamiento</a>
 <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Comunidad</a>
 <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Eventos</a>
 </div>
 <div class="flex items-center gap-6">
 <div class="flex gap-4">
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-icon="chat_bubble">chat_bubble</span>
+<a th:href="@{/notificaciones}" class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</a>
+<a href="javascript:void(0)" class="material-symbols-outlined text-on-surface-variant cursor-default text-slate-400">chat_bubble</a>
 </div>
-<div class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors">
-<img alt="Avatar del estudiante" class="w-8 h-8 rounded-full border-2 border-white" data-alt="close-up portrait of a young male student smiling confidently with soft natural studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZF7PxeGL3LRs_bWspvUvFsMI8zR2OSZCokAJjSyM4KZAtv7bWKVLoS_KTR_LAg381m-9xWlL-zbwk0uAcMdVS1X_ltLe2iEXereyGDSonU4OpwQugRyqLhUP4k2Bm0S7-j1vWP4xvlHY8E7PKPfcc7afUAovfKQLmi_3muJK4MzdOAqUpg3cNchNv8DqbH10gA5RivyGS6_BQl-eMzGEMumaDrAuegXqFRhv3vcSg2LwBMShLGV_Sg2pcud0azFrhY_QXLOtCTJI"/>
+<a th:href="@{/perfil}" class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors">
+<img alt="Avatar del estudiante" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
 <span class="font-semibold text-primary">Mi Perfil</span>
-</div>
+</a>
 </div>
 </nav>
 <main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
 <!-- Back Link -->
-<div class="mb-6 flex items-center gap-2 text-primary font-medium cursor-pointer">
-<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
-<span>Volver a la bÃºsqueda</span>
+<div class="mb-6 flex items-center gap-2 text-primary font-medium cursor-pointer" onclick="window.history.back()">
+<span class="material-symbols-outlined">arrow_back</span>
+<span>Volver a la búsqueda</span>
 </div>
-<!-- Editorial Gallery Grid (No text overlays) -->
+<!-- Editorial Gallery Grid (Dynamic) -->
 <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[500px] mb-12">
 <div class="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl">
-<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="spacious bright living room with minimalist scandinavian furniture, large windows with natural light and house plants" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2p_gD9EJdOk2951Z-iDcEdDdK6r-QSjT916shTelpm_qKe3Ka6yvJweNlFO92LPKs-OZviTj_hnVaIVpehoH-7AGVrQQGiX_6Qh03Z7iy3cr2Olv1n47_ghmmPBLkJJqz3DoYy4K2Ezdu0ShMlMR3RVAQ25armTn7Sq0UkCm0aZ5vNZ4vthE6hgdXGghe7n0mq08o00Hjw89ClVGjs4GrXnAI3mRT_-cxlgUHyrwdhlHpeBOayKP-PLPGnzjokcvQOGpx3Ae5tAQ"/>
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" th:src="@{/images/{img}(img=${alojamiento.imagen})}" src="https://via.placeholder.com/800x600" />
 </div>
-<div class="hidden md:block overflow-hidden rounded-xl">
-<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="cozy modern bedroom for a student with a study desk, warm bedside lamp and organized bookshelves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoPKaQi43s20yhuDS1bKrumMs9cPGxR9CHKCTL2uEEwVyQz1MUTz3TDSfAiWre6wDDwXAg96Sai8EQJGSOhD6pROYP7berXLvV3WnvpNADvrMLXtC9YLcdN_Bxwg7lDssRnp_ovIGS_Q_IVGKnsl6GlXDzku-6CRkScXjwV2BfOSKhar5qx6U7NmvBLmPHHE9DsMnuh6gRwveym5xgSjKePhshREkP0uiviajbB-v8Yhn4WWvdlblyyZu6kHzdx6y7LJwZr8sgWHA"/>
+<div th:if="${alojamiento.imagenes != null && alojamiento.imagenes.size() > 1}" class="hidden md:block overflow-hidden rounded-xl">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" th:src="@{/images/{img}(img=${alojamiento.imagenes[1]})}" src="https://via.placeholder.com/400x300" />
 </div>
-<div class="hidden md:block overflow-hidden rounded-xl">
-<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="clean modern kitchen with white cabinets, wooden countertops and stainless steel appliances in a bright apartment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfO7qEr9F_FqirrrmyaScAD_jTSH-udbRte3mnjNCglkH6tGUPg3xUhnGLawDAgYUd0QUJl-LSzg8sI0UcWKpQ1hTrecwszFHV6ix1yA_Bzy5b36eww_dbzFVOyrSePSH7oOz0V3nhmkR6QX5EVzG_DzUelshjM3KRcew-NTIecKCE0V2BudTfuTV8KDNBIXR-XG-A4XH-AE2FH_sSeRBOCwh69veswWLE5ymJjSx_eEU-HIz1pgIqn5Ez0EaWPUiiZDvFK2ISo6k"/>
+<div th:if="${alojamiento.imagenes != null && alojamiento.imagenes.size() > 2}" class="hidden md:block overflow-hidden rounded-xl">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" th:src="@{/images/{img}(img=${alojamiento.imagenes[2]})}" src="https://via.placeholder.com/400x300" />
 </div>
-<div class="hidden md:block overflow-hidden rounded-xl">
-<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="modern bathroom with elegant grey tiles, glass shower partition and soft ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTphBWfnm1uqMW7vOEml_ZpWSo8Jk_GUtXJJF5L-LXLANuhfj38xgfU2mUGpxd13-IQBzihBwf9IPct0gQTOlQcizflNrqh0TcXOEpILE15tyEMd-DFJCmHnNdqRnafTbFL93EVBkMo7c0exx2Iw4_vH4wvTw76tM0-VtTyefcFweP8TY1eQDcBVjeAJgLKu2XLmbWld168i_dAMZ5_cxfIELph2dPgb5OAKrZv54b1YpfL2X6ZNvaGE4oGG90XO9gDOMBpD1p7oo"/>
+<div th:if="${alojamiento.imagenes != null && alojamiento.imagenes.size() > 0}" class="hidden md:block overflow-hidden rounded-xl">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" th:src="@{/images/{img}(img=${alojamiento.imagen})}" src="https://via.placeholder.com/400x300" />
 </div>
 <div class="hidden md:block overflow-hidden rounded-xl relative">
-<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="detail of a sunlit balcony with comfortable outdoor seating and city views in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGRiEuhWC3lXnW7Dd0nLAuLanmPg9GUzXU1_0O1ARTO9BHzBJpTIWqQS07XxUcF3EQ_BENVHUxYZotLUI8cxsgz-Bzn5-VumEg2NzIoiZTIJaS-XvULFLQdQeCw68nJjp6BkgnBYrkw3FMcnvepi-rhmjDQGK7tvAB-Ymtn5cQVkuPUp6ZBuWgxaxSYjbevbFEqjkQCrEtQSzRapEr2dB8IMpFf4btWrkoTHjNOuRTD7VC3yYxcKoHDj6kz0sMjKQWVygbFN6dWRo"/>
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" th:src="@{/images/{img}(img=${alojamiento.imagen})}" />
 <div class="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer">
-<span class="text-white font-bold text-lg">+12 fotos</span>
+<span class="text-white font-bold text-lg">+5 fotos</span>
 </div>
 </div>
 </div>
@@ -144,25 +144,25 @@
 <span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase">Alta Demanda</span>
 <div class="flex items-center gap-1 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-sm font-bold">
 <span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span>4.9 (128 reseÃ±as)</span>
+<span>4.9 (128 reseñas)</span>
 </div>
 </div>
-<h1 class="text-5xl font-extrabold tracking-tighter text-on-surface mb-4">Residencia Universitaria "San Telmo" Loft</h1>
+<h1 class="text-5xl font-extrabold tracking-tighter text-on-surface mb-4" th:text="${alojamiento.titulo}">Residencia Universitaria "San Telmo" Loft</h1>
 <p class="text-xl text-on-surface-variant flex items-center gap-2">
 <span class="material-symbols-outlined" data-icon="location_on">location_on</span>
-                        Barrio de ChamberÃ­, Madrid
+                        <span th:text="${alojamiento.ubicacion}">Barrio de Chamberí, Madrid</span>
                     </p>
 </section>
 <!-- Key Specs (Intentional Asymmetry) -->
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 bg-surface-container-low rounded-xl">
 <div class="flex flex-col gap-1">
 <span class="material-symbols-outlined text-primary text-3xl" data-icon="bed">bed</span>
-<span class="text-sm font-bold text-on-surface">HabitaciÃ³n</span>
+<span class="text-sm font-bold text-on-surface">Habitación</span>
 <span class="text-xs text-on-surface-variant">Individual con suite</span>
 </div>
 <div class="flex flex-col gap-1">
 <span class="material-symbols-outlined text-primary text-3xl" data-icon="group">group</span>
-<span class="text-sm font-bold text-on-surface">CompaÃ±eros</span>
+<span class="text-sm font-bold text-on-surface">Compañeros</span>
 <span class="text-xs text-on-surface-variant">3 Estudiantes</span>
 </div>
 <div class="flex flex-col gap-1">
@@ -172,58 +172,31 @@
 </div>
 <div class="flex flex-col gap-1">
 <span class="material-symbols-outlined text-primary text-3xl" data-icon="distance">distance</span>
-<span class="text-sm font-bold text-on-surface">UbicaciÃ³n</span>
+<span class="text-sm font-bold text-on-surface">Ubicación</span>
 <span class="text-xs text-on-surface-variant">10 min de la UCM</span>
 </div>
 </div>
 <!-- Description -->
 <section>
 <h2 class="text-2xl font-bold mb-4 text-on-surface">Sobre este alojamiento</h2>
-<p class="text-lg text-on-surface-variant leading-relaxed mb-6">
-                        Disfruta de un entorno diseÃ±ado especÃ­ficamente para el Ã©xito acadÃ©mico y la vida social equilibrada. Este loft recientemente renovado combina techos altos de estilo industrial con mobiliario ergonÃ³mico de estudio. Ubicado en el corazÃ³n del distrito universitario, tendrÃ¡s acceso a bibliotecas, cafeterÃ­as y transporte pÃºblico a solo unos pasos de tu puerta.
+<p class="text-lg text-on-surface-variant leading-relaxed mb-6" th:text="${alojamiento.descripcion}">
+                        Disfruta de un entorno diseñado específicamente para el éxito académico y la vida social equilibrada. Este loft recientemente renovado combina techos altos de estilo industrial con mobiliario ergonómico de estudio. Ubicado en el corazón del distrito universitario, tendrás acceso a bibliotecas, cafeterías y transporte público a solo unos pasos de tu puerta.
                     </p>
-<div class="flex flex-wrap gap-4">
-<span class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest rounded-lg text-sm font-medium">
-<span class="material-symbols-outlined text-sm" data-icon="airwave">airwave</span> AC Central
-                        </span>
-<span class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest rounded-lg text-sm font-medium">
-<span class="material-symbols-outlined text-sm" data-icon="local_laundry_service">local_laundry_service</span> LavanderÃ­a
-                        </span>
-<span class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest rounded-lg text-sm font-medium">
-<span class="material-symbols-outlined text-sm" data-icon="kitchen">kitchen</span> Cocina Equipada
-                        </span>
+<div th:if="${alojamiento.servicios != null}" class="flex flex-wrap gap-4">
+<span th:each="servicio : ${alojamiento.servicios}" class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest rounded-lg text-sm font-medium">
+<span class="material-symbols-outlined text-sm">check_circle</span> <span th:text="${servicio}">AC Central</span>
+</span>
 </div>
 </section>
 <!-- Rules -->
 <section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15">
 <h2 class="text-2xl font-bold mb-6 text-on-surface">Reglas del hogar</h2>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-secondary" data-icon="schedule">schedule</span>
+<div th:if="${alojamiento.reglas != null}" class="grid md:grid-cols-2 gap-6">
+<div th:each="regla : ${alojamiento.reglas}" class="flex gap-4">
+<span class="material-symbols-outlined text-secondary">info</span>
 <div>
-<p class="font-bold text-on-surface">Horario de silencio</p>
-<p class="text-sm text-on-surface-variant">De 22:00 a 08:00 para asegurar el descanso de todos.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-secondary" data-icon="no_smoking">smoke_free</span>
-<div>
-<p class="font-bold text-on-surface">Prohibido fumar</p>
-<p class="text-sm text-on-surface-variant">Espacio 100% libre de humo en interiores y Ã¡reas comunes.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-secondary" data-icon="diversity_3">diversity_3</span>
-<div>
-<p class="font-bold text-on-surface">Visitas permitidas</p>
-<p class="text-sm text-on-surface-variant">Hasta las 21:00. Las pernoctaciones requieren aviso previo.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-secondary" data-icon="cleaning_services">cleaning_services</span>
-<div>
-<p class="font-bold text-on-surface">Limpieza compartida</p>
-<p class="text-sm text-on-surface-variant">Se asignan turnos semanales para las Ã¡reas comunes.</p>
+<p class="font-bold text-on-surface" th:text="${regla}">Regla</p>
+<p class="text-sm text-on-surface-variant">Cumplimiento obligatorio para la convivencia.</p>
 </div>
 </div>
 </div>
@@ -232,22 +205,25 @@
 <section>
 <div class="flex justify-between items-end mb-8">
 <div>
-<h2 class="text-2xl font-bold text-on-surface">ReseÃ±as de la comunidad</h2>
+<h2 class="text-2xl font-bold text-on-surface">Reseñas de la comunidad</h2>
 <p class="text-on-surface-variant">Lo que otros estudiantes opinan</p>
 </div>
-<button class="text-primary font-bold hover:underline">Ver todas</button>
+<div class="flex gap-4">
+<a th:href="@{/ver-todas-las-resenas}" class="bg-surface-container-high text-on-surface px-4 py-2 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-colors">Escribir reseña</a>
+<a th:href="@{/resenas-academicas}" class="text-primary font-bold hover:underline self-center">Ver todas</a>
+</div>
 </div>
 <div class="grid md:grid-cols-2 gap-6">
 <div class="p-6 bg-surface-container-low rounded-xl">
 <div class="flex items-center gap-3 mb-4">
 <img class="w-10 h-10 rounded-full" data-alt="portrait of a smiling young woman with curly hair, natural outdoor lighting, student profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB42Q3eiiNaiqjgLRO1Puc7QkQTc7w8X6Wurc_obZBO_sBGxpmhu7__9MrmqMh6Pnh-LsMiSZtrPyS1jfUH9ahRnULVVGA5CkudTSBeIDMUPwMrkneaC7agEK4AJ88kGv7-hZcvgJy2ZSZiaJRPIxqFjAmotQKTKiNNFXqLLxtnue3SE_vMmvZs2TGLvVD9L9IKrqpjknsM56hpJJ69LfAjK-PwFwgoohHfbiAqz99wP2bO9cmjHyccYv4XwMe2m2TIaMU6UjfLTA0"/>
 <div>
-<p class="font-bold text-on-surface">Elena GarcÃ­a</p>
-<p class="text-xs text-on-surface-variant">Estudiante de Medicina â€¢ Hace 2 meses</p>
+<p class="font-bold text-on-surface">Elena García</p>
+<p class="text-xs text-on-surface-variant">Estudiante de Medicina • Hace 2 meses</p>
 </div>
 </div>
 <p class="text-sm text-on-surface-variant italic leading-relaxed">
-                                "El mejor lugar donde me he quedado. El ambiente de estudio es increÃ­ble y el anfitriÃ³n siempre estÃ¡ atento a cualquier detalle."
+                                "El mejor lugar donde me he quedado. El ambiente de estudio es increíble y el anfitrión siempre está atento a cualquier detalle."
                             </p>
 </div>
 <div class="p-6 bg-surface-container-low rounded-xl">
@@ -255,11 +231,11 @@
 <img class="w-10 h-10 rounded-full" data-alt="portrait of a focused young man with glasses in a library setting, academic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBly-1QYSbbTu04cMM_doVFmJa-hFP03_hK0LcYJyF2b29irt6d7yFdY14ZrA01mDzhd7bHzmNK99sBne3d_bMYCoO5e68Nplr3WNp_OehdqfXz2qszPCyP1SiuOIdS76V_yy0xcUV_RSihLLjxn6r3UvrxQPRSF_ciQPps8Xh3n5Lh86WpbumUm5OizFgXuEbggmniBMIZ2GVSn5qcb_shtB0XJdFahr8bEswAMTetOb8fSVONJhv8tn4gkH-HAaxS-kdNSGZ28JM"/>
 <div>
 <p class="font-bold text-on-surface">Marcos Ruiz</p>
-<p class="text-xs text-on-surface-variant">Estudiante de IngenierÃ­a â€¢ Hace 1 semana</p>
+<p class="text-xs text-on-surface-variant">Estudiante de Ingeniería • Hace 1 semana</p>
 </div>
 </div>
 <p class="text-sm text-on-surface-variant italic leading-relaxed">
-                                "La conexiÃ³n a internet es sÃºper estable y la ubicaciÃ³n es inmejorable para ir caminando a la facultad."
+                                "La conexión a internet es súper estable y la ubicación es inmejorable para ir caminando a la facultad."
                             </p>
 </div>
 </div>
@@ -270,23 +246,26 @@
 <!-- Booking Card -->
 <div class="sticky top-28 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15 shadow-sm">
 <div class="flex justify-between items-baseline mb-6">
-<p class="text-3xl font-extrabold text-on-surface">650â‚¬<span class="text-lg font-normal text-on-surface-variant">/mes</span></p>
+<p class="text-3xl font-extrabold text-on-surface">S/ <span th:text="${alojamiento.precioMensual}">650</span><span class="text-lg font-normal text-on-surface-variant">/mes</span></p>
 <p class="text-sm text-secondary font-bold">Gastos incluidos</p>
 </div>
 <div class="space-y-4 mb-8">
 <div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
-<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estancia mÃ­nima</label>
-<p class="text-sm font-semibold">6 Meses (Semestre AcadÃ©mico)</p>
+<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estancia mínima</label>
+<p class="text-sm font-semibold">6 Meses (Semestre Académico)</p>
 </div>
 <div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
 <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Disponibilidad</label>
 <p class="text-sm font-semibold text-secondary">Inmediata</p>
 </div>
 </div>
-<button class="w-full bg-primary text-on-primary py-4 rounded-full font-bold text-lg shadow-lg hover:bg-primary-dim transition-all mb-4">
-                        Solicitar Reserva
-                    </button>
-<p class="text-center text-xs text-on-surface-variant">No se te cobrarÃ¡ nada todavÃ­a</p>
+<form th:action="@{/confirmar-reserva-escolar}" method="get">
+    <input type="hidden" name="alojamientoId" th:value="${alojamiento.id}" />
+    <button type="submit" class="w-full bg-primary text-on-primary py-4 rounded-full font-bold text-lg shadow-lg hover:bg-primary-dim transition-all mb-4">
+                            Solicitar Reserva
+                        </button>
+</form>
+<p class="text-center text-xs text-on-surface-variant">No se te cobrará nada todavía</p>
 <div class="mt-8 pt-8 border-t border-outline-variant/10">
 <div class="flex items-center justify-between mb-4">
 <div class="flex items-center gap-2">
@@ -296,13 +275,13 @@
 <span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="info">info</span>
 </div>
 <p class="text-[11px] text-on-surface-variant leading-tight">
-                            Tu reserva estÃ¡ protegida. Si el alojamiento no coincide con la descripciÃ³n, te devolvemos el dinero.
+                            Tu reserva está protegida. Si el alojamiento no coincide con la descripción, te devolvemos el dinero.
                         </p>
 </div>
 </div>
 <!-- Host Profile -->
 <div class="bg-surface-container-low p-6 rounded-xl">
-<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Tu AnfitriÃ³n</h3>
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Tu Anfitrión</h3>
 <div class="flex items-center gap-4 mb-4">
 <div class="relative">
 <img class="w-16 h-16 rounded-full object-cover" data-alt="middle-aged woman with a warm friendly smile, professional property manager look, natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
@@ -326,7 +305,7 @@
 </div>
 </div>
 <button class="w-full border-2 border-primary text-primary py-2 rounded-full font-bold hover:bg-primary/5 transition-colors">
-                        Contactar AnfitriÃ³n
+                        Contactar Anfitrión
                     </button>
 </div>
 <!-- Compatibility Gauge (Specialty Component) -->
@@ -343,41 +322,25 @@
 </div>
 </div>
 <p class="text-center text-xs font-bold text-on-secondary-container leading-tight">
-                            Â¡Gran coincidencia con tus hÃ¡bitos de estudio!
+                            Â¡Gran coincidencia con tus hábitos de estudio!
                         </p>
 </div>
 </div>
 </div>
 </div>
 </main>
-<!-- Map Section -->
-<section class="bg-surface-container px-4 md:px-8 py-20">
-<div class="max-w-7xl mx-auto">
-<h2 class="text-3xl font-bold mb-8 text-on-surface">UbicaciÃ³n y Entorno</h2>
-<div class="rounded-xl overflow-hidden h-[400px] shadow-sm relative">
-<img class="w-full h-full object-cover" data-alt="stylized map view of Madrid city center with soft colors and minimalist architectural markers" data-location="Madrid" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByEz1CivApuNc0igamInp-EMolsajOoT1M7WjUpFaICg8-b3Hc3rm6Vma1lYURTfjvs1lMLK6S8rl_DM2dr0YnmsVkLcapTmg_Ui67Yvq5cGa-poc92J5Ap8Dzy50anhmTC79pHl3zgdZSIsTy2VQ6qyofcE2-RlrWk8yPz15_y9SgkCBO5z7ED4vh7RlES4QvFTmg1F2-DBT5NaXSwN3FPphqwOKWNRwQYhTBYofmQomtMPSQJ_-vGoYPpXJ2ao-cuddy6xZBE9E"/>
-<div class="absolute top-4 left-4 bg-white p-4 rounded-xl shadow-lg max-w-xs">
-<p class="font-bold text-on-surface mb-1">Cerca de ti:</p>
-<ul class="text-xs text-on-surface-variant space-y-2">
-<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]" data-icon="school">school</span> Universidad Complutense (10 min)</li>
-<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]" data-icon="train">train</span> Metro Canal (3 min)</li>
-<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]" data-icon="shopping_basket">shopping_basket</span> Supermercado 24h (2 min)</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
+
 <!-- Footer -->
 <footer class="bg-surface-container-highest py-12 px-8">
 <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
 <div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
 <div class="flex gap-8 text-sm font-medium text-on-surface-variant">
-<a class="hover:text-primary transition-colors" href="#">TÃ©rminos</a>
+<a class="hover:text-primary transition-colors" href="#">Términos</a>
 <a class="hover:text-primary transition-colors" href="#">Privacidad</a>
 <a class="hover:text-primary transition-colors" href="#">Ayuda</a>
 <a class="hover:text-primary transition-colors" href="#">Blog</a>
 </div>
-<p class="text-xs text-on-surface-variant opacity-70">Â© 2024 Scholar Stay. Todos los derechos reservados.</p>
+<p class="text-xs text-on-surface-variant opacity-70">2026 Scholar Stay. Todos los derechos reservados.</p>
 </div>
 </footer>
 </body></html>

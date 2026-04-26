@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Registro - Scholar Stay</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -98,7 +98,7 @@
 <h1 class="font-headline text-5xl font-extrabold tracking-tighter text-primary leading-tight">
                     Scholar Stay
                 </h1>
-<p class="font-headline text-2xl text-on-surface-variant mt-4 font-bold">Ãšnete al santuario del conocimiento compartido.</p>
+<p class="font-headline text-2xl text-on-surface-variant mt-4 font-bold">Únete al santuario del conocimiento compartido.</p>
 </header>
 <div class="space-y-8">
 <!-- Benefit 1 -->
@@ -108,7 +108,7 @@
 </div>
 <div>
 <h3 class="font-headline font-bold text-lg text-on-surface">Comunidad Verificada</h3>
-<p class="text-on-surface-variant body-lg leading-relaxed mt-1">ConÃ©ctate exclusivamente con estudiantes y anfitriones validados mediante correos institucionales.</p>
+<p class="text-on-surface-variant body-lg leading-relaxed mt-1">Conéctate exclusivamente con estudiantes y anfitriones validados mediante correos institucionales.</p>
 </div>
 </div>
 <!-- Benefit 2 -->
@@ -118,7 +118,7 @@
 </div>
 <div>
 <h3 class="font-headline font-bold text-lg text-on-surface">Compatibilidad Curada</h3>
-<p class="text-on-surface-variant body-lg leading-relaxed mt-1">Nuestro algoritmo de convivencia encuentra compaÃ±eros con hÃ¡bitos de estudio y estilos de vida afines.</p>
+<p class="text-on-surface-variant body-lg leading-relaxed mt-1">Nuestro algoritmo de convivencia encuentra compañeros con hábitos de estudio y estilos de vida afines.</p>
 </div>
 </div>
 <!-- Image with Asymmetry -->
@@ -126,8 +126,8 @@
 <div class="absolute -top-4 -left-4 w-24 h-24 bg-tertiary-container rounded-full opacity-50 blur-3xl"></div>
 <img alt="Estudiantes compartiendo un espacio de estudio moderno" class="rounded-xl w-full h-64 object-cover shadow-sm ring-1 ring-outline-variant/15" data-alt="un grupo diverso de estudiantes universitarios colaborando en un espacio de estudio luminoso y moderno con muebles de madera clara" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlZYK6Gk-MgvikgmweqJqC7uPkDNTXGNJd9cc33NJZMq5C-NuIrjp0wyqyE0qIIWE4b5tg90tINpcHpsLh0tGi5ykFRdMcNGkifvnkBdoJmB95kno7zyc6qddTtgFNdXH2u0alVNJvlrcMASeIXYV4kmn9FKt_bk5ym8nsisSA1g6auOFs-1SUXVzRayxDs1LA7b7CqWg5TSoG94_MxxEYVHWsAsKJ_GyXfK2INn8tQUurDZ0XjENBc5r8eb11Ihs040WFIT3bbhE"/>
 <div class="absolute -bottom-6 -right-6 p-4 bg-secondary-container rounded-lg shadow-md max-w-[200px]">
-<p class="text-sm font-semibold text-on-secondary-container leading-tight">"EncontrÃ© el lugar perfecto para mi Ãºltimo aÃ±o de medicina."</p>
-<p class="text-[10px] mt-2 opacity-70">â€” SofÃ­a, Residente</p>
+<p class="text-sm font-semibold text-on-secondary-container leading-tight">"Encontré el lugar perfecto para mi último año de medicina."</p>
+<p class="text-[10px] mt-2 opacity-70">â€” Sofía, Residente</p>
 </div>
 </div>
 </div>
@@ -140,12 +140,18 @@
 </div>
 <div class="mb-8">
 <h2 class="font-headline text-2xl font-bold text-on-surface">Crea tu cuenta</h2>
-<p class="text-on-surface-variant mt-2">Comienza tu viaje acadÃ©mico hoy mismo.</p>
+<p class="text-on-surface-variant mt-2">Comienza tu viaje académico hoy mismo.</p>
 </div>
-<form class="space-y-6">
+
+<!-- Error message -->
+<div th:if="${error}" class="p-4 mb-4 text-sm text-on-error bg-error rounded-lg" role="alert">
+    <span class="font-medium" th:text="${error}"></span>
+</div>
+
+<form class="space-y-6" th:action="@{/register}" method="post">
 <!-- Role Selector -->
 <div class="space-y-3">
-<label class="font-label text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Â¿CuÃ¡l es tu rol?</label>
+<label class="font-label text-sm font-semibold text-on-surface-variant uppercase tracking-wider">¿Cuál es tu rol?</label>
 <div class="grid grid-cols-2 gap-4">
 <label class="relative cursor-pointer group">
 <input checked="" class="peer sr-only" name="role" type="radio" value="student"/>
@@ -158,7 +164,7 @@
 <input class="peer sr-only" name="role" type="radio" value="host"/>
 <div class="p-4 flex flex-col items-center gap-2 rounded-xl bg-surface-container-highest ring-2 ring-transparent peer-checked:ring-primary peer-checked:bg-surface-container-lowest transition-all hover:bg-surface-container-high">
 <span class="material-symbols-outlined text-primary">home_work</span>
-<span class="text-sm font-bold">AnfitriÃ³n</span>
+<span class="text-sm font-bold">Anfitrión</span>
 </div>
 </label>
 </div>
@@ -168,19 +174,19 @@
 <div class="space-y-2">
 <label class="font-label text-sm font-semibold text-on-surface-variant" for="name">Nombre Completo</label>
 <div class="relative group">
-<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="name" placeholder="Ej: Carlos MÃ©ndez" type="text"/>
+<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="name" name="nombre" placeholder="Ej: Carlos Méndez" type="text" required/>
 </div>
 </div>
 <div class="space-y-2">
 <label class="font-label text-sm font-semibold text-on-surface-variant" for="email">Correo Universitario</label>
 <div class="relative group">
-<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="email" placeholder="carlos@universidad.edu" type="email"/>
+<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="email" name="email" placeholder="carlos@universidad.edu" type="email" required/>
 </div>
 </div>
 <div class="space-y-2">
-<label class="font-label text-sm font-semibold text-on-surface-variant" for="password">ContraseÃ±a</label>
+<label class="font-label text-sm font-semibold text-on-surface-variant" for="password">Contraseña</label>
 <div class="relative group">
-<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" type="password"/>
+<input class="w-full px-5 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline text-on-surface" id="password" name="password" placeholder="••••••••" type="password" required/>
 </div>
 </div>
 </div>
@@ -190,8 +196,8 @@
                     </button>
 <!-- Footer Link -->
 <p class="text-center text-on-surface-variant text-sm pt-4">
-                        Â¿Ya tienes una cuenta? 
-                        <a class="text-primary font-bold hover:underline" href="#">Inicia sesiÃ³n</a>
+                        ¿Ya tienes una cuenta? 
+                        <a class="text-primary font-bold hover:underline" th:href="@{/login}">Inicia sesión</a>
 </p>
 </form>
 <!-- Compatibility Badge (Contextual Element) -->
@@ -204,7 +210,7 @@
 <span class="material-symbols-outlined text-sm text-on-tertiary-container" data-weight="fill">favorite</span>
 </div>
 </div>
-<span class="text-xs font-medium text-on-surface-variant italic">Potenciado por nuestro Match-Algoritmo AcadÃ©mico</span>
+<span class="text-xs font-medium text-on-surface-variant italic">Potenciado por nuestro Match-Algoritmo Académico</span>
 </div>
 </div>
 </div>

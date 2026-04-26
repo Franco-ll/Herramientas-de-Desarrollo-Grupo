@@ -12,7 +12,7 @@ public class Usuario {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nombre;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -26,10 +26,20 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Resena> resenas;
 
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private PerfilAcademico perfilAcademico;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Notificacion> notificaciones;
+
     public Usuario() {}
 
-    public Usuario(String name, String email, String password) {
-        this.name = name;
+    public Usuario(String nombre, String email, String password) {
+        this.nombre = nombre;
         this.email = email;
         this.password = password;
     }
@@ -37,8 +47,8 @@ public class Usuario {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -51,4 +61,13 @@ public class Usuario {
 
     public List<Resena> getResenas() { return resenas; }
     public void setResenas(List<Resena> resenas) { this.resenas = resenas; }
+
+    public Rol getRol() { return rol; }
+    public void setRol(Rol rol) { this.rol = rol; }
+
+    public PerfilAcademico getPerfilAcademico() { return perfilAcademico; }
+    public void setPerfilAcademico(PerfilAcademico perfilAcademico) { this.perfilAcademico = perfilAcademico; }
+
+    public List<Notificacion> getNotificaciones() { return notificaciones; }
+    public void setNotificaciones(List<Notificacion> notificaciones) { this.notificaciones = notificaciones; }
 }

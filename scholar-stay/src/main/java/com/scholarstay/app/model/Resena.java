@@ -20,12 +20,12 @@ public class Resena {
     private Alojamiento alojamiento;
 
     @Column(nullable = false)
-    private Integer rating; // 1 to 5
+    private Integer calificacion; // 1 a 5
 
     @Column(length = 1000)
-    private String comment;
+    private String comentario;
 
-    private LocalDate datePosted;
+    private LocalDate fechaPublicacion;
 
     public Resena() {}
 
@@ -38,12 +38,12 @@ public class Resena {
     public Alojamiento getAlojamiento() { return alojamiento; }
     public void setAlojamiento(Alojamiento alojamiento) { this.alojamiento = alojamiento; }
 
-    public Integer getRating() { return rating; }
-    public void setRating(Integer rating) { this.rating = rating; }
+    public Integer getCalificacion() { return calificacion; }
+    public void setCalificacion(Integer calificacion) { this.calificacion = calificacion; }
 
-    public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    public String getComentario() { return comentario; }
+    public void setComentario(String comentario) { this.comentario = comentario; }
 
-    public LocalDate getDatePosted() { return datePosted; }
-    public void setDatePosted(LocalDate datePosted) { this.datePosted = datePosted; }
+    public LocalDate getFechaPublicacion() { return fechaPublicacion; }
+    public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
 }

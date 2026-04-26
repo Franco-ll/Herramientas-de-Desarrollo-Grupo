@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accommodations")
+@RequestMapping("/api/alojamientos")
 public class AlojamientoRestController {
 
     private final AlojamientoService alojamientoService;
@@ -18,13 +18,22 @@ public class AlojamientoRestController {
     }
 
     @GetMapping
-    public List<Alojamiento> getAll() {
-        return alojamientoService.getAllAlojamientos();
+    public ResponseEntity<List<Alojamiento>> listar() {
+        return ResponseEntity.ok(alojamientoService.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Alojamiento> obtener(@PathVariable Long id) {
+        Alojamiento alojamiento = alojamientoService.obtenerPorId(id);
+        if (alojamiento != null) {
+            return ResponseEntity.ok(alojamiento);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Alojamiento> create(@RequestBody Alojamiento alojamiento) {
-        Alojamiento saved = alojamientoService.save(alojamiento);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<Alojamiento> crear(@RequestBody Alojamiento alojamiento) {
+        Alojamiento guardado = alojamientoService.save(alojamiento);
+        return ResponseEntity.ok(guardado);
     }
 }

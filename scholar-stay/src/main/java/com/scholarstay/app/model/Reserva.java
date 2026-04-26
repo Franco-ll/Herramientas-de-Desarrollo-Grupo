@@ -20,13 +20,13 @@ public class Reserva {
     private Alojamiento alojamiento;
 
     @Column(nullable = false)
-    private LocalDate startDate;
+    private LocalDate fechaInicio;
 
     @Column(nullable = false)
-    private LocalDate endDate;
+    private LocalDate fechaFin;
 
     @Column(nullable = false)
-    private String status; // PENDING, CONFIRMED, CANCELLED
+    private String estado; // PENDIENTE, CONFIRMADA, CANCELADA
 
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL)
     private Pago pago;
@@ -42,14 +42,14 @@ public class Reserva {
     public Alojamiento getAlojamiento() { return alojamiento; }
     public void setAlojamiento(Alojamiento alojamiento) { this.alojamiento = alojamiento; }
 
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public LocalDate getFechaInicio() { return fechaInicio; }
+    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
 
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public LocalDate getFechaFin() { return fechaFin; }
+    public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
     public Pago getPago() { return pago; }
     public void setPago(Pago pago) { this.pago = pago; }

@@ -15,9 +15,15 @@ public class AuthService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public boolean authenticate(String email, String password) {
+    public Usuario authenticate(String email, String password) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        // Simple password check without encryption for now
-        return usuario.isPresent() && usuario.get().getPassword().equals(password);
+        if (usuario.isPresent() && usuario.get().getPassword().equals(password)) {
+            return usuario.get();
+        }
+        return null;
+    }
+    public Usuario register(Usuario usuario) {
+        // En una aplicación real, aquí se cifraría la contraseña
+        return usuarioRepository.save(usuario);
     }
 }

@@ -16,12 +16,12 @@ public class Pago {
     private Reserva reserva;
 
     @Column(nullable = false)
-    private Double amount;
+    private Double monto;
 
     @Column(nullable = false)
-    private String status; // PENDING, COMPLETED, FAILED
+    private String estado; // PENDIENTE, COMPLETADO, FALLIDO
 
-    private LocalDateTime paymentDate;
+    private LocalDateTime fechaPago;
 
     public Pago() {}
 
@@ -31,12 +31,12 @@ public class Pago {
     public Reserva getReserva() { return reserva; }
     public void setReserva(Reserva reserva) { this.reserva = reserva; }
 
-    public Double getAmount() { return amount; }
-    public void setAmount(Double amount) { this.amount = amount; }
+    public Double getMonto() { return monto; }
+    public void setMonto(Double monto) { this.monto = monto; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public LocalDateTime getPaymentDate() { return paymentDate; }
-    public void setPaymentDate(LocalDateTime paymentDate) { this.paymentDate = paymentDate; }
+    public LocalDateTime getFechaPago() { return fechaPago; }
+    public void setFechaPago(LocalDateTime fechaPago) { this.fechaPago = fechaPago; }
 }

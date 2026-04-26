@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -108,7 +108,7 @@
 <!-- Search Mockup -->
 <div class="hidden md:flex items-center bg-surface-container px-4 py-2 rounded-full gap-3">
 <span class="material-symbols-outlined text-outline">search</span>
-<span class="text-on-surface-variant text-sm">Buscar destinos acadÃ©micos...</span>
+<span class="text-on-surface-variant text-sm">Buscar destinos académicos...</span>
 </div>
 </div>
 <nav class="hidden md:flex items-center gap-8">
@@ -131,63 +131,96 @@
 <div class="lg:col-span-7">
 <div class="mb-12">
 <h1 class="font-headline text-5xl font-extrabold text-primary tracking-tight mb-4 leading-tight">Completar pago seguro</h1>
-<p class="text-on-surface-variant text-lg max-w-xl">Tu viaje acadÃ©mico comienza aquÃ­. Procesa tu reserva en un entorno totalmente encriptado.</p>
+<p class="text-on-surface-variant text-lg max-w-xl">Tu viaje académico comienza aquí. Procesa tu reserva en un entorno totalmente encriptado.</p>
 </div>
 <!-- Payment Method Toggle (Visual Only) -->
 <div class="flex gap-4 mb-10">
-<button class="bg-primary text-on-primary px-8 py-3 rounded-full flex items-center gap-2 editorial-shadow transition-transform hover:scale-[0.98]">
+<button id="method-card" class="bg-primary text-on-primary px-8 py-3 rounded-full flex items-center gap-2 editorial-shadow transition-transform hover:scale-[0.98]" onclick="setPaymentMethod('card')">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">credit_card</span>
 <span class="font-medium">Tarjeta</span>
 </button>
-<button class="bg-surface-container-high text-on-surface px-8 py-3 rounded-full flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<button id="method-transfer" class="bg-surface-container-high text-on-surface px-8 py-3 rounded-full flex items-center gap-2 hover:bg-surface-container-highest transition-colors" onclick="setPaymentMethod('transfer')">
 <span class="material-symbols-outlined">account_balance</span>
 <span class="font-medium">Transferencia</span>
 </button>
 </div>
+<script>
+    function setPaymentMethod(method) {
+        const cardBtn = document.getElementById('method-card');
+        const transBtn = document.getElementById('method-transfer');
+        const cardFields = document.getElementById('card-fields');
+        const transferFields = document.getElementById('transfer-fields');
+        
+        if (method === 'card') {
+            cardBtn.classList.add('bg-primary', 'text-on-primary', 'editorial-shadow');
+            cardBtn.classList.remove('bg-surface-container-high', 'text-on-surface');
+            transBtn.classList.remove('bg-primary', 'text-on-primary', 'editorial-shadow');
+            transBtn.classList.add('bg-surface-container-high', 'text-on-surface');
+            cardFields.style.display = 'grid';
+            transferFields.style.display = 'none';
+        } else {
+            transBtn.classList.add('bg-primary', 'text-on-primary', 'editorial-shadow');
+            transBtn.classList.remove('bg-surface-container-high', 'text-on-surface');
+            cardBtn.classList.remove('bg-primary', 'text-on-primary', 'editorial-shadow');
+            cardBtn.classList.add('bg-surface-container-high', 'text-on-surface');
+            cardFields.style.display = 'none';
+            transferFields.style.display = 'block';
+        }
+    }
+</script>
 <!-- Form Section -->
 <section class="space-y-8">
-<div class="grid grid-cols-1 gap-6">
+<div id="card-fields" class="grid grid-cols-1 gap-6">
 <div class="space-y-2">
 <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Nombre del titular</label>
-<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="Como aparece en la tarjeta" type="text"/>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="Como aparece en la tarjeta" type="text" required/>
 </div>
 <div class="space-y-2 relative">
-<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">NÃºmero de tarjeta</label>
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Número de tarjeta</label>
 <div class="relative">
-<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="0000 0000 0000 0000" type="text"/>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="0000 0000 0000 0000" type="text" required/>
 <div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
 <div class="w-8 h-5 bg-white/20 flex items-center justify-center">
-<img alt="Visa Logo" class="h-3 opacity-80" data-alt="the official visa logo in blue on a clean transparent background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTxOdg2-g3ZBB2cjwVAXw52_64b5CBJbuiVL5wg1vXTj6CCZlnQBOkCZZXPjhOxCJ2ZFCXletsu_WwCj6DpzVg-BFWZ0CcWV1x5JYib-y0Nhq6PVa6E6cYbwKUU3NqRvvrviQji-7jPyjToGR3xw0-CewPBwRc4YHS07tad-amFa0YwcVqInuJ3yovIU9aBBFS9Mn9UQdheLPuWsTjJ4x8TYLimmSqMA6kk168Fp1fWvO4AFj6i33E1cEw7-tN93oSXY91ywK6wE"/>
-</div>
-<div class="w-8 h-5 bg-white/20 flex items-center justify-center">
-<img alt="Mastercard Logo" class="h-5 opacity-80" data-alt="the official mastercard logo showing two interlocking circles in red and orange" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApPNCRj9obbyotsm-xfimE9X4oO2J1T5cwkZqZhJxZPzy_NtDtrTHGIIVpOS4_iWGrH0E0vtq55Oeb6SXuJrnSKdsPd8yz70N-BB7RHlDXpUH533wa-OQ4kOKAqrENt01RLb8npxAuoihKjwz3QCASmEXLCykf087FaQci7zGKup8C_O9i9EkGkXZ-NzxdzZ6v8Ld19F2F0c8TDNDh_bP1uCjAtBPpDiwGVKSeR0SD49dSIzs4XvG7TNqzvaJOZ3i3MWJobknPVeE"/>
+<img alt="Visa Logo" class="h-3 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTxOdg2-g3ZBB2cjwVAXw52_64b5CBJbuiVL5wg1vXTj6CCZlnQBOkCZZXPjhOxCJ2ZFCXletsu_WwCj6DpzVg-BFWZ0CcWV1x5JYib-y0Nhq6PVa6E6cYbwKUU3NqRvvrviQji-7jPyjToGR3xw0-CewPBwRc4YHS07tad-amFa0YwcVqInuJ3yovIU9aBBFS9Mn9UQdheLPuWsTjJ4x8TYLimmSqMA6kk168Fp1fWvO4AFj6i33E1cEw7-tN93oSXY91ywK6wE"/>
 </div>
 </div>
 </div>
 </div>
 <div class="grid grid-cols-2 gap-6">
 <div class="space-y-2">
-<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Fecha expiraciÃ³n</label>
-<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="MM / AA" type="text"/>
+<label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Fecha expiración</label>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="MM / AA" type="text" required/>
 </div>
 <div class="space-y-2">
 <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">CVV</label>
 <div class="relative">
-<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="***" type="password"/>
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="***" type="password" required/>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-sm cursor-help">help</span>
 </div>
 </div>
 </div>
 </div>
+<div id="transfer-fields" class="bg-surface-container-low p-6 rounded-xl space-y-4" style="display: none;">
+    <p class="font-bold text-on-surface">Datos de transferencia (BCP/BBVA)</p>
+    <div class="space-y-2 text-sm text-on-surface-variant">
+        <p>Cuenta Corriente Soles: <span class="font-mono text-on-surface">193-4567890-0-12</span></p>
+        <p>CCI: <span class="font-mono text-on-surface">002-193-004567890012-14</span></p>
+        <p>Beneficiario: <span class="font-mono text-on-surface">Scholar Stay S.A.C.</span></p>
+    </div>
+    <div class="pt-4">
+        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2">Adjuntar comprobante</label>
+        <input type="file" class="text-sm" />
+    </div>
+</div>
 <div class="pt-6">
-<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-5 rounded-full font-headline text-lg font-bold editorial-shadow hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-3">
+<button onclick="window.location.href='/reserva-confirmada'" class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-5 rounded-full font-headline text-lg font-bold editorial-shadow hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-3">
                             Pagar ahora
                             <span class="material-symbols-outlined">arrow_forward</span>
 </button>
 </div>
 <div class="flex items-center justify-center gap-3 py-4 bg-secondary-container/30 rounded-xl">
 <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
-<span class="text-secondary font-medium text-sm">TransacciÃ³n Encriptada: Tu seguridad es nuestra prioridad.</span>
+<span class="text-secondary font-medium text-sm">Transacción Encriptada: Tu seguridad es nuestra prioridad.</span>
 </div>
 </section>
 </div>
@@ -228,15 +261,15 @@
 <div class="space-y-3 pt-4 border-t border-outline-variant/10">
 <div class="flex justify-between text-on-surface-variant">
 <span>Alquiler Mensual</span>
-<span>580.00â‚¬</span>
+<span>S/ 580.00</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
-<span>Gastos de gestiÃ³n</span>
-<span>70.00â‚¬</span>
+<span>Gastos de gestión</span>
+<span>S/ 70.00</span>
 </div>
 <div class="flex justify-between text-primary font-headline text-2xl font-extrabold pt-4">
 <span>Total</span>
-<span>650.00â‚¬</span>
+<span>S/ 650.00</span>
 </div>
 </div>
 </div>
@@ -252,11 +285,11 @@
 </div>
 <div>
 <h4 class="font-bold text-secondary">Compatibilidad Ideal</h4>
-<p class="text-sm text-secondary-dim/80">Tus futuros compaÃ±eros comparten tus hÃ¡bitos de estudio.</p>
+<p class="text-sm text-secondary-dim/80">Tus futuros compañeros comparten tus hábitos de estudio.</p>
 </div>
 </div>
 <div class="text-center px-4">
-<p class="text-xs text-outline leading-relaxed">Al pulsar "Pagar ahora", aceptas nuestros <a class="underline hover:text-primary" href="#">TÃ©rminos de Servicio</a> y la polÃ­tica de reserva para estudiantes internacionales.</p>
+<p class="text-xs text-outline leading-relaxed">Al pulsar "Pagar ahora", aceptas nuestros <a class="underline hover:text-primary" href="#">Términos de Servicio</a> y la política de reserva para estudiantes internacionales.</p>
 </div>
 </aside>
 </div>
@@ -264,6 +297,6 @@
 <!-- Support FAB (Contextual for Payment) -->
 <button class="fixed bottom-8 right-8 bg-white text-on-surface p-4 rounded-full editorial-shadow flex items-center gap-3 hover:bg-surface-container-high transition-all">
 <span class="material-symbols-outlined text-primary">support_agent</span>
-<span class="text-sm font-semibold pr-2">Â¿Necesitas ayuda?</span>
+<span class="text-sm font-semibold pr-2">¿Necesitas ayuda?</span>
 </button>
 </body></html>

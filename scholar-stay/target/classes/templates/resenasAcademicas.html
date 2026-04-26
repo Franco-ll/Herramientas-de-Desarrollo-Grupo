@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Escribir ReseÃ±a | Scholar Stay</title>
+<title>Escribir Reseña | Scholar Stay</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -97,12 +97,12 @@
 <span class="text-xl font-extrabold text-sky-800 dark:text-sky-200 font-manrope tracking-tight">Scholar Stay</span>
 </div>
 <nav class="hidden md:flex items-center gap-8">
-<a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" href="#">Discover</a>
+<a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" th:href="@{/explorar-residencias}">Alojamiento</a>
 <a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" href="#">Matches</a>
 <a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" href="#">Messages</a>
 </nav>
 <div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-sky-900 dark:text-sky-100 scale-95 active:opacity-80 transition-all p-2 rounded-full hover:bg-slate-100/80">account_circle</button>
+<a th:href="@{/editar-perfil-escolar}" class="material-symbols-outlined text-sky-900 dark:text-sky-100 scale-95 active:opacity-80 transition-all p-2 rounded-full hover:bg-slate-100/80">account_circle</a>
 </div>
 </header>
 <main class="min-h-[calc(100vh-64px)] flex flex-col items-center px-4 py-8 md:py-16">
@@ -114,12 +114,12 @@
 <div class="absolute bottom-6 left-6 right-6">
 <span class="inline-block px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold mb-2">Residencia Destacada</span>
 <h2 class="text-white font-headline text-2xl font-bold leading-tight">Casa del Intelecto</h2>
-<p class="text-white/90 text-sm">Calle AcadÃ©mica 42, Campus Norte</p>
+<p class="text-white/90 text-sm">Calle Académica 42, Campus Norte</p>
 </div>
 </div>
 <div class="bg-surface-container-low rounded-xxl p-6 border-l-4 border-primary">
 <p class="text-on-surface-variant italic leading-relaxed">
-                        "Tu opiniÃ³n ayuda a otros estudiantes a encontrar su hogar ideal. Comparte los detalles que te hubiera gustado saber antes de mudarte."
+                        "Tu opinión ayuda a otros estudiantes a encontrar su hogar ideal. Comparte los detalles que te hubiera gustado saber antes de mudarte."
                     </p>
 </div>
 </div>
@@ -130,7 +130,7 @@
 </header>
 <form class="space-y-8">
 <section>
-<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">CalificaciÃ³n General</label>
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Calificación General</label>
 <div class="flex gap-2">
 <button class="group transition-transform active:scale-90" type="button">
 <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
@@ -150,15 +150,15 @@
 </div>
 </section>
 <section>
-<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4" for="review">Tu ReseÃ±a Detallada</label>
-<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline/60" id="review" placeholder="Â¿QuÃ© tal fue la conexiÃ³n Wi-Fi? Â¿CÃ³mo era el ambiente de estudio?..." rows="6"></textarea>
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4" for="review">Tu Reseña Detallada</label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline/60" id="review" placeholder="¿Qué tal fue la conexión Wi-Fi? ¿Cómo era el ambiente de estudio?..." rows="6"></textarea>
 </section>
 <section>
-<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Adjuntar FotografÃ­as (Opcional)</label>
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Adjuntar Fotografías (Opcional)</label>
 <div class="grid grid-cols-3 gap-4">
 <button class="aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center gap-2 hover:bg-surface-container-low transition-colors text-outline" type="button">
 <span class="material-symbols-outlined">add_a_photo</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">AÃ±adir</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Añadir</span>
 </button>
 <div class="aspect-square rounded-xl bg-surface-container-high overflow-hidden group relative">
 <img alt="Common area" class="w-full h-full object-cover" data-alt="Shared student lounge with comfortable sofas and bookshelves in soft evening lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0tk61-QiHNVbelVX__AWRMByXy2PGjhO_KWzRlQLTc_zPAzDDNMEC0C9ZVkapX9P9Qi58gqrvUtpIoJBPXGMfkSWgFioqjZ-5UAB1a_jrwOB2NHgb6SZUH7aOGYgMCN9qvoaniyIjjATcZbuh7u8_r5i4bX-BVLbOy7C-0nOBD5BCtF4M9phni8UM47ca69s1yKcMJULiH0ITvm-D5aP1iQz4T2SPFGnOcd1sl5nsWFDz3Vn_hB5fMSZSd8YP4OiiWf7SbpY83Oo"/>
@@ -170,7 +170,7 @@
 </section>
 <div class="flex flex-col sm:flex-row gap-4 pt-4">
 <button class="flex-1 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-bold py-4 rounded-full shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">
-                            Publicar ReseÃ±a
+                            Publicar Reseña
                         </button>
 <button class="flex-1 bg-surface-container-high text-on-surface font-bold py-4 rounded-full hover:bg-surface-dim active:scale-95 transition-all" type="button">
                             Cancelar
