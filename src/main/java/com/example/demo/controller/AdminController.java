@@ -1,70 +1,136 @@
-package com.example.demo.controller;
+package com.scholarstay.app.controller.web;
 
-import java.util.List;
-import java.util.Map;
-
+import com.scholarstay.app.dto.UsuarioDTO;
+import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.repository.UsuarioRepository;
+import com.scholarstay.app.service.AdminDashboardService;
+import com.scholarstay.app.viewmodel.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/admin/dashboard")
-    public String dashboard(Model model) {
-        model.addAttribute("ocupacion", "94.2%");
-        model.addAttribute("ingresos", "S/ 42,850");
-        model.addAttribute("residentesActivos", 128);
+    private final AdminDashboardService adminDashboardService;
+    private final UsuarioRepository usuarioRepository;
 
+    public AdminController(AdminDashboardService adminDashboardService,
+                           UsuarioRepository usuarioRepository) {
+        this.adminDashboardService = adminDashboardService;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    // --- Validación manual de acceso admin ---
+    private boolean esAdmin(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        return usuario != null
+                && usuario.getRol() != null
+                && "ROLE_ADMIN".equals(usuario.getRol().getNombre());
+    }
+
+    @GetMapping({ "", "/", "/dashboard" })
+    public String dashboard(HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
+        model.addAttribute("stats", adminDashboardService.getDashboardStats());
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
         return "admin/dashboard";
     }
 
-    @GetMapping("/admin/residentes")
-    public String residentes(Model model) {
-        List<Map<String, Object>> lista = List.of(
-                Map.of("nombre", "Mateo Fernández", "codigo", "SS-2024-001", "carrera", "Ingeniería de Software", "estado", "Activo", "compatibilidad", 94),
-                Map.of("nombre", "Sofía Ramírez", "codigo", "SS-2024-002", "carrera", "Arquitectura", "estado", "Activo", "compatibilidad", 78),
-                Map.of("nombre", "Javier Ortiz", "codigo", "SS-2023-045", "carrera", "Medicina", "estado", "Inactivo", "compatibilidad", 52),
-                Map.of("nombre", "Elena Vargas", "codigo", "SS-2024-009", "carrera", "Bellas Artes", "estado", "Activo", "compatibilidad", 88)
-        );
-
-        model.addAttribute("residentes", lista);
+    @GetMapping("/residentes")
+    public String residentes(HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
+        model.addAttribute("vm", adminDashboardService.getResidentesStats());
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
         return "admin/residentes";
     }
 
-    @GetMapping("/admin/propiedades")
-    public String propiedades(Model model) {
-        List<Map<String, Object>> lista = List.of(
-                Map.of("nombre", "Residencia El Greco", "tipo", "Loft Premium", "ubicacion", "Distrito Universitario", "precio", 850, "estado", "Disponible"),
-                Map.of("nombre", "Apartamento Cervantes", "tipo", "Habitación Individual", "ubicacion", "Centro Histórico", "precio", 420, "estado", "Ocupado"),
-                Map.of("nombre", "Residencia Nobel", "tipo", "Suite Ejecutiva", "ubicacion", "Barrio Norte", "precio", 1100, "estado", "Disponible")
-        );
+    // --- Ver detalle del residente ---
+    @GetMapping("/residentes/{id}")
+    public String verResidente(@PathVariable Long id, HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
 
-        model.addAttribute("propiedades", lista);
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if (usuario == null) return "redirect:/admin/residentes";
+
+        model.addAttribute("residente", usuario);
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        return "admin/residente_detalle";
+    }
+
+    // --- Editar residente (formulario) ---
+    @GetMapping("/residentes/{id}/editar")
+    public String editarResidenteForm(@PathVariable Long id, HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
+
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if (usuario == null) return "redirect:/admin/residentes";
+
+        model.addAttribute("residente", usuario);
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        return "admin/residente_editar";
+    }
+
+    // --- Guardar edición del residente ---
+    @PostMapping("/residentes/{id}/editar")
+    public String guardarEdicionResidente(@PathVariable Long id,
+                                          @RequestParam String nombre,
+                                          @RequestParam String email,
+                                          HttpSession session,
+                                          RedirectAttributes ra) {
+        if (!esAdmin(session)) return "redirect:/login";
+
+        usuarioRepository.findById(id).ifPresent(u -> {
+            u.setNombre(nombre);
+            u.setEmail(email);
+            usuarioRepository.save(u);
+        });
+
+        ra.addFlashAttribute("exito", "Residente actualizado correctamente.");
+        return "redirect:/admin/residentes";
+    }
+
+    // --- Eliminar residente ---
+    @PostMapping("/residentes/{id}/eliminar")
+    public String eliminarResidente(@PathVariable Long id,
+                                    HttpSession session,
+                                    RedirectAttributes ra) {
+        if (!esAdmin(session)) return "redirect:/login";
+
+        // Verificar que no se elimine a sí mismo ni al admin
+        Usuario target = usuarioRepository.findById(id).orElse(null);
+        if (target == null) {
+            ra.addFlashAttribute("error", "Residente no encontrado.");
+            return "redirect:/admin/residentes";
+        }
+        if (target.getRol() != null && "ROLE_ADMIN".equals(target.getRol().getNombre())) {
+            ra.addFlashAttribute("error", "No se puede eliminar una cuenta de administrador.");
+            return "redirect:/admin/residentes";
+        }
+
+        usuarioRepository.deleteById(id);
+        ra.addFlashAttribute("exito", "Residente eliminado correctamente.");
+        return "redirect:/admin/residentes";
+    }
+
+    @GetMapping("/propiedades")
+    public String propiedades(HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
+        model.addAttribute("vm", adminDashboardService.getPropiedadesStats());
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
         return "admin/propiedades";
     }
 
-    @GetMapping("/admin/finanzas")
-    public String finanzas(Model model) {
-
-        model.addAttribute("ingresosTotales", "S/ 245,800.00");
-        model.addAttribute("ingresosMensuales", "S/ 32,450.00");
-        model.addAttribute("pagosPendientes", "S/ 4,120.00");
-
-        List<Map<String, Object>> transacciones = List.of(
-                Map.of("fecha", "12 May, 2024", "hora", "14:30 PM", "usuario", "Lucas Contreras", "habitacion", "Habitación 402", "monto", "S/ 1,200.00", "estado", "Pagado"),
-                Map.of("fecha", "10 May, 2024", "hora", "09:15 AM", "usuario", "Elena Martínez", "habitacion", "Habitación 105", "monto", "S/ 950.00", "estado", "Pendiente"),
-                Map.of("fecha", "08 May, 2024", "hora", "18:45 PM", "usuario", "Santiago Vaca", "habitacion", "Habitación 220", "monto", "S/ 1,450.00", "estado", "Pagado"),
-                Map.of("fecha", "05 May, 2024", "hora", "11:00 AM", "usuario", "Sofía Herrera", "habitacion", "Habitación 312", "monto", "S/ 1,100.00", "estado", "Pendiente")
-        );
-
-        model.addAttribute("transacciones", transacciones);
-
+    @GetMapping("/finanzas")
+    public String finanzas(HttpSession session, Model model) {
+        if (!esAdmin(session)) return "redirect:/login";
+        model.addAttribute("vm", adminDashboardService.getFinanzasStats());
+        model.addAttribute("admin", session.getAttribute("loggedUser"));
         return "admin/finanzas";
-    }
-
-    @GetMapping("/admin/configuracion")
-    public String configuracion() {
-        return "admin/configuracion";
     }
 }
