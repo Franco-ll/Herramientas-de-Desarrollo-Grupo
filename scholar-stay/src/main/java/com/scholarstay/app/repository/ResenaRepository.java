@@ -1,12 +1,12 @@
 package com.scholarstay.app.repository;
 
-import com.scholarstay.app.model.Resena;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.scholarstay.app.model.Resena;
 
 @Repository
 public interface ResenaRepository extends JpaRepository<Resena, Long> {
-    List<Resena> findByAlojamientoId(Long alojamientoId);
-}
+List<Resena> findByAlojamientoIdOrderByFechaPublicacionDesc(Long alojamientoId);}

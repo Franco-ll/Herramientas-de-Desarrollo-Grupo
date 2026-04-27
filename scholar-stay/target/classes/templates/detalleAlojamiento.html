@@ -102,18 +102,26 @@
 <a th:href="@{/notificaciones}" class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</a>
 <a href="javascript:void(0)" class="material-symbols-outlined text-on-surface-variant cursor-default text-slate-400">chat_bubble</a>
 </div>
-<a th:href="@{/perfil}" class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors">
-<img alt="Avatar del estudiante" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
-<span class="font-semibold text-primary">Mi Perfil</span>
-</a>
+<div class="flex items-center gap-4">
+    <a th:href="@{/perfil}" class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors shadow-sm">
+        <img alt="Avatar del estudiante" class="w-8 h-8 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
+        <span class="font-semibold text-primary">Mi Perfil</span>
+    </a>
+    <form th:action="@{/logout}" method="post" class="inline">
+        <button type="submit" class="flex items-center gap-2 text-error font-bold text-sm hover:text-error-dim transition-colors px-3 py-2 rounded-lg hover:bg-error/5">
+            <span class="material-symbols-outlined text-lg">logout</span>
+            <span class="hidden lg:inline">Cerrar Sesión</span>
+        </button>
+    </form>
 </div>
 </nav>
 <main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
 <!-- Back Link -->
-<div class="mb-6 flex items-center gap-2 text-primary font-medium cursor-pointer" onclick="window.history.back()">
-<span class="material-symbols-outlined">arrow_back</span>
-<span>Volver a la búsqueda</span>
-</div>
+<a th:href="@{/explorar-residencias}" 
+   class="mb-6 inline-flex items-center gap-2 text-primary font-medium hover:underline">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>Volver a la búsqueda</span>
+</a>
 <!-- Editorial Gallery Grid (Dynamic) -->
 <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[500px] mb-12">
 <div class="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl">
@@ -201,6 +209,50 @@
 </div>
 </div>
 </section>
+
+<!-- Host Profile (Moved from Sidebar to prevent overlap) -->
+<section class="bg-surface-container-low p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center md:items-start">
+    <div class="flex-shrink-0">
+        <div class="relative">
+            <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg" data-alt="portrait of a friendly host" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
+            <div class="absolute -bottom-1 -right-1 bg-secondary text-white p-1.5 rounded-full border-2 border-white">
+                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex-grow">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-2">Tu Anfitrión</h3>
+        <p class="text-2xl font-extrabold text-on-surface mb-1">Sra. Beatriz</p>
+        <p class="text-on-surface-variant mb-4 font-medium">Anfitriona Premium • Responde en menos de 1 hora</p>
+        <div class="flex flex-wrap gap-4 mb-6">
+            <span class="flex items-center gap-2 text-sm bg-white px-3 py-1 rounded-full border border-outline-variant/20 shadow-sm">
+                <span class="material-symbols-outlined text-sm">calendar_month</span>
+                Desde 2019
+            </span>
+            <span class="flex items-center gap-2 text-sm bg-white px-3 py-1 rounded-full border border-outline-variant/20 shadow-sm">
+                <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                128 Reseñas
+            </span>
+        </div>
+        <button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold hover:bg-primary-dim transition-all shadow-md active:scale-95">
+            Contactar Anfitrión
+        </button>
+    </div>
+    <!-- Mini Compatibility Gauge in Host Section -->
+    <div class="hidden md:flex flex-col items-center bg-secondary-container/30 p-6 rounded-2xl min-w-[160px]">
+        <div class="relative w-16 h-16 mb-2">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle class="text-secondary-fixed" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="5"></circle>
+                <circle class="text-secondary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175.8" stroke-dashoffset="17.5" stroke-width="5"></circle>
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-sm font-bold text-secondary">90%</span>
+            </div>
+        </div>
+        <p class="text-[10px] font-bold text-secondary uppercase tracking-tighter text-center">Afinidad Académica</p>
+    </div>
+</section>
+
 <!-- Reviews -->
 <section>
 <div class="flex justify-between items-end mb-8">
@@ -209,8 +261,8 @@
 <p class="text-on-surface-variant">Lo que otros estudiantes opinan</p>
 </div>
 <div class="flex gap-4">
-<a th:href="@{/ver-todas-las-resenas}" class="bg-surface-container-high text-on-surface px-4 py-2 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-colors">Escribir reseña</a>
-<a th:href="@{/resenas-academicas}" class="text-primary font-bold hover:underline self-center">Ver todas</a>
+<a th:href="@{/resenas_academicas(alojamientoId=${alojamiento.id})}" class="bg-surface-container-high text-on-surface px-4 py-2 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-colors">Escribir reseña</a>
+<a th:href="@{/ver_todas_las_resenas(alojamientoId=${alojamiento.id})}" class="text-primary font-bold hover:underline self-center">Ver todas</a>
 </div>
 </div>
 <div class="grid md:grid-cols-2 gap-6">
@@ -242,91 +294,52 @@
 </section>
 </div>
 <!-- Sidebar / Booking Card -->
-<div class="space-y-6">
-<!-- Booking Card -->
-<div class="sticky top-28 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15 shadow-sm">
-<div class="flex justify-between items-baseline mb-6">
-<p class="text-3xl font-extrabold text-on-surface">S/ <span th:text="${alojamiento.precioMensual}">650</span><span class="text-lg font-normal text-on-surface-variant">/mes</span></p>
-<p class="text-sm text-secondary font-bold">Gastos incluidos</p>
-</div>
-<div class="space-y-4 mb-8">
-<div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
-<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estancia mínima</label>
-<p class="text-sm font-semibold">6 Meses (Semestre Académico)</p>
-</div>
-<div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
-<label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Disponibilidad</label>
-<p class="text-sm font-semibold text-secondary">Inmediata</p>
-</div>
-</div>
-<form th:action="@{/confirmar-reserva-escolar}" method="get">
-    <input type="hidden" name="alojamientoId" th:value="${alojamiento.id}" />
-    <button type="submit" class="w-full bg-primary text-on-primary py-4 rounded-full font-bold text-lg shadow-lg hover:bg-primary-dim transition-all mb-4">
-                            Solicitar Reserva
-                        </button>
-</form>
-<p class="text-center text-xs text-on-surface-variant">No se te cobrará nada todavía</p>
-<div class="mt-8 pt-8 border-t border-outline-variant/10">
-<div class="flex items-center justify-between mb-4">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-secondary" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
-<span class="text-sm font-medium">Scholar Protection</span>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="info">info</span>
-</div>
-<p class="text-[11px] text-on-surface-variant leading-tight">
-                            Tu reserva está protegida. Si el alojamiento no coincide con la descripción, te devolvemos el dinero.
-                        </p>
-</div>
-</div>
-<!-- Host Profile -->
-<div class="bg-surface-container-low p-6 rounded-xl">
-<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Tu Anfitrión</h3>
-<div class="flex items-center gap-4 mb-4">
-<div class="relative">
-<img class="w-16 h-16 rounded-full object-cover" data-alt="middle-aged woman with a warm friendly smile, professional property manager look, natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
-<div class="absolute -bottom-1 -right-1 bg-secondary text-white p-1 rounded-full border-2 border-white">
-<span class="material-symbols-outlined text-[12px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
-</div>
-</div>
-<div>
-<p class="text-lg font-bold text-on-surface">Sra. Beatriz</p>
-<p class="text-sm text-on-surface-variant">Anfitriona Premium</p>
-</div>
-</div>
-<div class="space-y-3 mb-6">
-<div class="flex items-center gap-2 text-sm text-on-surface-variant">
-<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
-<span>Responde en menos de 1 hora</span>
-</div>
-<div class="flex items-center gap-2 text-sm text-on-surface-variant">
-<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
-<span>Anfitriona desde 2019</span>
-</div>
-</div>
-<button class="w-full border-2 border-primary text-primary py-2 rounded-full font-bold hover:bg-primary/5 transition-colors">
-                        Contactar Anfitrión
-                    </button>
-</div>
-<!-- Compatibility Gauge (Specialty Component) -->
-<div class="bg-secondary-container/30 p-6 rounded-xl">
-<h3 class="text-sm font-bold uppercase tracking-widest text-on-secondary-container mb-4 text-center">Compatibilidad</h3>
-<div class="flex flex-col items-center">
-<div class="relative w-24 h-24 mb-4">
-<svg class="w-full h-full transform -rotate-90">
-<circle class="text-secondary-fixed" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
-<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="25.12" stroke-width="8"></circle>
-</svg>
-<div class="absolute inset-0 flex items-center justify-center">
-<span class="text-xl font-extrabold text-on-secondary-container">90%</span>
-</div>
-</div>
-<p class="text-center text-xs font-bold text-on-secondary-container leading-tight">
-                            Â¡Gran coincidencia con tus hábitos de estudio!
-                        </p>
-</div>
-</div>
-</div>
+<aside class="relative">
+    <div class="sticky top-28 space-y-6">
+        <!-- Booking Card -->
+        <div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15 shadow-xl">
+            <div class="flex justify-between items-baseline mb-6">
+                <p class="text-3xl font-extrabold text-on-surface">S/ <span th:text="${alojamiento.precioMensual}">650</span><span class="text-lg font-normal text-on-surface-variant">/mes</span></p>
+                <p class="text-sm text-secondary font-bold">Gastos incluidos</p>
+            </div>
+            <div class="space-y-4 mb-8">
+                <div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estancia mínima</label>
+                    <p class="text-sm font-semibold">6 Meses (Semestre Académico)</p>
+                </div>
+                <div class="flex flex-col gap-1 p-3 bg-surface-container rounded-lg">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Disponibilidad</label>
+                    <p class="text-sm font-semibold text-secondary">Inmediata</p>
+                </div>
+            </div>
+            <form th:action="@{/confirmar-reserva-escolar}" method="get">
+                <input type="hidden" name="alojamientoId" th:value="${alojamiento.id}" />
+                <button type="submit" class="w-full bg-primary text-on-primary py-4 rounded-full font-bold text-lg shadow-lg hover:bg-primary-dim transition-all mb-4 active:scale-95">
+                    Solicitar Reserva
+                </button>
+            </form>
+            <p class="text-center text-xs text-on-surface-variant">No se te cobrará nada todavía</p>
+            <div class="mt-8 pt-8 border-t border-outline-variant/10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        <span class="text-sm font-medium">Scholar Protection</span>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm">info</span>
+                </div>
+                <p class="text-[11px] text-on-surface-variant leading-tight">
+                    Tu reserva está protegida. Si el alojamiento no coincide con la descripción, te devolvemos el dinero.
+                </p>
+            </div>
+        </div>
+
+        <!-- Safe Transaction Indicator -->
+        <div class="flex items-center gap-3 px-6 py-4 bg-surface-container-low rounded-xl border border-outline-variant/10">
+            <span class="material-symbols-outlined text-secondary">security</span>
+            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-tight">Pago 100% Seguro</p>
+        </div>
+    </div>
+</aside>
 </div>
 </main>
 

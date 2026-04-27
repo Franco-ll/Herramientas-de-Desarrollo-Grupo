@@ -95,12 +95,7 @@
 <header class="bg-slate-50/80 backdrop-blur-xl w-full sticky top-0 z-50">
 <div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
 <div class="flex items-center gap-8">
-<span class="text-2xl font-bold text-blue-900 font-headline tracking-tight">Scholarly Sanctuary</span>
-<nav class="hidden md:flex gap-6">
-<a class="font-headline font-semibold text-slate-600 hover:text-blue-800 transition-all duration-300 ease-in-out hover:opacity-80" th:href="@{/explorar-residencias}">Alojamiento</a>
-<a class="font-headline font-semibold text-slate-600 hover:text-blue-800 transition-all duration-300 ease-in-out hover:opacity-80" href="#">Matches</a>
-<a class="font-headline font-semibold text-slate-600 hover:text-blue-800 transition-all duration-300 ease-in-out hover:opacity-80" href="#">Bookings</a>
-</nav>
+<span class="text-2xl font-bold text-blue-900 font-headline tracking-tight">Scholar Stay</span>
 </div>
 <div class="flex items-center gap-4">
 <a th:href="@{/notificaciones}" class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
@@ -111,7 +106,7 @@
 <span class="material-symbols-outlined">chat_bubble</span>
 </a>
 <a th:href="@{/editar-perfil-escolar}">
-<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgsf4BAz-b-J7PzcWmpCqRuL0WTjJ0AIYwEpp1mRBvuPSuNiKmcMRfChCTZ2rVZbZiEWrKMifU54H90TA2rPGvfdT7Qj6_s98VVzI4xxb530ZWKZhzUXG3SOuoGHIx8P4gdSNNU4lyL2ZPQatD4KAtYLN1QYCVos5IbN_Tk1HPoE3Hz8mbxYKGu8-CtMyyUKzcwSsGB9tktzYPmim1tzVttRkLv5gokRU5SoYJKbX0jyLEI822yIFwpCk8HKeeMCAWwWI3XIdHY50"/>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
 </a>
 </div>
 </div>
@@ -120,14 +115,21 @@
 <!-- Notification Panel Shell -->
 <section class="bg-surface-container-lowest rounded-xl shadow-xl shadow-blue-900/5 overflow-hidden">
 <!-- Header -->
-<div class="px-8 py-6 flex flex-row justify-between items-end bg-surface-container-low">
-<div>
-<h1 class="text-4xl font-headline font-extrabold text-primary tracking-tight mb-1">Notificaciones</h1>
-<p class="text-on-surface-variant text-sm font-medium">Mantente al tanto de tus solicitudes académicas.</p>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200 Active:scale-98x">
-                    Marcar todo como leído
-                </button>
+<div class="px-8 py-6 flex flex-col md:flex-row justify-between items-start md:items-end bg-surface-container-low gap-4">
+    <div class="flex items-center gap-4">
+        <a th:href="@{/dashboard}" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors text-primary" title="Volver al Dashboard">
+            <span class="material-symbols-outlined text-3xl">arrow_back</span>
+        </a>
+        
+        <div>
+            <h1 class="text-4xl font-headline font-extrabold text-primary tracking-tight mb-1">Notificaciones</h1>
+            <p class="text-on-surface-variant text-sm font-medium">Mantente al tanto de tus solicitudes académicas.</p>
+        </div>
+    </div>
+    
+    <button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200">
+        Marcar todo como leído
+    </button>
 </div>
 <!-- Notification List --><div class="divide-y divide-outline-variant/10">
 <!-- Dynamic Notification Group -->

@@ -96,26 +96,18 @@
 <div class="flex items-center gap-2">
 <span class="text-xl font-extrabold text-sky-800 dark:text-sky-200 font-manrope tracking-tight">Scholar Stay</span>
 </div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" th:href="@{/explorar-residencias}">Alojamiento</a>
-<a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" href="#">Matches</a>
-<a class="text-slate-500 hover:bg-slate-100/80 transition-colors px-3 py-1 rounded-full text-sm font-medium" href="#">Messages</a>
-</nav>
-<div class="flex items-center gap-4">
-<a th:href="@{/editar-perfil-escolar}" class="material-symbols-outlined text-sky-900 dark:text-sky-100 scale-95 active:opacity-80 transition-all p-2 rounded-full hover:bg-slate-100/80">account_circle</a>
-</div>
 </header>
 <main class="min-h-[calc(100vh-64px)] flex flex-col items-center px-4 py-8 md:py-16">
 <div class="w-full max-w-4xl grid md:grid-cols-12 gap-8 items-start">
 <div class="md:col-span-5 space-y-6">
 <div class="rounded-xxl overflow-hidden aspect-[4/5] bg-surface-container-high relative">
-<img alt="Modern student residence" class="w-full h-full object-cover" data-alt="Modern minimalist student dormitory room with large windows, natural light, wooden desk, and cozy atmosphere with scholarly books" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwnr8GgVeeEqOZAgadyCuR-XATpBKYwAGHDWX-UCvuNJKerYv086CM26-UAamgiw30PNsCRSgCSgFgWuCHgK6OnC3i9EXD8GjxLcYJ6uj1WiBozngryyTsbW8tTCNSq_PB1i9T4UEYO9yJDe00Mjy5oJVVPqeWU5KvqJ2-ZPdXWC2E9kwk3vIWlz2-174AJxPQnr1ZvdpjCBMhm3lrjYxb7HYIKL4duqVn5q5P4eEq1tl9lLQ6p_p76YjsZe5ZTPMY4WDg8uYvJGk"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-<div class="absolute bottom-6 left-6 right-6">
-<span class="inline-block px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold mb-2">Residencia Destacada</span>
-<h2 class="text-white font-headline text-2xl font-bold leading-tight">Casa del Intelecto</h2>
-<p class="text-white/90 text-sm">Calle Académica 42, Campus Norte</p>
-</div>
+    <img th:src="@{/images/{img}(img=${alojamiento.imagen})}" alt="Modern student residence" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+    <div class="absolute bottom-6 left-6 right-6">
+        <span class="inline-block px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold mb-2">Alojamiento Elegido</span>
+        <h2 class="text-white font-headline text-2xl font-bold leading-tight" th:text="${alojamiento.titulo}">Nombre</h2>
+        <p class="text-white/90 text-sm" th:text="${alojamiento.ubicacion}">Ubicación</p>
+    </div>
 </div>
 <div class="bg-surface-container-low rounded-xxl p-6 border-l-4 border-primary">
 <p class="text-on-surface-variant italic leading-relaxed">
@@ -125,34 +117,55 @@
 </div>
 <div class="md:col-span-7 bg-surface-container-lowest rounded-xxl p-8 shadow-[0_4px_24px_rgba(44,52,53,0.04)]">
 <header class="mb-8">
-<h1 class="font-headline text-3xl font-extrabold text-primary tracking-tight mb-2">Tu experiencia en Casa del Intelecto</h1>
-<p class="text-on-surface-variant">Califica tu estancia y ayuda a la comunidad.</p>
+    <h1 class="font-headline text-3xl font-extrabold text-primary tracking-tight mb-2" th:text="${'Tu experiencia en ' + alojamiento.titulo}">Tu experiencia</h1>
+    <p class="text-on-surface-variant">Califica tu estancia y ayuda a la comunidad.</p>
 </header>
-<form class="space-y-8">
-<section>
-<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Calificación General</label>
-<div class="flex gap-2">
-<button class="group transition-transform active:scale-90" type="button">
-<span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
-</button>
-<button class="group transition-transform active:scale-90" type="button">
-<span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
-</button>
-<button class="group transition-transform active:scale-90" type="button">
-<span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
-</button>
-<button class="group transition-transform active:scale-90" type="button">
-<span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
-</button>
-<button class="group transition-transform active:scale-90" type="button">
-<span class="material-symbols-outlined text-4xl text-outline-variant hover:text-secondary transition-colors">star</span>
-</button>
-</div>
-</section>
-<section>
-<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4" for="review">Tu Reseña Detallada</label>
-<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline/60" id="review" placeholder="¿Qué tal fue la conexión Wi-Fi? ¿Cómo era el ambiente de estudio?..." rows="6"></textarea>
-</section>
+<form th:action="@{/publicar_resena}" method="post" class="space-y-8">
+    <input type="hidden" name="alojamientoId" th:value="${alojamiento.id}" />
+    <input type="hidden" name="calificacion" id="calificacion-input" value="5" />
+    
+    <section>
+        <label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Calificación General</label>
+        <div class="flex gap-2" id="star-rating">
+            <button class="star-btn transition-transform active:scale-90" type="button" data-value="1">
+                <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn transition-transform active:scale-90" type="button" data-value="2">
+                <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn transition-transform active:scale-90" type="button" data-value="3">
+                <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn transition-transform active:scale-90" type="button" data-value="4">
+                <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn transition-transform active:scale-90" type="button" data-value="5">
+                <span class="material-symbols-outlined text-4xl text-secondary star-active" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+        </div>
+    </section>
+    
+    <section>
+        <label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4" for="review">Tu Reseña Detallada</label>
+        <textarea name="comentario" class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline/60" id="review" placeholder="¿Qué tal fue la conexión Wi-Fi? ¿Cómo era el ambiente de estudio?..." rows="6" required></textarea>
+    </section>
+
+    <script>
+        document.querySelectorAll('.star-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = btn.getAttribute('data-value');
+                document.getElementById('calificacion-input').value = val;
+                
+                document.querySelectorAll('.star-btn span').forEach((span, idx) => {
+                    if (idx < val) {
+                        span.style.fontVariationSettings = "'FILL' 1";
+                    } else {
+                        span.style.fontVariationSettings = "'FILL' 0";
+                    }
+                });
+            });
+        });
+    </script>
 <section>
 <label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-4">Adjuntar Fotografías (Opcional)</label>
 <div class="grid grid-cols-3 gap-4">
@@ -172,7 +185,7 @@
 <button class="flex-1 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-bold py-4 rounded-full shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">
                             Publicar Reseña
                         </button>
-<button class="flex-1 bg-surface-container-high text-on-surface font-bold py-4 rounded-full hover:bg-surface-dim active:scale-95 transition-all" type="button">
+<button class="flex-1 bg-surface-container-high text-on-surface font-bold py-4 rounded-full hover:bg-surface-dim active:scale-95 transition-all" type="button" onclick="history.back()">
                             Cancelar
                         </button>
 </div>

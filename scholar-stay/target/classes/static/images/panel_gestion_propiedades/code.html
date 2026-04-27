@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Propiedades | Scholar Stay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#123e56",
+                    "surface-container-highest": "#dde4e4",
+                    "surface-bright": "#f8fafa",
+                    "on-primary-fixed-variant": "#335a74",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#b8dffe",
+                    "surface-container-high": "#e3e9ea",
+                    "on-surface-variant": "#596061",
+                    "on-primary-container": "#29506a",
+                    "surface-variant": "#dde4e4",
+                    "on-secondary-fixed": "#26462d",
+                    "on-surface": "#2c3435",
+                    "on-background": "#2c3435",
+                    "on-tertiary-fixed": "#50452f",
+                    "surface-tint": "#3d637e",
+                    "on-secondary-container": "#39593f",
+                    "tertiary": "#6a5e46",
+                    "background": "#f8fafa",
+                    "error-dim": "#67040d",
+                    "surface-container-low": "#f0f4f4",
+                    "tertiary-dim": "#5d523b",
+                    "primary-fixed-dim": "#aad1ef",
+                    "surface-container": "#eaefef",
+                    "on-tertiary-fixed-variant": "#6d614a",
+                    "on-error": "#fff7f6",
+                    "secondary-dim": "#3a5a40",
+                    "on-secondary-fixed-variant": "#426348",
+                    "surface": "#f8fafa",
+                    "primary": "#3d637e",
+                    "error-container": "#fa746f",
+                    "on-primary": "#f5f9ff",
+                    "error": "#a83836",
+                    "primary-dim": "#305771",
+                    "surface-dim": "#d4dbdc",
+                    "tertiary-fixed": "#feecce",
+                    "outline-variant": "#acb3b4",
+                    "secondary-fixed": "#c7ecc9",
+                    "tertiary-container": "#feecce",
+                    "secondary-container": "#c7ecc9",
+                    "secondary-fixed-dim": "#b9debc",
+                    "inverse-surface": "#0b0f0f",
+                    "secondary": "#46674b",
+                    "outline": "#757c7d",
+                    "on-error-container": "#6e0a12",
+                    "on-tertiary-container": "#635740",
+                    "on-tertiary": "#fff8f1",
+                    "inverse-primary": "#b8dffe",
+                    "tertiary-fixed-dim": "#efdec0",
+                    "primary-fixed": "#b8dffe",
+                    "on-secondary": "#e8ffe7",
+                    "inverse-on-surface": "#9b9d9e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "xxl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="bg-[#f0f4f4] dark:bg-[#1a1c1e] h-screen w-64 fixed left-0 top-0 overflow-y-auto flex flex-col py-8 z-50">
+<div class="px-8 mb-10">
+<h1 class="text-xl font-extrabold text-[#3d637e] tracking-tighter font-headline">Scholar Stay</h1>
+<p class="text-[10px] uppercase tracking-widest text-outline font-bold mt-1">Admin Portal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Dashboard Tab -->
+<a class="flex items-center gap-4 text-[#6a5e46] hover:text-[#3d637e] px-8 py-3 transition-all duration-300 font-manrope text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<!-- Residentes Tab -->
+<a class="flex items-center gap-4 text-[#6a5e46] hover:text-[#3d637e] px-8 py-3 transition-all duration-300 font-manrope text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                Residentes
+            </a>
+<!-- Propiedades Tab (ACTIVE) -->
+<a class="flex items-center gap-4 bg-white dark:bg-[#2c3435] text-[#3d637e] font-bold rounded-l-full ml-4 shadow-sm px-8 py-3 transition-all duration-300 font-manrope text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="domain" style="font-variation-settings: 'FILL' 1;">domain</span>
+                Propiedades
+            </a>
+<!-- Finanzas Tab -->
+<a class="flex items-center gap-4 text-[#6a5e46] hover:text-[#3d637e] px-8 py-3 transition-all duration-300 font-manrope text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+                Finanzas
+            </a>
+<!-- Configuración Tab -->
+<a class="flex items-center gap-4 text-[#6a5e46] hover:text-[#3d637e] px-8 py-3 transition-all duration-300 font-manrope text-sm font-medium tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Configuración
+            </a>
+</nav>
+<div class="px-8 pt-8 border-t border-outline-variant/10">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="close-up portrait of a professional male administrator in a light blue shirt with a friendly and focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4eJYQDsvciBP2VdBouuXIExKiVJlKMXcITYMx6tzy4Zg2kAu7aLqpceFSmYLXjdBr-tvXwGAPxoY0yRxNXB9oLIhvW4fMQtvBPLOiB6OTxIJQ509hQ2U5gsi47Wk_mSeNkIfl5gOCj4kiqVwomXRU5SsWzKq7_J_TvMyNmDgveWLmiEN7zvjvMdqJv6UagHsgfQBFz1TR1UtG65OAkq8PK4LBttBCKwsj82GyTgxIt4uuKjalBVX_E8Rn4ujZznr8Vqc1F5draww"/>
+<div>
+<p class="text-xs font-bold">Admin Central</p>
+<p class="text-[10px] text-outline">Gestionando 24 sedes</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 w-full z-40 bg-white/80 dark:bg-[#f8fafa]/10 backdrop-blur-md flex justify-between items-center h-16 px-8 shadow-[0_4px_24px_rgba(44,52,53,0.04)]">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-[#3d637e]/20 transition-all" placeholder="Buscar propiedades..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-outline hover:text-primary transition-colors flex items-center gap-1 font-inter text-sm">
+<span class="material-symbols-outlined text-lg">help_outline</span>
+                    Ayuda
+                </button>
+<div class="flex items-center gap-4 border-l border-outline-variant/20 pl-6">
+<button class="text-outline hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Page Header & Action -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+<div>
+<h2 class="text-4xl font-extrabold text-on-surface tracking-tight font-headline mb-2">Gestión de Propiedades</h2>
+<p class="text-on-surface-variant max-w-md leading-relaxed">Administra el inventario de alojamientos, estados de ocupación y tarifas de las residencias Scholar Stay.</p>
+</div>
+<button class="bg-primary hover:bg-primary-dim text-on-primary px-8 py-4 rounded-full flex items-center gap-3 transition-all duration-300 shadow-lg shadow-primary/20 group">
+<span class="material-symbols-outlined transition-transform group-hover:rotate-90">add</span>
+<span class="font-semibold tracking-wide">Añadir Nueva Propiedad</span>
+</button>
+</div>
+<!-- Filter Section -->
+<div class="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-outline-variant/10">
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span class="text-xs font-bold uppercase tracking-wider">Filtros:</span>
+</div>
+<select class="bg-surface-container-low border-none rounded-full px-6 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 cursor-pointer hover:bg-surface-container-high transition-colors">
+<option>Todas las Zonas</option>
+<option>Centro Histórico</option>
+<option>Distrito Universitario</option>
+<option>Barrio Norte</option>
+</select>
+<select class="bg-surface-container-low border-none rounded-full px-6 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 cursor-pointer hover:bg-surface-container-high transition-colors">
+<option>Cualquier Estado</option>
+<option>Disponible</option>
+<option>Ocupado</option>
+<option>Mantenimiento</option>
+</select>
+<button class="ml-auto flex items-center gap-2 text-primary font-bold text-sm px-4 py-2 hover:bg-primary/5 rounded-full transition-all">
+<span class="material-symbols-outlined">grid_view</span>
+                    Vista Cuadrícula
+                </button>
+<button class="flex items-center gap-2 text-outline font-medium text-sm px-4 py-2 hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined">list</span>
+                    Lista
+                </button>
+</div>
+<!-- Properties Grid (Asymmetric Bento-inspired layout) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 (Large Focus) -->
+<div class="lg:col-span-2 group relative bg-surface-container-lowest rounded-xxl overflow-hidden flex flex-col md:flex-row shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(61,99,126,0.1)] transition-all duration-500">
+<div class="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="modern industrial style studio apartment with large windows soft sunlight and minimalist furniture in a scholarly setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz1RIOmL15R_bbnfL1xOgoQnlh-zmg8xAKVuXdhdQJqN18F2paMnw2fBnlIEU9yhU-sL_CinEKdSDLLnIAb9HAg868GUC1rLF3VN1RfAv5qALZ1-EHIuQsPcZHPxNoa2DRrmqlgwNzXMIiMjgPR4YiUx3qnXgZTVi0y4xjtA6GU6oQbgpK06-Un0HT8EBa9i7NEH5cbiueDEL1jn9z8qvS0cJeBrQzndmKYXERtKdmxOWmbDVewkVDM_f-D8oGTVuhx67IsapmnXc"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 shadow-sm backdrop-blur-md">
+<span class="w-2 h-2 bg-secondary rounded-full"></span>
+                                Disponible
+                            </span>
+</div>
+</div>
+<div class="p-8 flex flex-col justify-between flex-1">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">Loft Premium</span>
+<h3 class="text-2xl font-bold text-primary">$850<span class="text-xs font-normal text-outline">/mes</span></h3>
+</div>
+<h4 class="text-2xl font-extrabold font-headline mb-2 group-hover:text-primary transition-colors">Residencia El Greco</h4>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-sm font-medium">Distrito Universitario, Madrid</span>
+</div>
+<div class="flex flex-wrap gap-3 mb-8">
+<span class="px-3 py-1 bg-surface-container-high rounded-lg text-[10px] font-bold text-outline">WIFI 1GB</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-lg text-[10px] font-bold text-outline">ESTUDIO PRIVADO</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-lg text-[10px] font-bold text-outline">GIMNASIO</span>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-outline-variant/10 pt-6">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="portrait of a male student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuxPmq-mfR7iIFTxSU_C-g4BnCyY4IJiMs87Og0hfVRk_lB0r-9TROYZJNiHTdVV5AsBNADXOQoDfJHhZG01_YUvC4MUexglFy8-AuWr7W0Za7iAWKkE9wkK80nDBovoRYZaE2w40lqV9GsvHNLiDRk6supI609iwFXf_d_pH945dZUtiEpPwCmuNWIGae1D-etoW5i-ApUhtOd0WwytyzwZqqsiIzf-cI0zTLATfXnxdhQeH4ojNxmaPDEFcD-aSxxin7FUPE_lE"/>
+<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="portrait of a female student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWtZWmeQ907tkBEI_kkXI3Fnp7IyZPPawI6lIzmODTUfhCCyWSNNywsEEBI94eGU8IZaAzP1hAHYUMHv6Tj3YrXvATchJo3znxT8nLIF6t0xX2uObMVKar0WFJu2AQ0gYetq1CTIriZPNP3IU5ja0iM7xMU48WDWzVZg8lvpr0LMxQBnbJAdr3En-Ks74oG4a3O8dYwA2-d20h7FRAjoYmaklQVUFVxNRhRJYS1Hj_j-sgL4Z5f7Eo1uf3ONELjxgxBGB1LMaaLmQ"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">+4</div>
+</div>
+<button class="text-primary font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                Ver Detalles <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 (Standard) -->
+<div class="bg-surface-container-lowest rounded-xxl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(61,99,126,0.08)] transition-all duration-500 group">
+<div class="h-48 rounded-xl overflow-hidden relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="cozy bedroom in a shared student house with bright natural light and wooden floors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpwQhSMnfLUbSMVwwQL5DOwA6DgnmXDFnpS1rZJm1xLbdQsEDC6OhN87UieVuD8wqQv5-MzDQQ-mRB-iqFjdV2c1zh9LyegYhSXq1bJ0J9H_LHs4GxGrWkI-4pKQvUXqNUKkxnwWmiKnnmGT8oHSFWYXrSp89FUgbZmO6nZ-f_qLcLAys04Zgri8x3gN-5c-FQVngtspkWfiv5AyQkQpvuhO2YvgIw0ooXLQthHutSbbgIKY7B-RZD6mzb5kn-0jY5PapVCi-Dm4A"/>
+<div class="absolute top-4 left-4">
+<span class="bg-surface-container-highest text-outline px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 backdrop-blur-md">
+<span class="w-2 h-2 bg-outline rounded-full"></span>
+                                Ocupado
+                            </span>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">Habitación Individual</span>
+<h3 class="text-xl font-bold text-primary">$420</h3>
+</div>
+<h4 class="text-xl font-extrabold font-headline mb-2 group-hover:text-primary transition-colors">Apartamento Cervantes</h4>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-xs font-medium">Centro Histórico, Salamanca</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg">verified</span>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tight">Verificado</span>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Card 3 (Standard) -->
+<div class="bg-surface-container-lowest rounded-xxl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(61,99,126,0.08)] transition-all duration-500 group">
+<div class="h-48 rounded-xl overflow-hidden relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="modern minimalist apartment interior with plants and clean lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSSImPVuJnwIt9TF4iYAquWphph4T7P-nWWC-l2iMBKvUZwxAJhhgLHAsj1cxsiaorttWqpP5QZHaLzMPPS9mAOPIFZiY2Sl1KokBhCLNeUIWjlj6mQ7WNFQQQES_w9R2mMJb7usPBbdxIo-W8GYylZTKiwNZfkghYlmERQWZY65xN2t62ncKMUxt3EYXlQoKHEvThxkOhMOLApmdSYabKWOU6FFdNi2OxQ42Yyx_0VldNwCeRLXJ7fJAnAClZ5t2-r9UASxCnLm8"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 backdrop-blur-md">
+<span class="w-2 h-2 bg-secondary rounded-full"></span>
+                                Disponible
+                            </span>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">Suite Ejecutiva</span>
+<h3 class="text-xl font-bold text-primary">$1,100</h3>
+</div>
+<h4 class="text-xl font-extrabold font-headline mb-2 group-hover:text-primary transition-colors">Residencia Nobel</h4>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-xs font-medium">Barrio Norte, Madrid</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-lg">star</span>
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-tight">Alta Demanda</span>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Card 4 (Standard) -->
+<div class="bg-surface-container-lowest rounded-xxl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(61,99,126,0.08)] transition-all duration-500 group">
+<div class="h-48 rounded-xl overflow-hidden relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="luxury student accommodation with designer furniture and urban views" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcu9U1wmKme8JP7uHOJhHdy7QNVDgQVar4rmzJ3YJjICalkQ8OTC39HTeLggz1jB22-gCRlVnD5om_mUjhIQy4PpzUvhR-BnqU0i9oEB9Q1-zDKzOAv4L7i55gfin1yJw-W7ZYN85RJm49QuGud9trAJ9skbEVVRh5xzIJK4emYIS3dmXpDGXySSwU1bAby3JH_L5PmUEb0XLvQa-gRJ2AoW-T6Y25dXCaLh9wPjQaSK3-KSDiXToLxm4Ejml-V7Qexr26vsGHW64"/>
+<div class="absolute top-4 left-4">
+<span class="bg-surface-container-highest text-outline px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 backdrop-blur-md">
+<span class="w-2 h-2 bg-outline rounded-full"></span>
+                                Ocupado
+                            </span>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">Dúplex</span>
+<h3 class="text-xl font-bold text-primary">$1,450</h3>
+</div>
+<h4 class="text-xl font-extrabold font-headline mb-2 group-hover:text-primary transition-colors">Torre de las Ciencias</h4>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-xs font-medium">Distrito Universitario, Barcelona</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-lg">event_busy</span>
+<span class="text-[10px] font-bold text-error uppercase tracking-tight">Próxima Renovación</span>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Card 5 (Specialty Small Match-Chip Highlight) -->
+<div class="bg-primary/5 rounded-xxl p-8 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-primary/10 transition-all duration-500">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">add_home</span>
+</div>
+<h4 class="text-lg font-bold font-headline mb-2">Nueva Propiedad</h4>
+<p class="text-xs text-on-surface-variant px-4">Haz clic aquí para añadir una nueva unidad al catálogo deScholar Stay.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for quick actions (Contextual - Hidden on subpages usually, but here as a shortcut) -->
+<button class="fixed bottom-10 right-10 w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined">add</span>
+</button>
+</body></html>

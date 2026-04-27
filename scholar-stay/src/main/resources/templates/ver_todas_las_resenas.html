@@ -96,20 +96,6 @@
 <div class="text-2xl font-extrabold tracking-tighter text-blue-900 dark:text-blue-100 font-['Manrope']">
                 Scholar Stay
             </div>
-<nav class="hidden md:flex items-center gap-8 font-['Manrope'] tracking-tight font-bold">
-<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" th:href="@{/explorar-residencias}">Alojamiento</a>
-<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" href="#">Comunidad</a>
-<a class="text-blue-700 dark:text-blue-300 border-b-2 border-blue-700 dark:border-blue-300 pb-1" href="#">Bookings</a>
-<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all" href="#">Saved</a>
-</nav>
-<div class="flex items-center gap-4">
-<a th:href="@{/notificaciones}" class="p-2 rounded-full hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all">
-<span class="material-symbols-outlined text-blue-800 dark:text-blue-300">notifications</span>
-</a>
-<a th:href="@{/editar-perfil-escolar}" class="h-10 w-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-primary-container">
-<img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUNmMhNx_Tb2JpnGaIaVUr1jt-RW7lbmJD0EaJ47yvw4IAd02UP3Z2u2pLo7s4kcrOzCtBdtO90skN1ouMrPNE1prIWP23ex_No6iWrfHJZwwv-8TLofzuXr6Jp-quu_65wfuW_pA7FJQk0lc-FByWsz02EZY-b1n70DjXOm_kO2DApbmntNKkyvloqzjWqjLMQ6Cc8CRvIrBm6suFpMrS0RJ-E9zVtEmY9oq-OH9Gdyp1sqDdMvLn_BcQcYkgG4XaOSvkqW4hxCE"/>
-</a>
-</div>
 </div>
 </header>
 <main class="max-w-7xl mx-auto px-6 py-12 pb-32">
@@ -129,18 +115,19 @@
 </div>
 <div class="lg:col-span-5 bg-surface-container-low rounded-xl p-8 flex items-center justify-between shadow-[0_4px_24px_rgba(44,52,53,0.04)]">
 <div>
-<div class="flex items-baseline gap-1">
-<span class="text-6xl font-extrabold text-primary">4.9</span>
-<span class="text-on-surface-variant font-semibold">/ 5</span>
-</div>
-<div class="flex text-secondary gap-0.5 mt-2">
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star_half</span>
-</div>
-<p class="text-sm font-semibold text-on-surface-variant mt-1">Basado en 128 reseñas</p>
+    <div class="flex items-baseline gap-1">
+        <span class="text-6xl font-extrabold text-primary" th:text="${#aggregates.avg(resenas.![calificacion]) ?: '0.0'}">4.9</span>
+        <span class="text-on-surface-variant font-semibold">/ 5</span>
+    </div>
+    <div class="flex text-secondary gap-0.5 mt-2">
+        <!-- Simplified star display -->
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star_half</span>
+    </div>
+    <p class="text-sm font-semibold text-on-surface-variant mt-1" th:text="${'Basado en ' + resenas.size() + ' reseñas'}">Basado en 128 reseñas</p>
 </div>
 <div class="hidden sm:block h-24 w-24 relative">
 <!-- Gauge Mockup -->
@@ -155,130 +142,93 @@
 <!-- Filters Section (No-Line Rule) -->
 <section class="bg-surface-container-low rounded-xl p-6 mb-12 sticky top-24 z-40 backdrop-blur-md bg-opacity-90">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-<div class="flex flex-wrap gap-3">
-<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-primary-dim">Todas</button>
-<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">5 estrellas</button>
-<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">4 estrellas</button>
-<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-semibold text-sm transition-all hover:bg-surface-container-highest">3 estrellas</button>
-</div>
-<div class="flex items-center gap-4 text-sm font-semibold">
-<span class="text-on-surface-variant">Ordenar por:</span>
-<select class="bg-transparent border-none focus:ring-0 text-primary cursor-pointer font-bold">
-<option>Más recientes</option>
-<option>Mejor valoradas</option>
-<option>Críticas</option>
-</select>
-</div>
+
+    <!-- FILTRO ESTRELLAS -->
+    <div class="flex flex-wrap gap-3">
+        <button onclick="filtrarResenas(0,this)"
+            class="filtro-btn bg-primary text-on-primary px-6 py-2 rounded-full font-semibold text-sm">
+            Todas
+        </button>
+
+        <button onclick="filtrarResenas(5,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            5 estrellas
+        </button>
+
+        <button onclick="filtrarResenas(4,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            4 estrellas
+        </button>
+
+        <button onclick="filtrarResenas(3,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            3 estrellas
+        </button>
+    </div>
+
+    <!-- ORDENAR -->
+    <div class="flex items-center gap-4 text-sm font-semibold">
+        <span class="text-on-surface-variant">Ordenar por:</span>
+
+        <select onchange="ordenarResenas(this.value)"
+            class="bg-transparent border-none focus:ring-0 text-primary cursor-pointer font-bold">
+
+            <option value="recientes">Más recientes</option>
+            <option value="mejor">Mejor valoradas</option>
+            <option value="peor">Críticas</option>
+        </select>
+    </div>
+
 </div>
 </section>
 <!-- Reviews List (Tonal Layering) -->
 <section class="space-y-8 bg-surface-container-low p-8 rounded-xl">
-<!-- Review Card 1 -->
-<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
-<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
-<div class="flex items-center gap-4">
-<div class="h-14 w-14 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xl overflow-hidden">
-<img alt="Student profile" data-alt="portrait of a young female university student with glasses smiling warmly in a library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEiYFdZ1uVBwsegsFTG-iHDyoLCU-KN5h5BZnxv13Y2gfCPiQMXNDOO4A8piyijJ4aVt5GTyeTeLoqRzMBsR9ixWWugQSrGJO7-za80cC6NhhnqmhdbsHfU70fi7KgaY1o0cz2bTfhj6rRTcx5HhimH0Bm_5TK5RXEcplIrct65Z5x5b9a4mLVW4ajnqCRNUgvqkcYln1kBZwOwhYhhX7JZCDwXi3Dc9Kq4gQd8EMlV59Fy9DKeGoEZ_BnlO3DsmxsiapeltJFt3k"/>
-</div>
-<div>
-<h3 class="font-bold text-lg leading-tight">Lucía Fernández</h3>
-<p class="text-on-surface-variant text-sm font-medium">Arquitectura • 3er Año</p>
-</div>
-</div>
-<div class="flex flex-col md:items-end">
-<div class="flex text-secondary mb-1">
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<time class="text-xs text-outline font-medium uppercase tracking-wider">12 de Octubre, 2023</time>
-</div>
-</div>
-<div class="mt-6">
-<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
-<span class="material-symbols-outlined text-sm">verified_user</span> 
-                        98% Compatibilidad
-                    </span>
-<p class="text-on-surface leading-relaxed text-lg">
-                        La atmósfera es perfecta para concentrarse. Las zonas comunes están siempre impecables y el diseño de las habitaciones realmente ayuda a mantener el orden mental. He conocido a compañeros de master increíbles aquí. El sistema de emparejamiento de Scholar Stay realmente funciona; mi compañera de piso es encantadora y compartimos horarios de estudio similares.
+    <!-- Dynamic Reviews -->
+<article th:each="resena : ${resenas}"
+         th:attr="data-calificacion=${resena.calificacion},
+                  data-fecha=${resena.fechaPublicacion}"
+         class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">        <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="h-14 w-14 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xl overflow-hidden">
+                    <span th:text="${resena.usuario.nombre.substring(0,1)}">U</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg leading-tight" th:text="${resena.usuario.nombre}">Usuario</h3>
+                    <p class="text-on-surface-variant text-sm font-medium">
+                        <span th:if="${resena.usuario.perfilAcademico != null and resena.usuario.perfilAcademico.carrera != null}" 
+                              th:text="${resena.usuario.perfilAcademico.carrera}">Carrera</span>
+                        <span th:if="${resena.usuario.perfilAcademico == null or resena.usuario.perfilAcademico.carrera == null}">Estudiante</span>
+                        <span class="mx-1">•</span>
+                        <span th:text="${'Comunidad Scholar Stay'}">Scholar Stay</span>
                     </p>
+                </div>
+            </div>
+            <div class="flex flex-col md:items-end">
+                <div class="flex text-secondary mb-1">
+    <span th:each="i : ${#numbers.sequence(1,5)}"
+          class="material-symbols-outlined"
+          th:classappend="${i <= resena.calificacion} ? ' filled-icon' : ''">
+        star
+    </span>
 </div>
-</article>
-<!-- Review Card 2 -->
-<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
-<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
-<div class="flex items-center gap-4">
-<div class="h-14 w-14 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-xl overflow-hidden">
-<img alt="Student profile" data-alt="close up of a confident young male medical student in a modern workspace with soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTZLTJtWI5dHCuuCxl25Gn5GIoxrguRnol63i2DiI8GapLrLf6t7fc1OTvlFNokcl2exnbLUq779aKYOll6D8gnB6IKni2wVGRQmJ0aqX68qLneQbZJgKN0w4txZM3R5x2XYo_jQmXEimCEd3CrNGVIFkzDTZd6y0Ot_n9DcrfOXfMK3CwLUU0LELCqCiDLc2uQDYTMWoDQZaftNiJMKlwvjGYt6ibjJCU2zTxKaiFjbwz1SmeEWwzpMGmgo2FV0LyGE_f6gJ883o"/>
-</div>
-<div>
-<h3 class="font-bold text-lg leading-tight">Mateo Rossi</h3>
-<p class="text-on-surface-variant text-sm font-medium">Medicina • 5to Año</p>
-</div>
-</div>
-<div class="flex flex-col md:items-end">
-<div class="flex text-secondary mb-1">
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
-</div>
-<time class="text-xs text-outline font-medium uppercase tracking-wider">05 de Septiembre, 2023</time>
-</div>
-</div>
-<div class="mt-6">
-<span class="inline-flex items-center gap-1 bg-surface-container-high text-on-surface-variant text-xs font-bold px-3 py-1 rounded-full mb-4">
-<span class="material-symbols-outlined text-sm">handshake</span> 
-                        85% Compatibilidad
-                    </span>
-<p class="text-on-surface leading-relaxed text-lg">
-                        Como estudiante de medicina, valoro mucho el silencio por las noches y aquí se respeta enormemente. La conexión a internet es ultra-rápida, ideal para las clases online y descargar recursos pesados. Solo le daría 5 estrellas si el gimnasio fuera un poco más grande, pero el resto es excepcional.
-                    </p>
-</div>
-</article>
-<!-- Review Card 3 -->
-<article class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">
-<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
-<div class="flex items-center gap-4">
-<div class="h-14 w-14 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary font-bold text-xl overflow-hidden">
-<img alt="Student profile" data-alt="candid portrait of a creative female student with artistic style in a sun-drenched modern studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxOrALfbWFXNY6rFaYEZmEp1x5LkYMwI_1QtwQiT-S_UZUWE82KVsctTxW7G1kmI4eL9-DSG5aDbrU3V2R2pV55JY4mG_03Y_Psv88_joLfh_FFC8xOpTx6lklGJJvG-g9RFLtMu-ORxDQrpx-6m6UYE6QUs3fpeu1vDcUvKl5IRfXhz2O5bPdTfyDJmR2slyeRHBOZgf-QnAagvs1vuj6oUvc9sWgWHjMwzTD01VQunoa5C7rNkMYNWTn33pAnS9wIJiCFGNjjXc"/>
-</div>
-<div>
-<h3 class="font-bold text-lg leading-tight">Elena Sobrino</h3>
-<p class="text-on-surface-variant text-sm font-medium">Bellas Artes • 2do Año</p>
-</div>
-</div>
-<div class="flex flex-col md:items-end">
-<div class="flex text-secondary mb-1">
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<time class="text-xs text-outline font-medium uppercase tracking-wider">28 de Agosto, 2023</time>
-</div>
-</div>
-<div class="mt-6">
-<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
-<span class="material-symbols-outlined text-sm">bolt</span> 
-                        94% Compatibilidad
-                    </span>
-<p class="text-on-surface leading-relaxed text-lg">
-                        Lo que más me gusta es la luz natural en las habitaciones. Para alguien que dibuja, esto es vital. El santuario académico no es solo un nombre, realmente se siente como un refugio. Las cenas comunitarias organizadas por los gestores son una delicia para desconectar un poco de la carga académica.
-                    </p>
-</div>
-</article>
-<!-- Load More (Asymmetrical Button) -->
-<div class="flex justify-center pt-8">
-<button class="group flex items-center gap-3 bg-surface-container-highest text-on-surface font-bold px-10 py-4 rounded-full transition-all hover:bg-primary hover:text-on-primary">
-                    Cargar más historias
-                    <span class="material-symbols-outlined group-hover:translate-y-1 transition-transform">expand_more</span>
-</button>
-</div>
+                <time class="text-xs text-outline font-medium uppercase tracking-wider" th:text="${#temporals.format(resena.fechaPublicacion, 'dd MMMM, yyyy')}">Fecha</time>
+            </div>
+        </div>
+        <div class="mt-6">
+            <span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
+                <span class="material-symbols-outlined text-sm">verified_user</span> 
+                Reseña Verificada
+            </span>
+            <p class="text-on-surface leading-relaxed text-lg" th:text="${resena.comentario}">
+                Comentario de la reseña.
+            </p>
+        </div>
+    </article>
+
+    <div th:if="${resenas.isEmpty()}" class="text-center py-20 text-on-surface-variant">
+        <span class="material-symbols-outlined text-6xl mb-4 opacity-20">rate_review</span>
+        <p class="text-xl">Aún no hay reseñas para esta propiedad.</p>
+    </div>
 </section>
 </main>
 <!-- BottomNavBar (Mobile Only via JSON classes) -->
@@ -300,4 +250,53 @@
 <span>Profile</span>
 </a>
 </nav>
+<script>
+function filtrarResenas(estrellas, boton) {
+
+    let cards = document.querySelectorAll("article[data-calificacion]");
+
+    cards.forEach(card => {
+        let rating = parseInt(card.dataset.calificacion);
+
+        if (estrellas === 0 || rating === estrellas) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".filtro-btn").forEach(btn => {
+        btn.classList.remove("bg-slate-800","text-white");
+        btn.classList.remove("bg-primary","text-on-primary");
+        btn.classList.add("bg-surface-container-high","text-on-surface");
+    });
+
+    boton.classList.remove("bg-surface-container-high","text-on-surface");
+    boton.classList.add("bg-slate-800","text-white");
+}
+</script>
+
+<script>
+function ordenarResenas(tipo){
+
+    let container = document.querySelector("section.space-y-8");
+    let cards = Array.from(document.querySelectorAll("article[data-calificacion]"));
+
+    cards.sort((a,b)=>{
+
+        let ratingA = parseInt(a.dataset.calificacion);
+        let ratingB = parseInt(b.dataset.calificacion);
+
+        let fechaA = new Date(a.dataset.fecha);
+        let fechaB = new Date(b.dataset.fecha);
+
+        if(tipo==="mejor") return ratingB-ratingA;
+        if(tipo==="peor") return ratingA-ratingB;
+
+        return fechaB-fechaA;
+    });
+
+    cards.forEach(card => container.appendChild(card));
+}
+</script>
 </body></html>

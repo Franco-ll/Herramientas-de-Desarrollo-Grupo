@@ -28,6 +28,9 @@ public class Reserva {
     @Column(nullable = false)
     private String estado; // PENDIENTE, CONFIRMADA, CANCELADA
 
+    @Column(nullable = false)
+    private Double precioTotal;
+
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL)
     private Pago pago;
 
@@ -50,6 +53,9 @@ public class Reserva {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public Double getPrecioTotal() { return precioTotal; }
+    public void setPrecioTotal(Double precioTotal) { this.precioTotal = precioTotal; }
 
     public Pago getPago() { return pago; }
     public void setPago(Pago pago) { this.pago = pago; }

@@ -1,12 +1,12 @@
 package com.scholarstay.app.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.scholarstay.app.model.Resena;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.repository.ResenaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ResenaService {
@@ -32,7 +32,7 @@ public class ResenaService {
         return guardada;
     }
 
-    public List<Resena> obtenerResenasPorAlojamiento(Long alojamientoId) {
-        return resenaRepository.findByAlojamientoId(alojamientoId);
-    }
+    public List<Resena> obtenerResenasPorAlojamiento(Long id){
+    return resenaRepository.findByAlojamientoIdOrderByFechaPublicacionDesc(id);
+}
 }

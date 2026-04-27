@@ -94,15 +94,7 @@
 <!-- TopNavBar -->
 <header class="bg-[#f8fafa]/80 backdrop-blur-xl docked full-width top-0 z-50 shadow-[0px_24px_24px_rgba(44,52,53,0.04)]">
 <nav class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
-<div class="text-xl font-bold tracking-tighter text-[#3d637e]">Scholarly Sanctuary</div>
-<div class="hidden md:flex items-center gap-8">
-<a class="text-[#3d637e] font-semibold border-b-2 border-[#3d637e] font-['Manrope'] tracking-tight" href="#">Explore</a>
-<a class="text-[#acb3b4] hover:bg-[#dde4e4] transition-colors font-['Manrope'] tracking-tight px-3 py-1 rounded-lg" href="#">Community</a>
-</div>
-<div class="flex items-center gap-4">
-<button class="material-symbols-outlined p-2 text-[#3d637e] hover:bg-[#dde4e4] rounded-full transition-colors">notifications</button>
-<button class="material-symbols-outlined p-2 text-[#3d637e] hover:bg-[#dde4e4] rounded-full transition-colors">account_circle</button>
-</div>
+<div class="text-xl font-bold tracking-tighter text-[#3d637e]">Scholar Stay</div>
 </nav>
 </header>
 <!-- Main Content: Digital Receipt -->
@@ -128,33 +120,30 @@
 </div>
 <!-- Main Transaction Info -->
 <div class="text-center py-6 bg-surface-container-low rounded-xl mb-8">
-<p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">ID DE RESERVA</p>
-<p class="font-headline text-xl font-bold text-on-surface mb-4">#SS-2024-8832</p>
-<div class="h-px w-12 bg-outline-variant/30 mx-auto mb-4"></div>
-<p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">MONTO TOTAL</p>
-<p class="font-headline text-4xl font-extrabold text-primary tracking-tighter">S/ 1,240.00</p>
+    <p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">ID DE RESERVA</p>
+    <p class="font-headline text-xl font-bold text-on-surface mb-4" th:text="${'#SS-' + reserva.id + '-RES'}">#SS-2024-8832</p>
+    <div class="h-px w-12 bg-outline-variant/30 mx-auto mb-4"></div>
+    <p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">MONTO TOTAL</p>
+    <p class="font-headline text-4xl font-extrabold text-primary tracking-tighter" th:text="${'S/ ' + reserva.precioTotal}">S/ 1,240.00</p>
 </div>
 <!-- Minimal Breakdown -->
-<div class="space-y-4 mb-10">
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Concepto</span>
-<span class="text-on-surface font-semibold">Residencia Semestral</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Periodo</span>
-<span class="text-on-surface font-semibold">Sep 2024 - Ene 2025</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Método de Pago</span>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-lg text-outline">credit_card</span>
-<span class="text-on-surface font-semibold">Visa **** 4242</span>
-</div>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Fecha</span>
-<span class="text-on-surface font-semibold">15 de Mayo, 2024</span>
-</div>
+<div class="space-y-4 mb-10 border-t border-b border-surface-container-high py-6">
+    <div class="flex justify-between items-start gap-4">
+        <span class="text-on-surface-variant font-medium text-sm">Alojamiento</span>
+        <span class="text-on-surface font-extrabold text-right leading-tight max-w-[200px]" th:text="${reserva.alojamiento.titulo}">Nombre del Alojamiento Seleccionado</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Periodo</span>
+        <span class="text-on-surface font-semibold" th:text="${reserva.fechaInicio + ' al ' + reserva.fechaFin}">Sep 2024 - Ene 2025</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Estudiante</span>
+        <span class="text-on-surface font-semibold" th:text="${usuario.nombre}">Nombre</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Fecha Emisión</span>
+        <span class="text-on-surface font-semibold" th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}">15 de Mayo, 2024</span>
+    </div>
 </div>
 <!-- Compatibility Badge (Design System Specific) -->
 <div class="bg-secondary-container rounded-lg p-4 flex items-center justify-between mb-10">

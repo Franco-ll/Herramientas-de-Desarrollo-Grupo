@@ -103,9 +103,14 @@
 <a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications</a>
 <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
 </div>
-<a th:href="@{/perfil}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all active:scale-98">
-                Mi Perfil
-            </a>
+<div class="flex items-center gap-4">
+    <a th:href="@{/perfil}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+        Mi Perfil
+    </a>
+    <a th:href="@{/logout}" class="flex items-center gap-2 text-error font-bold text-sm hover:text-error-dim transition-colors px-3 py-2 rounded-lg hover:bg-error/5">
+    <span class="material-symbols-outlined text-lg">logout</span>
+    <span class="hidden lg:inline">Cerrar Sesión</span>
+</a>
 </div>
 </nav>
 <main class="pt-28 pb-20 px-8 max-w-7xl mx-auto">
@@ -116,7 +121,7 @@
                     Tu próximo <br/> <span class="text-primary italic">Santuario Académico</span>.
                 </h1>
 <p class="text-lg text-on-surface-variant max-w-md leading-relaxed">
-                    Curamos espacios diseñados para el enfoque, la colaboración y el descanso de la comunidad universitaria internacional.
+                    Ofrecemos espacios diseñados para el enfoque, la colaboración y el descanso de la comunidad universitaria.
                 </p>
 </div>
 <div class="hidden md:block">
@@ -265,7 +270,7 @@
             if (title.includes(query)) {
                 card.classList.remove('filtered-out');
 
-                if (matchCount < 3) {
+                if (matchCount < 5) {
                     card.style.display = '';
                 } else {
                     card.style.display = 'none';

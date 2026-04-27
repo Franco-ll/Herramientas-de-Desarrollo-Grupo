@@ -106,52 +106,52 @@
 <span class="material-symbols-outlined text-[18px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 <span class="font-label text-sm font-semibold tracking-wide">Reserva Confirmada</span>
 </div>
-<p class="font-headline text-4xl font-extrabold text-primary tracking-tighter mb-2">S/ 650.00</p>
+<p class="font-headline text-4xl font-extrabold text-primary tracking-tighter mb-2" th:text="${'S/ ' + reserva.alojamiento.precioMensual}">S/ 650.00</p>
 <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-on-surface leading-[1.1]">
-                        Tu santuario académico te espera.
-                    </h1>
+                        ¡Reserva Confirmada!
+</h1>
 <p class="text-lg text-on-surface-variant max-w-md font-body leading-relaxed">
-                        Hemos procesado tu solicitud con éxito. Scholar Stay está listo para recibirte en tu próximo hogar de estudio.
-                    </p>
+    Tu santuario académico te espera. Código de reserva: <span class="font-bold text-primary" th:text="${'RES-' + reserva.id + 'SS'}">#12345</span>
+</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div class="bg-surface-container-low p-6 rounded-xl space-y-4">
-<span class="material-symbols-outlined text-primary" data-icon="event">event</span>
-<div>
-<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Check-in</p>
-<p class="text-lg font-bold">15 Septiembre, 2024</p>
-<p class="text-sm text-on-surface-variant">Desde las 14:00 hrs</p>
-</div>
+    <span class="material-symbols-outlined text-primary" data-icon="event">event</span>
+    <div>
+        <p class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Check-in</p>
+        <p class="text-lg font-bold" th:text="${reserva.fechaInicio}">15 Septiembre, 2024</p>
+        <p class="text-sm text-on-surface-variant" th:text="${'Hasta: ' + reserva.fechaFin}">Hasta: 15 Junio, 2025</p>
+    </div>
 </div>
 <div class="bg-surface-container-low p-6 rounded-xl space-y-4">
-<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
-<div>
-<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Ubicación</p>
-<p class="text-lg font-bold">Residencia El Prado</p>
-<p class="text-sm text-on-surface-variant">Calle Mayor 42, Madrid</p>
-</div>
+    <span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+    <div>
+        <p class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Alojamiento</p>
+        <p class="text-lg font-bold" th:text="${reserva.alojamiento.titulo}">Residencia El Prado</p>
+        <p class="text-sm text-on-surface-variant" th:text="${reserva.alojamiento.ubicacion}">Calle Mayor 42, Madrid</p>
+    </div>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<a th:href="@{/explorar-residencias}" class="bg-primary text-on-primary py-4 px-8 rounded-full font-headline font-bold text-lg hover:bg-primary-dim transition-all text-center">
-                    Ir al panel de control
+<a th:href="@{/dashboard}" class="bg-primary text-on-primary py-4 px-8 rounded-full font-headline font-bold text-lg hover:bg-primary-dim transition-all text-center">
+                    Ir al Dashboard
                 </a>
-<a th:href="@{/recibo-digital}" class="bg-surface-container-high text-on-surface py-4 px-8 rounded-full font-headline font-bold text-lg hover:bg-surface-container-highest transition-all text-center">
+<a th:href="@{/reciboDigital}" class="bg-surface-container-high text-on-surface py-4 px-8 rounded-full font-headline font-bold text-lg hover:bg-surface-container-highest transition-all text-center">
                     Ver mi recibo
                 </a>
 </div>
 </section>
 <section class="lg:col-span-6 order-1 lg:order-2 relative">
 <div class="relative z-10 w-full aspect-square md:aspect-video lg:aspect-[4/5] rounded-xl overflow-hidden editorial-shadow bg-surface-container-highest">
-<img alt="Academic Sanctuary" class="w-full h-full object-cover grayscale-[20%] contrast-[1.05]" data-alt="Modern minimal student common area with warm wood furniture, books, plants, and soft sunlight coming through a large window" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJHiBIEkU-b710O_7foE9Ep_DQ82lNvj2_uxhgVApP2ljs13FyuJNnHtJ6mdHehZOdg93J5TMPE-InAhnbfC-qHFGRWRa8uFzjBWGejCwvh2Q4_beDeinIz7SqFfqBZ7FUsHu6yX5AuJmVQoGfvbuVs_SuPCpVz81zZPJODDpvEpR7h1LtRAmc1nvOgdxwP5euCzonMELbOrIqmQ3lqUDHLLmchjILT3UKEW2YyJPdw0YssQ5FsAP3nZSfVZiZTn2obrqxRJyIuGA"/>
+    <img th:src="@{/images/{img}(img=${reserva.alojamiento.imagen})}" alt="Academic Sanctuary" class="w-full h-full object-cover grayscale-[20%] contrast-[1.05]" />
 <div class="absolute bottom-6 right-6 bg-white/80 backdrop-blur-md p-6 rounded-xl max-w-xs editorial-shadow border border-white/20">
 <div class="flex items-center gap-4 mb-3">
 <div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
-<img alt="Host Avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a friendly female academic advisor in a modern library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhGvPNfw92jrwS4Pm4FBdzoLeDyADwkRoTf1Rad24cpw-l0akZFNoexfiZLrnEv6l7N7kTUtR2Lv5wTCUNASpLGWpqMhaqZu3MrfE4RIQAOITjSwiYlC4HKkIItpeRoh5FnIx9KnwuGBbFUT-ZXiP_NP1j8cy2g7rvAAEkPKp2AXNWgGdKsWdy7qcaECx8mxOz9OgVEuM5E7-ncZc1NIW70bBcFoyZd1RG1-_WAWUXB3-Q_RIspSmoWE8whxFh6SCnlVkj3BIo2sk"/>
+<img alt="Host Avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a friendly female academic advisor in a modern library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
 </div>
 <div>
 <h3 class="text-sm font-bold">Tu Anfitriona</h3>
-<p class="text-xs text-on-surface-variant">Dra. Elena Martínez</p>
+<p class="text-xs text-on-surface-variant">Sra. Beatriz</p>
 </div>
 </div>
 <div class="flex items-center justify-between gap-4">

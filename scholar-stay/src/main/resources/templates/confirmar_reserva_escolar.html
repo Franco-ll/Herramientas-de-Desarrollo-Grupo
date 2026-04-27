@@ -111,8 +111,12 @@
 <!-- Form Section -->
 <div class="lg:col-span-7 space-y-10">
 <section>
-<h1 class="text-4xl font-extrabold tracking-tight mb-2 text-on-surface">Confirma tu estancia</h1>
-<p class="text-on-surface-variant text-lg">Revisa los detalles de tu reserva antes de proceder al pago seguro.</p>
+    <a th:href="@{/alojamiento/{id}(id=${alojamiento.id})}" class="flex items-center gap-2 text-primary font-bold mb-6 hover:underline group">
+        <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        Volver al detalle del alojamiento
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-on-surface">Confirma tu estancia</h1>
+    <p class="text-on-surface-variant text-lg">Revisa los detalles de tu reserva antes de proceder al pago seguro.</p>
 </section>
 <!-- Custom Calendar Selection Container -->
 <div class="bg-surface-container-low p-8 rounded-xl space-y-6">
@@ -121,69 +125,21 @@
 <h2 class="text-xl font-bold">Selección de Fechas</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm">
-<label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Llegada</label>
-<div class="text-lg font-semibold">15 Septiembre, 2024</div>
-</div>
-<div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm border-2 border-primary">
-<label class="block text-xs font-bold uppercase tracking-wider text-primary mb-1">Salida</label>
-<div class="text-lg font-semibold">15 Junio, 2025</div>
-</div>
+    <div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm">
+        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Llegada</label>
+        <input type="date" id="fecha-inicio" class="w-full bg-transparent border-none p-0 text-lg font-semibold focus:ring-0" required onchange="calculateTotal()"/>
+    </div>
+    <div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm border-2 border-primary">
+        <label class="block text-xs font-bold uppercase tracking-wider text-primary mb-1">Salida</label>
+        <input type="date" id="fecha-fin" class="w-full bg-transparent border-none p-0 text-lg font-semibold focus:ring-0" required onchange="calculateTotal()"/>
+    </div>
 </div>
 <!-- Simplified Calendar Visual -->
-<div class="bg-surface-container-lowest p-6 rounded-lg">
-<div class="flex justify-between items-center mb-4">
-<span class="font-bold">Septiembre 2024</span>
-<div class="flex gap-2">
-<span class="material-symbols-outlined text-outline cursor-pointer">chevron_left</span>
-<span class="material-symbols-outlined text-outline cursor-pointer">chevron_right</span>
-</div>
-</div>
-<div class="grid grid-cols-7 gap-2 text-center text-sm">
-<div class="text-outline-variant font-medium">LU</div>
-<div class="text-outline-variant font-medium">MA</div>
-<div class="text-outline-variant font-medium">MI</div>
-<div class="text-outline-variant font-medium">JU</div>
-<div class="text-outline-variant font-medium">VI</div>
-<div class="text-outline-variant font-medium">SA</div>
-<div class="text-outline-variant font-medium">DO</div>
-<!-- Simple calendar grid representation -->
-<div class="py-2 text-outline-variant/40">28</div>
-<div class="py-2 text-outline-variant/40">29</div>
-<div class="py-2 text-outline-variant/40">30</div>
-<div class="py-2 text-outline-variant/40">31</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">1</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">2</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">3</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">4</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">5</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">6</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">7</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">8</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">9</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">10</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">11</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">12</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">13</div>
-<div class="calendar-day py-2 hover:bg-surface-container transition-colors rounded-lg cursor-pointer" onclick="selectDate(this)">14</div>
-<div class="calendar-day py-2 bg-primary text-on-primary rounded-lg font-bold cursor-pointer" onclick="selectDate(this)">15</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">16</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">17</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">18</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">19</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">20</div>
-<div class="calendar-day py-2 hover:bg-primary-container rounded-lg cursor-pointer" onclick="selectDate(this)">21</div>
-</div>
-<script>
-    function selectDate(element) {
-        document.querySelectorAll('.calendar-day').forEach(el => {
-            el.classList.remove('bg-primary', 'text-on-primary', 'font-bold');
-            el.classList.add('hover:bg-surface-container');
-        });
-        element.classList.add('bg-primary', 'text-on-primary', 'font-bold');
-        element.classList.remove('hover:bg-surface-container');
-    }
-</script>
+<div class="bg-surface-container-lowest p-6 rounded-lg text-center">
+    <p class="text-on-surface-variant italic">Usa el selector de arriba para definir tus fechas académicas.</p>
+    <div id="date-validation-error" class="hidden mt-4 p-3 bg-error-container text-on-error-container rounded-lg text-sm font-bold">
+        La fecha de salida debe ser posterior a la de llegada.
+    </div>
 </div>
 </div>
 <!-- Price Breakdown & Services -->
@@ -195,24 +151,20 @@
 <div class="bg-surface-container-lowest rounded-xl overflow-hidden">
 <div class="p-6 space-y-4">
 <div class="flex justify-between items-center">
-<span class="text-on-surface-variant">Renta mensual base</span>
-<span class="font-semibold">S/ 650,00</span>
+    <span class="text-on-surface-variant">Renta mensual base</span>
+    <span class="font-semibold" th:text="${'S/ ' + #numbers.formatDecimal(alojamiento.precioMensual, 1, 2)}">S/ 650,00</span>
 </div>
 <div class="flex justify-between items-center">
-<span class="text-on-surface-variant">Suministros (Agua, Luz, Gas)</span>
-<span class="text-secondary font-medium italic">Incluido</span>
+    <span class="text-on-surface-variant">Cantidad de tiempo</span>
+    <span id="duracion-reserva" class="font-semibold">--</span>
 </div>
 <div class="flex justify-between items-center">
-<span class="text-on-surface-variant">Internet Fibra Óptica</span>
-<span class="text-secondary font-medium italic">Incluido</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant">Limpieza semanal zonas comunes</span>
-<span class="text-secondary font-medium italic">Incluido</span>
+    <span class="text-on-surface-variant">Servicios (Wifi, Agua, Luz)</span>
+    <span class="text-secondary font-medium italic">Incluido</span>
 </div>
 <div class="pt-4 border-t border-surface-container-high flex justify-between items-center">
-<span class="text-lg font-bold">Total a pagar mensual</span>
-<span class="text-2xl font-extrabold text-primary">S/ 650,00</span>
+    <span class="text-lg font-bold">Total estimado</span>
+    <span id="precio-total" class="text-2xl font-extrabold text-primary" th:data-precio-base="${alojamiento.precioMensual}">S/ 0,00</span>
 </div>
 </div>
 <div class="bg-primary-container/30 px-6 py-3 flex items-center gap-3">
@@ -222,37 +174,100 @@
 </div>
 </div>
 <div class="pt-6">
-<button onclick="window.location.href='/pasarela-pago'" class="w-full bg-primary hover:bg-primary-dim text-on-primary text-xl font-bold py-6 rounded-full transition-all shadow-lg shadow-primary/20 flex justify-center items-center gap-3 active:scale-[0.98]">
-                        Confirmar Pago
-                        <span class="material-symbols-outlined">lock</span>
-</button>
-<p class="text-center mt-4 text-sm text-outline">Transacción encriptada y segura. Al confirmar, aceptas nuestros términos de servicio.</p>
+    <button id="btn-confirmar" onclick="proceedToPayment()" class="w-full bg-primary hover:bg-primary-dim text-on-primary text-xl font-bold py-6 rounded-full transition-all shadow-lg shadow-primary/20 flex justify-center items-center gap-3 active:scale-[0.98] opacity-50 cursor-not-allowed" disabled>
+                            Confirmar Pago
+                            <span class="material-symbols-outlined">lock</span>
+    </button>
+    <p class="text-center mt-4 text-sm text-outline">Transacción encriptada y segura. Al confirmar, aceptas nuestros términos de servicio.</p>
 </div>
+
+<script th:inline="javascript">
+    const precioBase = /*[[${alojamiento.precioMensual}]]*/ 0;
+    const alojamientoId = /*[[${alojamiento.id}]]*/ 0;
+
+    function calculateTotal() {
+        const arrival = document.getElementById('fecha-inicio').value;
+        const departure = document.getElementById('fecha-fin').value;
+        const btn = document.getElementById('btn-confirmar');
+        const errorMsg = document.getElementById('date-validation-error');
+
+        if (!arrival || !departure) return;
+
+        const d1 = new Date(arrival);
+        const d2 = new Date(departure);
+
+        if (d2 <= d1) {
+            errorMsg.classList.remove('hidden');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('duracion-reserva').innerText = "Error fechas";
+            document.getElementById('precio-total').innerText = "S/ 0.00";
+            return;
+        }
+
+        errorMsg.classList.add('hidden');
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        const diffTime = Math.abs(d2 - d1);
+        const diffDaysTotal = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        let duracionText = "";
+        let total = 0;
+
+        const months = Math.floor(diffDaysTotal / 30);
+        const remainingDays = diffDaysTotal % 30;
+
+        if (months > 0) {
+            duracionText = months === 1 ? "1 mes" : `${months} meses`;
+            if (remainingDays > 0) {
+                const daysText = remainingDays === 1 ? "1 día" : `${remainingDays} días`;
+                duracionText += ` y ${daysText}`;
+            }
+        } else {
+            duracionText = diffDaysTotal === 1 ? "1 día" : `${diffDaysTotal} días`;
+        }
+
+        total = (precioBase * (diffDaysTotal / 30)).toFixed(2);
+
+        document.getElementById('duracion-reserva').innerText = duracionText;
+        document.getElementById('precio-total').innerText = "S/ " + total;
+        document.getElementById('precio-total').dataset.calculatedTotal = total;
+    }
+
+    function proceedToPayment() {
+        const arrival = document.getElementById('fecha-inicio').value;
+        const departure = document.getElementById('fecha-fin').value;
+        const total = document.getElementById('precio-total').dataset.calculatedTotal;
+        
+        window.location.href = `/pasarelaPagos?alojamientoId=${alojamientoId}&fechaInicio=${arrival}&fechaFin=${departure}&total=${total}`;
+    }
+</script>
 </div>
 <!-- Property Card Section (Sidebar) -->
 <div class="lg:col-span-5 sticky top-28">
 <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
 <!-- Asymmetric Hero for Sidebar -->
 <div class="relative h-64">
-<img alt="Luxury student studio" class="w-full h-full object-cover" data-alt="Modern minimalist studio apartment with large windows, study desk, and wooden floors in soft morning natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPBe6Rt0L2KssEKVixxU-Tw6ThHDVvQ82SXHntpBgpNA_W3a1JeBSxXqYM53ib4xtszUhOwPSBx9VFwkGGiVAqN6tZh22VHn8_6bRBoEzMtFj0XtOkeDg3-bqdQsmlM-1jXLHemud1Zohh9egRFNQZaK_VnhTtq1ZVNQRCVe6ESQKZitjYoymwE8bJZS3jxrROY7qF1_MX6504QMhdXf6_QhA1yOG8kFumBcr9sGRhBn7x645kVT0RBLDOqea5K4i65JBkZ8oqNIc"/>
-<div class="absolute top-4 right-4 bg-secondary text-on-secondary px-4 py-2 rounded-full font-bold flex items-center gap-1 shadow-md">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                            4.9
-                        </div>
+    <img th:src="@{/images/{img}(img=${alojamiento.imagen})}" alt="Alojamiento" class="w-full h-full object-cover" />
+    <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-4 py-2 rounded-full font-bold flex items-center gap-1 shadow-md">
+        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span th:text="${alojamiento.calificacionPromedio}">4.9</span>
+    </div>
 </div>
 <div class="p-8 space-y-6">
 <div>
-<span class="text-xs font-bold uppercase tracking-widest text-primary mb-2 block">Habitación Premium</span>
-<h3 class="text-2xl font-bold leading-tight">The Heritage Studio - Salamanca District</h3>
-<div class="flex items-center gap-2 text-on-surface-variant mt-2">
-<span class="material-symbols-outlined scale-75">location_on</span>
-<span class="text-sm font-medium">Calle de Velázquez, Madrid</span>
-</div>
+    <span class="text-xs font-bold uppercase tracking-widest text-primary mb-2 block">Alojamiento Scholar</span>
+    <h3 class="text-2xl font-bold leading-tight" th:text="${alojamiento.titulo}">Nombre Alojamiento</h3>
+    <div class="flex items-center gap-2 text-on-surface-variant mt-2">
+        <span class="material-symbols-outlined scale-75">location_on</span>
+        <span class="text-sm font-medium" th:text="${alojamiento.ubicacion}">Ubicación</span>
+    </div>
 </div>
 <!-- Match Chip -->
 <div class="bg-secondary-container rounded-full px-4 py-2 inline-flex items-center gap-2">
-<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="text-sm font-semibold text-on-secondary-container">94% Afinidad con residentes</span>
+    <span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">favorite</span>
+    <span class="text-sm font-semibold text-on-secondary-container" th:text="${alojamiento.calificacionPromedio + ' de calificación'}">94% Afinidad</span>
 </div>
 <div class="grid grid-cols-2 gap-4 pt-4 border-t border-surface-container">
 <div class="flex items-center gap-3">
@@ -281,10 +296,10 @@
 </div>
 </div>
 <div class="bg-surface-container-low p-4 rounded-xl flex items-center gap-4">
-<img alt="Property manager" class="w-12 h-12 rounded-full object-cover" data-alt="Friendly professional man smiling, property manager portrait, high-end editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRt5c7JT-Atjl22a3RiRYm4lwwAHZmml9dXfrpXV_UZArUlwXF4j0Pj3VawNNzK2PDie7qzIhhUI6sJ60pPrVLMsbB8UhY8zLD5V3V2DMBrRsTjXz6gKMxTy5cYmtI_AA6IHfOwnNAgGWVQE1bLaU540ChRIeqFfNgSgfECbI3I2sG58eyv65U2aEBoWmfWN3Iwv6RApp-UYgU91kzfAW_ZWZwRGyhV6NuBf6fClqaohetrPePlzNBQjRvLiL1IQeKhnVodr0Y-q8"/>
+<img alt="Property manager" class="w-12 h-12 rounded-full object-cover" data-alt="Friendly professional man smiling, property manager portrait, high-end editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
 <div>
 <p class="text-xs text-on-surface-variant font-medium">Anfitrión</p>
-<p class="font-bold">Alejandro M.</p>
+<p class="font-bold">Sra. Beatriz</p>
 </div>
 <div class="ml-auto flex gap-2">
 <button class="p-2 rounded-full bg-white text-primary shadow-sm hover:scale-110 transition-transform">
