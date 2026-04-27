@@ -225,15 +225,15 @@
 <div>
 <h4 class="font-bold text-on-surface-variant text-sm uppercase tracking-widest mb-6">Horario de Estudio</h4>
 <select class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary transition-all outline-none w-full" name="horarioEstudio">
-    <option value="Mañanas" th:selected="${perfil.horarioEstudio == 'Mañanas'}">Mañanas</option>
-    <option value="Tardes" th:selected="${perfil.horarioEstudio == 'Tardes'}">Tardes</option>
-    <option value="Noctámbulo" th:selected="${perfil.horarioEstudio == 'Noctámbulo'}">Noctámbulo</option>
+    <option value="Mañanas" th:selected="${perfil.horarioEstudio == 'Mañanas'}">Mañana</option>
+    <option value="Tardes" th:selected="${perfil.horarioEstudio == 'Tardes'}">Tarde</option>
+    <option value="Noctámbulo" th:selected="${perfil.horarioEstudio == 'Noctámbulo'}">Noche</option>
 </select>
 
 <h4 class="font-bold text-on-surface-variant text-sm uppercase tracking-widest mt-6 mb-6">Hábitos de Sueño</h4>
 <select class="bg-surface-container-highest border-none rounded-lg p-4 focus:ring-2 focus:ring-primary transition-all outline-none w-full" name="habitosSueno">
     <option value="Madrugador" th:selected="${perfil.habitosSueno == 'Madrugador'}">Madrugador</option>
-    <option value="Noctámbulo" th:selected="${perfil.habitosSueno == 'Noctámbulo'}">Noctámbulo</option>
+    <option value="Noctámbulo" th:selected="${perfil.habitosSueno == 'Noctámbulo'}">Trasnochador</option>
 </select>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-4">
@@ -241,9 +241,6 @@
 <div class="flex flex-col">
 <span class="font-bold">Humo y Vapeo</span>
 <span class="text-xs text-on-surface-variant">¿Se permite en zonas comunes?</span>
-</div>
-<div class="w-14 h-8 bg-surface-container-highest rounded-full p-1 cursor-pointer">
-<div class="w-6 h-6 bg-white rounded-full shadow-sm"></div>
 </div>
 </div>
 <div class="flex items-center justify-between">

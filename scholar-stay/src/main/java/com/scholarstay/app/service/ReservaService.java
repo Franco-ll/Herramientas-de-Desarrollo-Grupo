@@ -1,12 +1,12 @@
 package com.scholarstay.app.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.scholarstay.app.model.Reserva;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.repository.ReservaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ReservaService {

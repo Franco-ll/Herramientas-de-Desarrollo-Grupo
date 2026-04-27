@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gestión de Propiedades - Scholar Stay Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          theme: { extend: { colors: {
+            "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+            "primary-container": "#b8dffe", "on-primary-container": "#29506a",
+            "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+            "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
+            "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
+            "surface-container-high": "#e3e9ea", "surface-container-highest": "#dde4e4",
+            "surface-container-lowest": "#ffffff", "on-surface": "#2c3435",
+            "on-surface-variant": "#596061", "outline": "#757c7d", "outline-variant": "#acb3b4",
+            "error": "#a83836",
+          }, fontFamily: { "headline": ["Manrope"] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 4px 24px rgba(44,52,53,0.06); }
+        .prop-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .prop-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(44,52,53,0.12); }
+        .prop-card.hidden-card { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
+    <div class="mb-8">
+        <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
+        <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
+        <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
+                 th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
+            <div>
+                <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                <p class="text-[10px] text-outline">Gestión Académica</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/dashboard}">
+            <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
+            <span class="material-symbols-outlined">group</span><span>Residentes</span>
+        </a>
+        <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/propiedades}">
+            <span class="material-symbols-outlined filled">apartment</span><span>Propiedades</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
+            <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
+        </a>
+    </nav>
+    <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
+        <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
+            <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-8 min-h-screen">
+
+    <!-- Header -->
+    <header class="mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <div>
+            <h1 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2">Gestión de Propiedades</h1>
+            <p class="text-on-surface-variant">
+                <span th:text="${vm.totalPropiedades}">0</span> propiedades con
+                <span th:text="${vm.totalHabitaciones}">0</span> habitaciones en total.
+            </p>
+        </div>
+        <!-- Botón Añadir Propiedad -->
+        <a href="javascript:void(0)"
+   class="inline-flex items-center gap-2 bg-gray-400 text-white px-6 py-3 rounded-xl font-headline font-bold text-sm cursor-not-allowed opacity-60">
+            <span class="material-symbols-outlined text-[18px]">add_home</span>
+            + Añadir nueva propiedad
+        </a>
+    </header>
+
+    <!-- KPI Bar -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-5 editorial-shadow">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Total Propiedades</p>
+            <p class="text-3xl font-headline font-extrabold text-on-surface" th:text="${vm.totalPropiedades}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 editorial-shadow">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Total Habitaciones</p>
+            <p class="text-3xl font-headline font-extrabold text-primary" th:text="${vm.totalHabitaciones}">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 editorial-shadow">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Calificación Promedio</p>
+            <p class="text-3xl font-headline font-extrabold text-secondary"
+               th:text="${vm.calificacionPromedioTotal > 0 ? vm.calificacionPromedioTotal : '—'}">—</p>
+        </div>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="bg-white rounded-2xl editorial-shadow p-6 mb-6 flex flex-wrap gap-4 items-end">
+        <div class="flex-1 min-w-[180px]">
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-2">Zona / Ubicación</label>
+            <input type="text" id="filtroZona" oninput="filtrarPropiedades()" placeholder="Buscar por zona..."
+                   class="w-full bg-surface-container-low border border-outline-variant/30 text-on-surface text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30"/>
+        </div>
+        <div class="flex-1 min-w-[160px]">
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-2">Estado</label>
+            <select id="filtroEstado" onchange="filtrarPropiedades()"
+                    class="w-full bg-surface-container-low border border-outline-variant/30 text-on-surface text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                <option value="">Todos</option>
+                <option value="alta">Alta calificación (≥4.5)</option>
+                <option value="media">Media (4.0–4.4)</option>
+                <option value="baja">Baja (&lt;4.0)</option>
+            </select>
+        </div>
+        <button onclick="limpiarFiltrosProp()"
+                class="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-on-surface transition-colors px-3 py-2 rounded-lg hover:bg-surface-container-low">
+            <span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
+            Limpiar
+        </button>
+    </div>
+
+    <!-- Properties Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="gridPropiedades">
+        <div th:if="${vm.propiedades.empty}" class="col-span-3 text-center py-16 text-on-surface-variant">
+            No hay propiedades registradas aún.
+        </div>
+
+        <div th:each="prop : ${vm.propiedades}"
+             th:attr="data-zona=${prop.ubicacion != null ? prop.ubicacion : ''},
+                      data-calificacion=${prop.calificacionPromedio != null ? prop.calificacionPromedio : 0}"
+             class="prop-card bg-white rounded-2xl editorial-shadow overflow-hidden">
+            <!-- Image -->
+            <div class="relative h-44 bg-surface-container overflow-hidden">
+                <img class="w-full h-full object-cover"
+                     th:src="${prop.imagen != null ? '/images/' + prop.imagen : '/images/alojamiento1.png'}"
+                     th:alt="${prop.titulo}"
+                     onerror="this.src='/images/alojamiento1.png'"/>
+                <!-- Rating badge -->
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-secondary text-[14px]"
+                          style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">star</span>
+                    <span class="text-xs font-black" th:text="${prop.calificacionPromedio}">0.0</span>
+                </div>
+                <!-- Habitaciones badge -->
+                <div class="absolute top-3 left-3 bg-primary/90 text-on-primary text-[10px] font-bold px-2.5 py-1 rounded-full">
+                    <span th:text="${(prop.habitaciones != null ? prop.habitaciones : 0) + ' hab.'}">0 hab.</span>
+                </div>
+            </div>
+            <!-- Content -->
+            <div class="p-6">
+                <h3 class="font-headline font-bold text-on-surface mb-1 line-clamp-1" th:text="${prop.titulo}">Alojamiento</h3>
+                <p class="text-sm text-on-surface-variant mb-4 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">location_on</span>
+                    <span class="line-clamp-1" th:text="${prop.ubicacion}">Ubicación</span>
+                </p>
+                <!-- Services preview -->
+                <div th:if="${prop.servicios != null and !prop.servicios.empty}" class="flex flex-wrap gap-1.5 mb-4">
+                    <span th:each="servicio, iter : ${prop.servicios}" th:if="${iter.index < 3}"
+                          class="text-[10px] font-semibold bg-secondary-container/50 text-on-secondary-container px-2 py-0.5 rounded-full"
+                          th:text="${servicio}">Servicio</span>
+                </div>
+                <!-- Price & actions -->
+                <div class="flex justify-between items-center pt-3 border-t border-surface-container-high">
+                    <div>
+                        <span class="text-lg font-black text-primary">S/ <span th:text="${prop.precioMensual}">0</span></span>
+                        <span class="text-xs text-on-surface-variant">/mes</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <a href="javascript:void(0)"
+   class="p-2 rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed"
+   title="Ver detalle deshabilitado">
+                            <span class="material-symbols-outlined text-[18px]">visibility</span>
+                        </a>
+                        <button disabled
+        class="p-2 rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed"
+        title="Editar deshabilitado">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No results state -->
+    <div id="sinResultadosProp" class="hidden py-16 text-center text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl mb-3 block">search_off</span>
+        No hay propiedades que coincidan con los filtros.
+    </div>
+</main>
+
+<script>
+function filtrarPropiedades() {
+    const zona   = document.getElementById('filtroZona').value.toLowerCase();
+    const estado = document.getElementById('filtroEstado').value;
+    const tarjetas = document.querySelectorAll('#gridPropiedades [data-zona]');
+    let visibles = 0;
+
+    tarjetas.forEach(card => {
+        const zonaProp = (card.dataset.zona || '').toLowerCase();
+        const calif    = parseFloat(card.dataset.calificacion || 0);
+
+        const matchZona = !zona || zonaProp.includes(zona);
+        let matchEstado = true;
+        if (estado === 'alta')  matchEstado = calif >= 4.5;
+        if (estado === 'media') matchEstado = calif >= 4.0 && calif < 4.5;
+        if (estado === 'baja')  matchEstado = calif < 4.0;
+
+        if (matchZona && matchEstado) {
+            card.style.display = '';
+            visibles++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    document.getElementById('sinResultadosProp').classList.toggle('hidden', visibles > 0);
+}
+
+function limpiarFiltrosProp() {
+    document.getElementById('filtroZona').value  = '';
+    document.getElementById('filtroEstado').value = '';
+    filtrarPropiedades();
+}
+</script>
+</body>
+</html>

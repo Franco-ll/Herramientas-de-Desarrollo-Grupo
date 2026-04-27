@@ -26,6 +26,10 @@ public class WebAuthController {
         Usuario usuario = authService.authenticate(email, password);
         if (usuario != null) {
             session.setAttribute("loggedUser", usuario);
+            // Redirect ADMIN users to the admin panel
+            if (usuario.getRol() != null && "ROLE_ADMIN".equals(usuario.getRol().getNombre())) {
+                return "redirect:/admin/dashboard";
+            }
             return "redirect:/dashboard";
         } else {
             model.addAttribute("error", "Credenciales inválidas");

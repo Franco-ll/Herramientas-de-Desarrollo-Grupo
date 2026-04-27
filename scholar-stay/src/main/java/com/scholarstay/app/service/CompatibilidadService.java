@@ -1,14 +1,14 @@
 package com.scholarstay.app.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.scholarstay.app.model.Compatibilidad;
 import com.scholarstay.app.model.PerfilAcademico;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.repository.CompatibilidadRepository;
 import com.scholarstay.app.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CompatibilidadService {

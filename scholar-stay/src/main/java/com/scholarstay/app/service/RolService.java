@@ -1,11 +1,11 @@
 package com.scholarstay.app.service;
 
-import com.scholarstay.app.model.Rol;
-import com.scholarstay.app.repository.RolRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.scholarstay.app.model.Rol;
+import com.scholarstay.app.repository.RolRepository;
 
 @Service
 public class RolService {

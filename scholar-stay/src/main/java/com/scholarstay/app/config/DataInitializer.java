@@ -1,7 +1,11 @@
 package com.scholarstay.app.config;
 
 import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.model.Rol;
+import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.repository.AlojamientoRepository;
+import com.scholarstay.app.repository.RolRepository;
+import com.scholarstay.app.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +16,28 @@ import java.util.Arrays;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner initData(AlojamientoRepository repository) {
+    CommandLineRunner initData(AlojamientoRepository repository,
+                               RolRepository rolRepository,
+                               UsuarioRepository usuarioRepository) {
         return args -> {
+            // --- Seed Roles ---
+            Rol rolAdmin = rolRepository.findByNombre("ROLE_ADMIN");
+            if (rolAdmin == null) {
+                rolAdmin = rolRepository.save(new Rol("ROLE_ADMIN"));
+            }
+            Rol rolEstudiante = rolRepository.findByNombre("ROLE_ESTUDIANTE");
+            if (rolEstudiante == null) {
+                rolEstudiante = rolRepository.save(new Rol("ROLE_ESTUDIANTE"));
+            }
+
+            // --- Seed Admin User ---
+            if (usuarioRepository.findByEmail("admin@scholarstay.com").isEmpty()) {
+                Usuario admin = new Usuario("Administrador", "admin@scholarstay.com", "admin123");
+                admin.setRol(rolAdmin);
+                usuarioRepository.save(admin);
+            }
+
+            // --- Seed Alojamientos ---
             if (repository.count() == 0) {
                 Alojamiento a1 = new Alojamiento();
                 a1.setTitulo("Loft Moderno Cerca de la Universidad");

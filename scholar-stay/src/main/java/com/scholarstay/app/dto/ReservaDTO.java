@@ -8,6 +8,8 @@ public class ReservaDTO {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
+    private Double monto;
+    private String nombreUsuario;
 
     public ReservaDTO() {}
 
@@ -25,4 +27,10 @@ public class ReservaDTO {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public Double getMonto() { return monto; }
+    public void setMonto(Double monto) { this.monto = monto; }
+
+    public String getNombreUsuario() { return nombreUsuario; }
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
 }
