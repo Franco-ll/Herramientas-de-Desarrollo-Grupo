@@ -1,17 +1,19 @@
 package com.scholarstay.app.controller.web;
 
-import com.scholarstay.app.dto.UsuarioDTO;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.repository.UsuarioRepository;
 import com.scholarstay.app.service.AdminDashboardService;
-import com.scholarstay.app.viewmodel.*;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")

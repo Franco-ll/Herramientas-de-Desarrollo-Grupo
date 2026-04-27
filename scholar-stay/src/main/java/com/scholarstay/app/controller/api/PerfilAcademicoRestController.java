@@ -1,11 +1,16 @@
 package com.scholarstay.app.controller.api;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.scholarstay.app.dto.PerfilAcademicoDTO;
 import com.scholarstay.app.model.PerfilAcademico;
 import com.scholarstay.app.service.PerfilAcademicoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/perfil-academico")
