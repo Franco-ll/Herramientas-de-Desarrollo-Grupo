@@ -1,11 +1,11 @@
 # Herramientas-de-Desarrollo-Grupo
-# 🏠 Coliving Académico
+# Coliving Académico
 
 Sistema web orientado a estudiantes que buscan compartir vivienda (coliving), optimizando la convivencia mediante perfiles académicos y preferencias personales.
 
 ---
 
-## 🎯 Objetivo del Proyecto
+## Objetivo del Proyecto
 
 Desarrollar una plataforma web que permita a los estudiantes:
 
@@ -15,7 +15,7 @@ Desarrollar una plataforma web que permita a los estudiantes:
 
 ---
 
-## ⚙️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 * Java 17
 * Spring Boot
@@ -37,7 +37,7 @@ Actualmente el sistema cuenta con:
 
 ---
 
-## 📅 Avances del Proyecto
+## Avances del Proyecto
 
 ### Semana 4
 - Análisis y definición del módulo de perfil académico
