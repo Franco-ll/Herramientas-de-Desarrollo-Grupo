@@ -142,11 +142,12 @@
 <div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center text-center shadow-sm">
 <div class="relative group">
 <div class="w-48 h-64 rounded-xl overflow-hidden mb-6 bg-surface-container-high transform rotate-2 transition-transform hover:rotate-0">
-<img class="w-full h-full object-cover" data-alt="artistic portrait of a young woman with glasses looking thoughtful, soft natural window light, grainy film aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
+<img class="w-full h-full object-cover" th:src="${perfil.avatar != null} ? @{/uploads/{img}(img=${perfil.avatar})} : 'https://via.placeholder.com/520x700?text=Avatar'" alt="Avatar del perfil"/>
 </div>
-<button class="absolute -bottom-2 -right-2 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-dim transition-colors">
+<label class="absolute -bottom-2 -right-2 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-dim transition-colors cursor-pointer">
 <span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
-</button>
+<input type="file" name="avatarFile" accept="image/*" form="perfilForm" class="hidden"/>
+</label>
 </div>
 <h3 class="text-xl font-bold text-on-surface" th:text="${usuario.nombre}">Sofía Martínez</h3>
 <p class="text-on-surface-variant text-sm mb-6">Estudiante de Arquitectura, 4to Año</p>
@@ -161,7 +162,7 @@
 </div>
 </aside>
 <!-- Main Form Canvas -->
-<form th:action="@{/perfil}" method="post" class="space-y-12">
+<form id="perfilForm" th:action="@{/perfil}" method="post" enctype="multipart/form-data" class="space-y-12">
     <div th:if="${param.success}" class="p-4 text-sm text-on-secondary bg-secondary rounded-lg mb-6 text-center">
         ¡Perfil actualizado con éxito!
     </div>

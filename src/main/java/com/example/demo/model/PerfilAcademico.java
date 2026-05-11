@@ -16,6 +16,7 @@ public class PerfilAcademico {
     private String habitosSueno; // e.g., "Madrugador", "Noctámbulo"
     private String nivelTolerancia; // e.g., "Alto", "Medio", "Bajo"
     private String biografia;
+    private String avatar;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -43,6 +44,9 @@ public class PerfilAcademico {
 
     public String getBiografia() { return biografia; }
     public void setBiografia(String biografia) { this.biografia = biografia; }
+
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }

@@ -1,8 +1,16 @@
 package com.scholarstay.app.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.scholarstay.app.dto.PerfilAcademicoDTO;
 import com.scholarstay.app.model.PerfilAcademico;
@@ -24,6 +32,10 @@ public class PerfilAcademicoService {
     }
 
     public PerfilAcademico actualizarPerfil(Long usuarioId, PerfilAcademicoDTO dto) {
+        return actualizarPerfil(usuarioId, dto, null);
+    }
+
+    public PerfilAcademico actualizarPerfil(Long usuarioId, PerfilAcademicoDTO dto, MultipartFile avatarFile) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         if (!usuarioOpt.isPresent()) {
             throw new RuntimeException("Usuario no encontrado");
@@ -40,6 +52,13 @@ public class PerfilAcademicoService {
         usuario.setNombre(dto.getNombre());
         usuario.setEmail(dto.getEmail());
         
+        if (avatarFile != null && !avatarFile.isEmpty()) {
+            String avatarPath = saveAvatarFile(avatarFile, usuarioId);
+            if (avatarPath != null) {
+                perfil.setAvatar(avatarPath);
+            }
+        }
+        
         perfil.setCarrera(dto.getCarrera());
         perfil.setHorarioEstudio(dto.getHorarioEstudio());
         perfil.setHabitosRuido(dto.getHabitosRuido());
@@ -55,6 +74,32 @@ public class PerfilAcademicoService {
         compatibilidadService.calcularCompatibilidadesParaUsuario(usuario);
         
         return perfil;
+    }
+
+    private String saveAvatarFile(MultipartFile avatarFile, Long usuarioId) {
+        if (avatarFile == null || avatarFile.isEmpty()) {
+            return null;
+        }
+
+        String filename = StringUtils.cleanPath(avatarFile.getOriginalFilename());
+        if (filename.contains("..")) {
+            return null;
+        }
+
+        String extension = StringUtils.getFilenameExtension(filename);
+        String storedName = usuarioId + "_" + System.currentTimeMillis() + (extension != null ? "." + extension : "");
+        Path uploadDir = Paths.get("uploads", "perfiles");
+
+        try {
+            Files.createDirectories(uploadDir);
+            Path destination = uploadDir.resolve(storedName);
+            try (InputStream inputStream = avatarFile.getInputStream()) {
+                Files.copy(inputStream, destination, StandardCopyOption.REPLACE_EXISTING);
+            }
+            return "perfiles/" + storedName;
+        } catch (IOException e) {
+            throw new RuntimeException("Error guardando la imagen de perfil", e);
+        }
     }
 
     public PerfilAcademico obtenerPorUsuario(Long usuarioId) {
