@@ -9,6 +9,16 @@
       "projectName": "scholar-stay",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ScholarStayApplication<com.scholarstay-scholar-stay>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.scholarstay.app.ScholarStayApplication",
+      "projectName": "com.scholarstay-scholar-stay",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
