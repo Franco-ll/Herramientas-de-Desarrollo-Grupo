@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-ScholarStayApplication<scholar-stay>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.scholarstay.app.ScholarStayApplication",
+      "projectName": "scholar-stay",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

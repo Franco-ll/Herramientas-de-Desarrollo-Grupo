@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Finanzas - Scholar Stay Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          theme: { extend: { colors: {
+            "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+            "primary-container": "#b8dffe", "on-primary-container": "#29506a",
+            "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+            "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
+            "surface": "#f8fafa", "surface-container-low": "#f0f4f4", "surface-container": "#eaefef",
+            "surface-container-high": "#e3e9ea", "surface-container-highest": "#dde4e4",
+            "surface-container-lowest": "#ffffff", "on-surface": "#2c3435",
+            "on-surface-variant": "#596061", "outline": "#757c7d", "outline-variant": "#acb3b4",
+            "error": "#a83836",
+          }, fontFamily: { "headline": ["Manrope", "sans-serif"] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 4px 24px rgba(44,52,53,0.06); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
+    <div class="mb-8">
+        <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
+        <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
+        <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
+                 th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
+            <div>
+                <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                <p class="text-[10px] text-outline">Gestión Académica</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/dashboard}">
+            <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
+            <span class="material-symbols-outlined">group</span><span>Residentes</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/propiedades}">
+            <span class="material-symbols-outlined">apartment</span><span>Propiedades</span>
+        </a>
+        <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/finanzas}">
+            <span class="material-symbols-outlined filled">payments</span><span>Finanzas</span>
+        </a>
+    </nav>
+    <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
+        <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
+            <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-8 min-h-screen">
+    <header class="mb-10">
+        <h1 class="text-3xl font-headline font-extrabold text-on-surface tracking-tight mb-1">Resumen Financiero</h1>
+        <p class="text-on-surface-variant">Control centralizado de flujos de ingresos y transacciones.</p>
+    </header>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Total Ingresos -->
+        <div class="bg-white rounded-xl p-6 editorial-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-primary-container/30 rounded-xl">
+                    <span class="material-symbols-outlined text-primary">payments</span>
+                </div>
+                <span class="text-xs font-bold text-secondary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">trending_up</span> +12.5%
+                </span>
+            </div>
+            <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Ingresos Totales</h3>
+            <div class="text-3xl font-black text-on-surface">
+                S/ <span th:text="${#numbers.formatDecimal(vm.ingresosTotales, 1, 2)}">0.00</span>
+            </div>
+        </div>
+        <!-- Ingresos Mensuales -->
+        <div class="bg-white rounded-xl p-6 editorial-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-secondary-container/30 rounded-xl">
+                    <span class="material-symbols-outlined text-secondary">calendar_month</span>
+                </div>
+                <span class="text-xs font-bold text-secondary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">check_circle</span> Meta en curso
+                </span>
+            </div>
+            <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Ingresos Mensuales</h3>
+            <div class="text-3xl font-black text-on-surface">
+                S/ <span th:text="${#numbers.formatDecimal(vm.ingresosMensuales, 1, 2)}">0.00</span>
+            </div>
+            <div class="mt-3 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                <div class="bg-secondary h-full rounded-full" th:style="${'width: ' + vm.metaMensualPorcentaje + '%'}"></div>
+            </div>
+            <div class="mt-1 text-[10px] text-on-surface-variant text-right">
+                <span th:text="${vm.metaMensualPorcentaje}">85</span>% de la meta mensual
+            </div>
+        </div>
+        <!-- Pagos Pendientes -->
+        <div class="bg-white rounded-xl p-6 editorial-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-tertiary-container/30 rounded-xl">
+                    <span class="material-symbols-outlined text-tertiary">pending_actions</span>
+                </div>
+                <span class="text-xs font-bold text-error flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">priority_high</span> Acción requerida
+                </span>
+            </div>
+            <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Pagos Pendientes</h3>
+            <div class="text-3xl font-black text-on-surface">
+                S/ <span th:text="${#numbers.formatDecimal(vm.pagosPendientes, 1, 2)}">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="bg-white rounded-2xl editorial-shadow overflow-hidden">
+        <div class="p-8 border-b border-surface-container-high flex justify-between items-center">
+            <h2 class="text-xl font-headline font-extrabold text-on-surface">Transacciones Recientes</h2>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-surface-container-low/50">
+                        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Fecha Inicio</th>
+                        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Residente</th>
+                        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Alojamiento</th>
+                        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Monto</th>
+                        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-surface-container-high">
+                    <tr th:if="${vm.transacciones.empty}">
+                        <td colspan="5" class="px-8 py-6 text-center text-on-surface-variant">No hay transacciones registradas.</td>
+                    </tr>
+                    <tr th:each="t : ${vm.transacciones}" class="hover:bg-surface-container-low/30 transition-colors">
+                        <td class="px-8 py-5">
+                            <div class="text-sm font-medium" th:text="${#temporals.format(t.fechaInicio, 'dd MMM, yyyy')}">Fecha</div>
+                        </td>
+                        <td class="px-8 py-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container"
+                                     th:text="${t.nombreUsuario != null ? t.nombreUsuario.substring(0,1) : '?'}">?</div>
+                                <span class="text-sm font-bold" th:text="${t.nombreUsuario}">Usuario</span>
+                            </div>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="text-sm text-on-surface-variant" th:text="${t.tituloAlojamiento}">Alojamiento</span>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="text-sm font-black text-on-surface" th:text="${'S/ ' + #numbers.formatDecimal(t.monto, 1, 2)}">S/ 0.00</span>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span th:if="${t.estado == 'CONFIRMADA'}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Pagado
+                            </span>
+                            <span th:if="${t.estado == 'PENDIENTE'}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-bold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Pendiente
+                            </span>
+                            <span th:if="${t.estado == 'CANCELADA'}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Cancelado
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
