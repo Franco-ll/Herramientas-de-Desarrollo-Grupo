@@ -17,6 +17,8 @@ public class PerfilAcademico {
     private String nivelTolerancia; // e.g., "Alto", "Medio", "Bajo"
     private String biografia;
     private String avatar;
+    private Boolean humoVapeo;
+    private Boolean mascotas;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -47,6 +49,12 @@ public class PerfilAcademico {
 
     public String getAvatar() { return avatar; }
     public void setAvatar(String avatar) { this.avatar = avatar; }
+
+    public Boolean getHumoVapeo() { return humoVapeo; }
+    public void setHumoVapeo(Boolean humoVapeo) { this.humoVapeo = humoVapeo; }
+    
+    public Boolean getMascotas() { return mascotas; }
+    public void setMascotas(Boolean mascotas) { this.mascotas = mascotas; }
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }

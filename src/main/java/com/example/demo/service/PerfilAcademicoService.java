@@ -65,6 +65,8 @@ public class PerfilAcademicoService {
         perfil.setHabitosSueno(dto.getHabitosSueno());
         perfil.setNivelTolerancia(dto.getNivelTolerancia());
         perfil.setBiografia(dto.getBiografia());
+        perfil.setHumoVapeo(dto.getHumoVapeo() != null);
+        perfil.setMascotas(dto.getMascotas() != null);
         
         perfil = perfilAcademicoRepository.save(perfil);
         usuario.setPerfilAcademico(perfil);

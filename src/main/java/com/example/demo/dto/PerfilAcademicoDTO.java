@@ -9,6 +9,8 @@ public class PerfilAcademicoDTO {
     private String habitosRuido;
     private String habitosSueno;
     private String nivelTolerancia;
+    private Boolean humoVapeo;
+    private Boolean mascotas;
 
     public PerfilAcademicoDTO() {}
 
@@ -35,4 +37,10 @@ public class PerfilAcademicoDTO {
 
     public String getNivelTolerancia() { return nivelTolerancia; }
     public void setNivelTolerancia(String nivelTolerancia) { this.nivelTolerancia = nivelTolerancia; }
+
+    public Boolean getHumoVapeo() { return humoVapeo; }
+    public void setHumoVapeo(Boolean humoVapeo) { this.humoVapeo = humoVapeo; }
+    
+    public Boolean getMascotas() { return mascotas; }
+    public void setMascotas(Boolean mascotas) { this.mascotas = mascotas; }
 }
