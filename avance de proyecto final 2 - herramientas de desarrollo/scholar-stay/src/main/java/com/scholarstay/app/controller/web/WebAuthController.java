@@ -5,11 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scholarstay.app.model.Usuario;
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -21,36 +18,18 @@ public class WebAuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/login")
-    public String performLogin(@RequestParam String email, @RequestParam String password, Model model, HttpSession session) {
-        Usuario usuario = authService.authenticate(email, password);
-        if (usuario != null) {
-            session.setAttribute("loggedUser", usuario);
-            // Redirect ADMIN users to the admin panel
-            if (usuario.getRol() != null && "ROLE_ADMIN".equals(usuario.getRol().getNombre())) {
-                return "redirect:/admin/dashboard";
-            }
-            return "redirect:/dashboard";
-        } else {
-            model.addAttribute("error", "Credenciales inválidas");
-            return "iniciarSesion";
-        }
-    }
-    
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
-    }
+    // Spring Security maneja automáticamente el POST /login y /logout
+    // Solo necesitamos los controladores de vista GET para mostrar los formularios (están en WebViewController)
 
     @PostMapping("/register")
-    public String performRegister(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
+    public String performRegister(@ModelAttribute Usuario usuario, Model model) {
         try {
-            Usuario guardado = authService.register(usuario);
-            session.setAttribute("loggedUser", guardado);
-            return "redirect:/dashboard";
+            // AuthService ahora se encarga de cifrar la contraseña con BCrypt
+            authService.register(usuario);
+            // Redirigimos al login con mensaje de éxito para que inicie sesión con seguridad
+            return "redirect:/login?registered=true";
         } catch (Exception e) {
-            model.addAttribute("error", "Error al crear la cuenta: " + e.getMessage());
+            model.addAttribute("error", "Error al crear la cuenta. Intente con otro email.");
             return "CrearNuevaCuenta";
         }
     }

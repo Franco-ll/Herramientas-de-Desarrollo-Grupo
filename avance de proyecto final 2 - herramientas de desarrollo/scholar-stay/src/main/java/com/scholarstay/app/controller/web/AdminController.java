@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.scholarstay.app.security.CustomUserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,59 +25,57 @@ public class AdminController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    // --- Validación manual de acceso admin ---
-    private boolean esAdmin(HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
-        return usuario != null
-                && usuario.getRol() != null
-                && "ROLE_ADMIN".equals(usuario.getRol().getNombre());
+    // Spring Security maneja el acceso al panel admin a través de SecurityConfig (hasRole("ADMIN"))
+    
+    private Usuario getAdminUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
+            return ((CustomUserDetails) auth.getPrincipal()).getUsuario();
+        }
+        return null;
     }
 
     @GetMapping({ "", "/", "/dashboard" })
     public String dashboard(HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
         model.addAttribute("stats", adminDashboardService.getDashboardStats());
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/dashboard";
     }
 
     @GetMapping("/residentes")
     public String residentes(HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
         model.addAttribute("vm", adminDashboardService.getResidentesStats());
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/residentes";
     }
 
     // --- Ver detalle del residente ---
     @GetMapping("/residentes/{id}")
     public String verResidente(@PathVariable Long id, HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
 
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
         if (usuario == null)
             return "redirect:/admin/residentes";
 
         model.addAttribute("residente", usuario);
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/residente_detalle";
     }
 
     // --- Editar residente (formulario) ---
     @GetMapping("/residentes/{id}/editar")
     public String editarResidenteForm(@PathVariable Long id, HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
 
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
         if (usuario == null)
             return "redirect:/admin/residentes";
 
         model.addAttribute("residente", usuario);
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/residente_editar";
     }
 
@@ -85,8 +86,7 @@ public class AdminController {
             @RequestParam String email,
             HttpSession session,
             RedirectAttributes ra) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
 
         usuarioRepository.findById(id).ifPresent(u -> {
             u.setNombre(nombre);
@@ -103,8 +103,7 @@ public class AdminController {
     public String eliminarResidente(@PathVariable Long id,
             HttpSession session,
             RedirectAttributes ra) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
 
         // Verificar que no se elimine a sí mismo ni al admin
         Usuario target = usuarioRepository.findById(id).orElse(null);
@@ -124,19 +123,17 @@ public class AdminController {
 
     @GetMapping("/propiedades")
     public String propiedades(HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
         model.addAttribute("vm", adminDashboardService.getPropiedadesStats());
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/propiedades";
     }
 
     @GetMapping("/finanzas")
     public String finanzas(HttpSession session, Model model) {
-        if (!esAdmin(session))
-            return "redirect:/login";
+        // La validación de seguridad la hace Spring Security
         model.addAttribute("vm", adminDashboardService.getFinanzasStats());
-        model.addAttribute("admin", session.getAttribute("loggedUser"));
+        model.addAttribute("admin", getAdminUser());
         return "admin/finanzas";
     }
 }

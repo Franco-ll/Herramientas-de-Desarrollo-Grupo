@@ -16,6 +16,9 @@ import com.scholarstay.app.service.PerfilAcademicoService;
 import com.scholarstay.app.service.ResenaService;
 import com.scholarstay.app.service.ReservaService;
 import com.scholarstay.app.service.UsuarioService;
+import com.scholarstay.app.security.CustomUserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -40,6 +43,14 @@ public class WebViewController {
         this.resenaService = resenaService;
     }
 
+    private Usuario getLoggedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
+            return ((CustomUserDetails) auth.getPrincipal()).getUsuario();
+        }
+        return null;
+    }
+
     @GetMapping("/")
     public String index() {
         return "redirect:/dashboard";
@@ -61,7 +72,7 @@ public class WebViewController {
 
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -83,7 +94,7 @@ public class WebViewController {
 
     @GetMapping("/alojamiento/{id}")
     public String accommodationDetail(@PathVariable Long id, HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -98,7 +109,7 @@ public class WebViewController {
 
     @GetMapping("/perfil")
     public String profile(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -122,7 +133,7 @@ public class WebViewController {
 
     @PostMapping("/perfil")
     public String updateProfile(HttpSession session, @ModelAttribute com.scholarstay.app.dto.PerfilAcademicoDTO dto) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -143,7 +154,7 @@ public class WebViewController {
 
     @GetMapping("/resenas")
     public String reviews(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -153,7 +164,7 @@ public class WebViewController {
 
     @GetMapping("/notificaciones")
     public String notifications(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -167,7 +178,7 @@ public class WebViewController {
     @GetMapping("/confirmar-reserva-escolar")
     public String confirmReservation(@org.springframework.web.bind.annotation.RequestParam Long alojamientoId,
             HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -186,7 +197,7 @@ public class WebViewController {
             @org.springframework.web.bind.annotation.RequestParam String fechaFin,
             @org.springframework.web.bind.annotation.RequestParam Double total,
             HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -210,7 +221,7 @@ public class WebViewController {
             // @org.springframework.web.bind.annotation.RequestParam Double total,
             HttpSession session, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
         
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null) return "redirect:/login";
 
         Alojamiento alojamiento = alojamientoService.obtenerPorId(alojamientoId);
@@ -243,7 +254,7 @@ public class WebViewController {
 
     @GetMapping("/reservaConfirmada")
     public String reservationConfirmed(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -261,7 +272,7 @@ public class WebViewController {
 
     @GetMapping("/reciboDigital")
     public String digitalReceipt(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -284,7 +295,7 @@ public class WebViewController {
             @org.springframework.web.bind.annotation.RequestParam(defaultValue = "0") int page,
             @org.springframework.web.bind.annotation.RequestParam(defaultValue = "10") int size,
             HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -310,7 +321,7 @@ public class WebViewController {
     @GetMapping("/resenas_academicas")
     public String writeReviewPage(@org.springframework.web.bind.annotation.RequestParam Long alojamientoId,
             HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
@@ -328,7 +339,7 @@ public class WebViewController {
             @org.springframework.web.bind.annotation.RequestParam(required = false) Integer calificacion,
             @org.springframework.web.bind.annotation.RequestParam(required = false) String comentario,
             HttpSession session, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
-        Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+        Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
