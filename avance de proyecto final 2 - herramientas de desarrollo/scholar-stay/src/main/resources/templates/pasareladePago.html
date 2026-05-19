@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#46674b",
+                        "on-secondary": "#e8ffe7",
+                        "surface-tint": "#3d637e",
+                        "primary-fixed": "#b8dffe",
+                        "tertiary-dim": "#5d523b",
+                        "tertiary": "#6a5e46",
+                        "primary-dim": "#305771",
+                        "on-surface": "#2c3435",
+                        "surface-container-high": "#e3e9ea",
+                        "on-error-container": "#6e0a12",
+                        "on-tertiary": "#fff8f1",
+                        "surface-container-highest": "#dde4e4",
+                        "inverse-on-surface": "#9b9d9e",
+                        "outline-variant": "#acb3b4",
+                        "on-secondary-fixed": "#26462d",
+                        "primary-fixed-dim": "#aad1ef",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "background": "#f8fafa",
+                        "secondary-dim": "#3a5a40",
+                        "error-container": "#fa746f",
+                        "on-primary-fixed-variant": "#335a74",
+                        "on-primary": "#f5f9ff",
+                        "error-dim": "#67040d",
+                        "error": "#a83836",
+                        "secondary-container": "#c7ecc9",
+                        "on-error": "#fff7f6",
+                        "surface": "#f8fafa",
+                        "on-tertiary-container": "#635740",
+                        "secondary-fixed-dim": "#b9debc",
+                        "primary": "#3d637e",
+                        "inverse-primary": "#b8dffe",
+                        "secondary-fixed": "#c7ecc9",
+                        "surface-dim": "#d4dbdc",
+                        "surface-container-low": "#f0f4f4",
+                        "surface-container": "#eaefef",
+                        "on-secondary-fixed-variant": "#426348",
+                        "inverse-surface": "#0b0f0f",
+                        "on-surface-variant": "#596061",
+                        "on-tertiary-fixed": "#50452f",
+                        "on-primary-container": "#29506a",
+                        "primary-container": "#b8dffe",
+                        "surface-bright": "#f8fafa",
+                        "on-background": "#2c3435",
+                        "surface-variant": "#dde4e4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#39593f",
+                        "tertiary-container": "#feecce",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "tertiary-fixed": "#feecce",
+                        "outline": "#757c7d",
+                        "on-primary-fixed": "#123e56"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #2c3435;
+        }
+        .editorial-shadow {
+            box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04);
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar (JSON Immutable Content & Styles) -->
+<header class="w-full sticky top-0 z-50 bg-slate-50/80 backdrop-blur-xl border-none">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold text-blue-900 font-['Manrope'] tracking-tight">Scholar Stay</span>
+<!-- Search Mockup -->
+
+</div>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 py-12 lg:py-20">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Payment Form Column -->
+<div class="lg:col-span-7">
+<div class="mb-8">
+    <a th:href="@{/confirmar-reserva-escolar(alojamientoId=${alojamiento.id})}" class="flex items-center gap-2 text-primary font-bold mb-6 hover:underline group">
+        <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        Volver a la confirmación
+    </a>
+    <h1 class="font-headline text-5xl font-extrabold text-primary tracking-tight mb-4 leading-tight">Completar pago seguro</h1>
+    <p class="text-on-surface-variant text-lg max-w-xl">Tu viaje académico comienza aquí. Procesa tu reserva en un entorno totalmente encriptado.</p>
+</div>
+<!-- Payment Method Toggle (Visual Only) -->
+<div class="flex gap-4 mb-10">
+<button id="method-card" class="bg-primary text-on-primary px-8 py-3 rounded-full flex items-center gap-2 editorial-shadow transition-transform hover:scale-[0.98]" onclick="setPaymentMethod('card')">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">credit_card</span>
+<span class="font-medium">Tarjeta</span>
+</button>
+<button id="method-transfer" class="bg-surface-container-high text-on-surface px-8 py-3 rounded-full flex items-center gap-2 hover:bg-surface-container-highest transition-colors" onclick="setPaymentMethod('transfer')">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-medium">Transferencia</span>
+</button>
+</div>
+<script>
+    function setPaymentMethod(method) {
+        const cardBtn = document.getElementById('method-card');
+        const transBtn = document.getElementById('method-transfer');
+        const cardFields = document.getElementById('card-fields');
+        const transferFields = document.getElementById('transfer-fields');
+        
+        if (method === 'card') {
+            cardBtn.classList.add('bg-primary', 'text-on-primary', 'editorial-shadow');
+            cardBtn.classList.remove('bg-surface-container-high', 'text-on-surface');
+            transBtn.classList.remove('bg-primary', 'text-on-primary', 'editorial-shadow');
+            transBtn.classList.add('bg-surface-container-high', 'text-on-surface');
+            cardFields.style.display = 'grid';
+            transferFields.style.display = 'none';
+        } else {
+            transBtn.classList.add('bg-primary', 'text-on-primary', 'editorial-shadow');
+            transBtn.classList.remove('bg-surface-container-high', 'text-on-surface');
+            cardBtn.classList.remove('bg-primary', 'text-on-primary', 'editorial-shadow');
+            cardBtn.classList.add('bg-surface-container-high', 'text-on-surface');
+            cardFields.style.display = 'none';
+            transferFields.style.display = 'block';
+        }
+    }
+</script>
+<!-- Form Section -->
+<!-- Bloque de Error devuelto por Backend (Validaciones) -->
+<div th:if="${error}" class="mb-6 bg-error-container text-on-error-container p-4 rounded-xl flex items-center gap-3">
+    <span class="material-symbols-outlined">error</span>
+    <span class="font-semibold" th:text="${error}">Se encontró un error.</span>
+</div>
+
+<!-- Form Section: Englobamos TODOS los campos (inputs y botón) dentro de la etiqueta form -->
+<form th:action="@{/procesar-pago}" method="post" class="space-y-8">
+    <input type="hidden" name="alojamientoId" th:value="${alojamiento.id}" />
+    <input type="hidden" name="fechaInicio" th:value="${fechaInicio}" />
+    <input type="hidden" name="fechaFin" th:value="${fechaFin}" />
+    <!-- Ignoramos el campo total porque el Backend lo calcula para prevenir tampering, pero lo pasamos por si aca -->
+    <input type="hidden" name="total" th:value="${total}" />
+
+    <div id="card-fields" class="grid grid-cols-1 gap-6">
+        <div class="space-y-2">
+            <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Nombre del titular</label>
+            <input name="nombreTitular" class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="Como aparece en la tarjeta" type="text" required oninvalid="this.setCustomValidity('Ingrese el nombre del titular')" oninput="this.setCustomValidity('')"/>
+        </div>
+        <div class="space-y-2 relative">
+            <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Número de tarjeta</label>
+            <div class="relative">
+                <input name="numeroTarjeta" class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="0000 0000 0000 0000" type="text" pattern="\d{16}" required oninvalid="this.setCustomValidity('Complete el campo número de tarjeta (16 dígitos)')" oninput="this.setCustomValidity('')"/>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+                    <div class="w-8 h-5 bg-white/20 flex items-center justify-center">
+                        <img alt="Visa Logo" class="h-3 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTxOdg2-g3ZBB2cjwVAXw52_64b5CBJbuiVL5wg1vXTj6CCZlnQBOkCZZXPjhOxCJ2ZFCXletsu_WwCj6DpzVg-BFWZ0CcWV1x5JYib-y0Nhq6PVa6E6cYbwKUU3NqRvvrviQji-7jPyjToGR3xw0-CewPBwRc4YHS07tad-amFa0YwcVqInuJ3yovIU9aBBFS9Mn9UQdheLPuWsTjJ4x8TYLimmSqMA6kk168Fp1fWvO4AFj6i33E1cEw7-tN93oSXY91ywK6wE"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">Fecha expiración</label>
+                <input name="fechaExpiracion" class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="MM / AA" type="text" pattern="(0[1-9]|1[0-2])\/?([0-9]{2})" required oninvalid="this.setCustomValidity('Ingrese una fecha válida de expiración (MM/AA)')" oninput="this.setCustomValidity('')"/>
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-on-surface-variant ml-2 uppercase tracking-wider">CVV</label>
+                <div class="relative">
+                    <input name="cvv" class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="***" type="password" pattern="\d{3,4}" required oninvalid="this.setCustomValidity('Este campo es obligatorio y debe tener 3-4 dígitos')" oninput="this.setCustomValidity('')"/>
+                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-sm cursor-help">help</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="transfer-fields" class="bg-surface-container-low p-6 rounded-xl space-y-4" style="display: none;">
+        <p class="font-bold text-on-surface">Datos de transferencia (BCP/BBVA)</p>
+        <div class="space-y-2 text-sm text-on-surface-variant">
+            <p>Cuenta Corriente Soles: <span class="font-mono text-on-surface">193-4567890-0-12</span></p>
+            <p>CCI: <span class="font-mono text-on-surface">002-193-004567890012-14</span></p>
+            <p>Beneficiario: <span class="font-mono text-on-surface">Scholar Stay S.A.C.</span></p>
+        </div>
+        <div class="pt-4">
+            <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2">Adjuntar comprobante</label>
+            <input type="file" id="comprobante" class="text-sm" oninvalid="this.setCustomValidity('Adjunte su comprobante para confirmar la transferencia')" oninput="this.setCustomValidity('')" />
+        </div>
+    </div>
+    
+    <div class="pt-6">
+        <button type="submit" class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-5 rounded-full font-headline text-lg font-bold editorial-shadow hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-3">
+            Pagar ahora
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+    </div>
+</form>
+<div class="flex items-center justify-center gap-3 py-4 bg-secondary-container/30 rounded-xl">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-secondary font-medium text-sm">Transacción Encriptada: Tu seguridad es nuestra prioridad.</span>
+</div>
+</section>
+</div>
+<!-- Sidebar Column: Reservation Details -->
+<aside class="lg:col-span-5 space-y-8">
+<div class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow border-none">
+<div class="mb-8 overflow-hidden rounded-lg aspect-video">
+    <img th:src="@{/images/{img}(img=${alojamiento.imagen})}" alt="Reserva Propiedad" class="w-full h-full object-cover" />
+</div>
+<div class="space-y-6">
+<div>
+    <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3 inline-block">Alojamiento Seleccionado</span>
+    <h3 class="font-headline text-2xl font-bold text-on-surface" th:text="${alojamiento.titulo}">Nombre Alojamiento</h3>
+    <p class="text-on-surface-variant text-sm flex items-center gap-1 mt-1">
+        <span class="material-symbols-outlined text-sm">location_on</span>
+        <span th:text="${alojamiento.ubicacion}">Ubicación</span>
+    </p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl space-y-4">
+    <div class="flex justify-between items-center text-sm">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">calendar_today</span>
+            <div>
+                <p class="text-outline text-[10px] uppercase font-bold">Entrada</p>
+                <p class="font-semibold" th:text="${fechaInicio}">01 Sep, 2024</p>
+            </div>
+        </div>
+        <div class="h-8 w-[1px] bg-outline-variant/30"></div>
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">event_upcoming</span>
+            <div>
+                <p class="text-outline text-[10px] uppercase font-bold">Salida</p>
+                <p class="font-semibold" th:text="${fechaFin}">20 Dic, 2024</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+    <div class="flex justify-between text-on-surface-variant">
+        <span>Alquiler base</span>
+        <span th:text="${'S/ ' + alojamiento.precioMensual}">S/ 580.00</span>
+    </div>
+    <div class="flex justify-between text-on-surface-variant">
+        <span>Gestión y Servicios</span>
+        <span class="italic text-secondary">Incluido</span>
+    </div>
+    <div class="flex justify-between text-primary font-headline text-2xl font-extrabold pt-4">
+        <span>Total</span>
+        <span th:text="${'S/ ' + total}">S/ 650.00</span>
+    </div>
+</div>
+</div>
+</div>
+<!-- Match Compatibility Reward -->
+<div class="bg-secondary/5 rounded-xl p-6 flex items-center gap-6">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle cx="32" cy="32" fill="transparent" r="28" stroke="#c7ecc9" stroke-width="6"></circle>
+<circle cx="32" cy="32" fill="transparent" r="28" stroke="#46674b" stroke-dasharray="175" stroke-dashoffset="35" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<span class="absolute text-xs font-bold text-secondary">85%</span>
+</div>
+<div>
+<h4 class="font-bold text-secondary">Compatibilidad Ideal</h4>
+<p class="text-sm text-secondary-dim/80">Tus futuros compañeros comparten tus hábitos de estudio.</p>
+</div>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline leading-relaxed">Al pulsar "Pagar ahora", aceptas nuestros <a class="underline hover:text-primary" href="#">Términos de Servicio</a> y la política de reserva para estudiantes internacionales.</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Support FAB (Contextual for Payment) -->
+<button class="fixed bottom-8 right-8 bg-white text-on-surface p-4 rounded-full editorial-shadow flex items-center gap-3 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<span class="text-sm font-semibold pr-2">¿Necesitas ayuda?</span>
+</button>
+</body></html>
