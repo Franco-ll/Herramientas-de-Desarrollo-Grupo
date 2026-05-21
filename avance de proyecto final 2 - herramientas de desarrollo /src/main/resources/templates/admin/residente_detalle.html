@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title th:text="${residente.nombre + ' - Detalle - Scholar Stay Admin'}">Detalle Residente</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          theme: { extend: { colors: {
+            "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+            "primary-container": "#b8dffe", "on-primary-container": "#29506a",
+            "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+            "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
+            "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
+            "surface-container-high": "#e3e9ea", "surface-container-highest": "#dde4e4",
+            "surface-container-lowest": "#ffffff", "on-surface": "#2c3435",
+            "on-surface-variant": "#596061", "outline": "#757c7d", "outline-variant": "#acb3b4",
+            "error": "#a83836",
+          }, fontFamily: { "headline": ["Manrope"] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 4px 24px rgba(44,52,53,0.06); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
+    <div class="mb-8">
+        <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
+        <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
+        <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
+                 th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
+            <div>
+                <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                <p class="text-[10px] text-outline">Gestión Académica</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/dashboard}">
+            <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
+        </a>
+        <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/residentes}">
+            <span class="material-symbols-outlined filled">group</span><span>Residentes</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/propiedades}">
+            <span class="material-symbols-outlined">apartment</span><span>Propiedades</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
+            <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
+        </a>
+    </nav>
+    <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
+        <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
+            <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-8 min-h-screen">
+
+    <!-- Back + Actions -->
+    <div class="flex justify-between items-center mb-8">
+        <a th:href="@{/admin/residentes}"
+           class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-sm font-semibold">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Volver a Residentes
+        </a>
+        <div class="flex gap-3">
+            <a th:href="@{/admin/residentes/{id}/editar(id=${residente.id})}"
+               class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-xl font-headline font-bold text-sm hover:bg-primary-dim transition-colors">
+                <span class="material-symbols-outlined text-[18px]">edit</span>
+                Editar
+            </a>
+            <form th:action="@{/admin/residentes/{id}/eliminar(id=${residente.id})}"
+                  method="post"
+                  onsubmit="return confirm('¿Seguro que deseas eliminar este residente? Esta acción no se puede deshacer.');">
+                <button type="submit"
+                        class="inline-flex items-center gap-2 bg-error/10 text-error border border-error/20 px-5 py-2.5 rounded-xl font-headline font-bold text-sm hover:bg-error/20 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                    Eliminar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Left: Identity Card -->
+        <div class="bg-white rounded-2xl editorial-shadow p-8 flex flex-col items-center text-center">
+            <div class="w-24 h-24 rounded-2xl bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-extrabold text-4xl mb-5"
+                 th:text="${residente.nombre.substring(0,1)}">U</div>
+            <h2 class="text-2xl font-headline font-extrabold text-on-surface mb-1" th:text="${residente.nombre}">Nombre</h2>
+            <p class="text-on-surface-variant text-sm mb-4" th:text="${residente.email}">email</p>
+
+            <div th:if="${residente.rol != null}"
+                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-[11px] font-bold mb-6">
+                <span class="material-symbols-outlined text-[14px]">manage_accounts</span>
+                <span th:text="${residente.rol.nombre}">ROL</span>
+            </div>
+
+            <div class="w-full border-t border-surface-container-high pt-6 space-y-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-on-surface-variant">ID</span>
+                    <span class="font-bold text-on-surface" th:text="${residente.id}">#</span>
+                </div>
+                <div th:if="${residente.perfilAcademico != null}" class="flex justify-between text-sm">
+                    <span class="text-on-surface-variant">Carrera</span>
+                    <span class="font-bold text-on-surface" th:text="${residente.perfilAcademico.carrera}">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Info Panels -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <!-- Perfil Académico -->
+            <div th:if="${residente.perfilAcademico != null}" class="bg-white rounded-2xl editorial-shadow p-8">
+                <h3 class="text-lg font-headline font-bold text-on-surface mb-5 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">school</span>
+                    Perfil Académico
+                </h3>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Carrera</p>
+                        <p class="font-semibold text-on-surface" th:text="${residente.perfilAcademico.carrera != null ? residente.perfilAcademico.carrera : '—'}">—</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Horario de Estudio</p>
+                        <p class="font-semibold text-on-surface" th:text="${residente.perfilAcademico.horarioEstudio != null ? residente.perfilAcademico.horarioEstudio : '—'}">—</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Hábitos de Ruido</p>
+                        <p class="font-semibold text-on-surface" th:text="${residente.perfilAcademico.habitosRuido != null ? residente.perfilAcademico.habitosRuido : '—'}">—</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Hábitos de Sueño</p>
+                        <p class="font-semibold text-on-surface" th:text="${residente.perfilAcademico.habitosSueno != null ? residente.perfilAcademico.habitosSueno : '—'}">—</p>
+                    </div>
+                    <div class="col-span-2">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Biografía</p>
+                        <p class="text-on-surface-variant" th:text="${residente.perfilAcademico.biografia != null ? residente.perfilAcademico.biografia : 'Sin información.'}">—</p>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${residente.perfilAcademico == null}"
+                 class="bg-surface-container-low rounded-2xl p-8 text-center text-on-surface-variant flex items-center gap-3 justify-center">
+                <span class="material-symbols-outlined">info</span>
+                Este residente no ha completado su perfil académico.
+            </div>
+
+            <!-- Reservas -->
+            <div class="bg-white rounded-2xl editorial-shadow p-8">
+                <h3 class="text-lg font-headline font-bold text-on-surface mb-5 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">apartment</span>
+                    Historial de Reservas
+                </h3>
+                <div th:if="${residente.reservas == null or residente.reservas.empty}"
+                     class="text-center text-on-surface-variant text-sm py-4">Sin reservas registradas.</div>
+                <div class="space-y-3">
+                    <div th:each="rv : ${residente.reservas}"
+                         class="flex justify-between items-center p-4 bg-surface-container-low rounded-xl">
+                        <div>
+                            <p class="font-bold text-sm text-on-surface" th:text="${rv.alojamiento.titulo}">Alojamiento</p>
+                            <p class="text-xs text-on-surface-variant">
+                                <span th:text="${#temporals.format(rv.fechaInicio, 'dd MMM yyyy')}">inicio</span>
+                                →
+                                <span th:text="${#temporals.format(rv.fechaFin, 'dd MMM yyyy')}">fin</span>
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-black text-sm text-primary" th:text="${'S/ ' + rv.precioTotal}">S/ 0</p>
+                            <span th:if="${rv.estado == 'CONFIRMADA'}"
+                                  class="text-[10px] font-bold text-secondary bg-secondary-container px-2 py-0.5 rounded-full">Confirmada</span>
+                            <span th:if="${rv.estado == 'PENDIENTE'}"
+                                  class="text-[10px] font-bold text-tertiary bg-tertiary-container px-2 py-0.5 rounded-full">Pendiente</span>
+                            <span th:if="${rv.estado == 'CANCELADA'}"
+                                  class="text-[10px] font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">Cancelada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>
