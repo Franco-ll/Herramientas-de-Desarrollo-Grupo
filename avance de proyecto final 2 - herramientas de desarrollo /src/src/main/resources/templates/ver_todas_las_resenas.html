@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .headline {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3d637e",
+                        "secondary": "#46674b",
+                        "surface-container-highest": "#dde4e4",
+                        "on-primary-fixed": "#123e56",
+                        "surface-container-low": "#f0f4f4",
+                        "outline": "#757c7d",
+                        "on-primary": "#f5f9ff",
+                        "on-secondary-fixed": "#26462d",
+                        "error-dim": "#67040d",
+                        "secondary-container": "#c7ecc9",
+                        "on-surface-variant": "#596061",
+                        "on-error": "#fff7f6",
+                        "tertiary-dim": "#5d523b",
+                        "error-container": "#fa746f",
+                        "primary": "#3d637e",
+                        "error": "#a83836",
+                        "surface-variant": "#dde4e4",
+                        "primary-fixed": "#b8dffe",
+                        "surface": "#f8fafa",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "on-primary-container": "#29506a",
+                        "on-primary-fixed-variant": "#335a74",
+                        "on-secondary-fixed-variant": "#426348",
+                        "tertiary": "#6a5e46",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "secondary-dim": "#3a5a40",
+                        "surface-container-high": "#e3e9ea",
+                        "surface-container": "#eaefef",
+                        "on-secondary-container": "#39593f",
+                        "tertiary-fixed": "#feecce",
+                        "on-tertiary": "#fff8f1",
+                        "on-tertiary-container": "#635740",
+                        "surface-dim": "#d4dbdc",
+                        "outline-variant": "#acb3b4",
+                        "on-tertiary-fixed": "#50452f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#6e0a12",
+                        "primary-fixed-dim": "#aad1ef",
+                        "on-secondary": "#e8ffe7",
+                        "on-surface": "#2c3435",
+                        "on-background": "#2c3435",
+                        "inverse-surface": "#0b0f0f",
+                        "tertiary-container": "#feecce",
+                        "secondary-fixed": "#c7ecc9",
+                        "background": "#f8fafa",
+                        "surface-bright": "#f8fafa",
+                        "primary-dim": "#305771",
+                        "primary-container": "#b8dffe",
+                        "inverse-primary": "#b8dffe",
+                        "secondary-fixed-dim": "#b9debc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 z-50 shadow-sm shadow-blue-900/5 sticky">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-extrabold tracking-tighter text-blue-900 dark:text-blue-100 font-['Manrope']">
+                Scholar Stay
+            </div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12 pb-32">
+<!-- Header & Stats Section (Intentional Asymmetry) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-16">
+<div class="lg:col-span-7 space-y-4">
+<a onclick="history.back()" class="flex items-center gap-2 text-on-surface-variant text-sm mb-6 cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span>Volver a la propiedad</span>
+</a>
+<h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-on-surface leading-none">
+                    Voz de la <span class="text-primary italic">Comunidad</span>
+</h1>
+<p class="text-body-lg text-on-surface-variant max-w-xl">
+                    Descubre las experiencias de otros becarios y estudiantes en esta residencia académica curada para el éxito.
+                </p>
+</div>
+<div class="lg:col-span-5 bg-surface-container-low rounded-xl p-8 flex items-center justify-between shadow-[0_4px_24px_rgba(44,52,53,0.04)]">
+<div>
+    <div class="flex items-baseline gap-1">
+        <span class="text-6xl font-extrabold text-primary" th:text="${#aggregates.avg(resenas.![calificacion]) ?: '0.0'}">4.9</span>
+        <span class="text-on-surface-variant font-semibold">/ 5</span>
+    </div>
+    <div class="flex text-secondary gap-0.5 mt-2">
+        <!-- Simplified star display -->
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">star_half</span>
+    </div>
+    <p class="text-sm font-semibold text-on-surface-variant mt-1" th:text="${'Basado en ' + resenas.size() + ' reseñas'}">Basado en 128 reseñas</p>
+</div>
+<div class="hidden sm:block h-24 w-24 relative">
+<!-- Gauge Mockup -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-secondary-container" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="25" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-secondary">98%</div>
+</div>
+</div>
+</section>
+<!-- Filters Section (No-Line Rule) -->
+<section class="bg-surface-container-low rounded-xl p-6 mb-12 sticky top-24 z-40 backdrop-blur-md bg-opacity-90">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+    <!-- FILTRO ESTRELLAS -->
+    <div class="flex flex-wrap gap-3">
+        <button onclick="filtrarResenas(0,this)"
+            class="filtro-btn bg-primary text-on-primary px-6 py-2 rounded-full font-semibold text-sm">
+            Todas
+        </button>
+
+        <button onclick="filtrarResenas(5,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            5 estrellas
+        </button>
+
+        <button onclick="filtrarResenas(4,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            4 estrellas
+        </button>
+
+        <button onclick="filtrarResenas(3,this)"
+            class="filtro-btn bg-surface-container-high px-6 py-2 rounded-full font-semibold text-sm">
+            3 estrellas
+        </button>
+    </div>
+
+    <!-- ORDENAR -->
+    <div class="flex items-center gap-4 text-sm font-semibold">
+        <span class="text-on-surface-variant">Ordenar por:</span>
+
+        <select onchange="ordenarResenas(this.value)"
+            class="bg-transparent border-none focus:ring-0 text-primary cursor-pointer font-bold">
+
+            <option value="recientes">Más recientes</option>
+            <option value="mejor">Mejor valoradas</option>
+            <option value="peor">Críticas</option>
+        </select>
+    </div>
+
+</div>
+</section>
+<!-- Reviews List (Tonal Layering) -->
+<section class="space-y-8 bg-surface-container-low p-8 rounded-xl">
+    <!-- Dynamic Reviews -->
+<article th:each="resena : ${resenas}"
+         th:attr="data-calificacion=${resena.calificacion},
+                  data-fecha=${resena.fechaPublicacion}"
+         class="bg-surface-container-lowest p-8 rounded-xl shadow-sm transition-all hover:shadow-md">        <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="h-14 w-14 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xl overflow-hidden">
+                    <span th:text="${resena.usuario.nombre.substring(0,1)}">U</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg leading-tight" th:text="${resena.usuario.nombre}">Usuario</h3>
+                    <p class="text-on-surface-variant text-sm font-medium">
+                        <span th:if="${resena.usuario.perfilAcademico != null and resena.usuario.perfilAcademico.carrera != null}" 
+                              th:text="${resena.usuario.perfilAcademico.carrera}">Carrera</span>
+                        <span th:if="${resena.usuario.perfilAcademico == null or resena.usuario.perfilAcademico.carrera == null}">Estudiante</span>
+                        <span class="mx-1">•</span>
+                        <span th:text="${'Comunidad Scholar Stay'}">Scholar Stay</span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-col md:items-end">
+                <div class="flex text-secondary mb-1">
+    <span th:each="i : ${#numbers.sequence(1,5)}"
+          class="material-symbols-outlined"
+          th:classappend="${i <= resena.calificacion} ? ' filled-icon' : ''">
+        star
+    </span>
+</div>
+                <time class="text-xs text-outline font-medium uppercase tracking-wider" th:text="${#temporals.format(resena.fechaPublicacion, 'dd MMMM, yyyy')}">Fecha</time>
+            </div>
+        </div>
+        <div class="mt-6">
+            <span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full mb-4">
+                <span class="material-symbols-outlined text-sm">verified_user</span> 
+                Reseña Verificada
+            </span>
+            <p class="text-on-surface leading-relaxed text-lg" th:text="${resena.comentario}">
+                Comentario de la reseña.
+            </p>
+        </div>
+    </article>
+
+    <div th:if="${resenas.isEmpty()}" class="text-center py-20 text-on-surface-variant">
+        <span class="material-symbols-outlined text-6xl mb-4 opacity-20">rate_review</span>
+        <p class="text-xl">Aún no hay reseñas para esta propiedad.</p>
+    </div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only via JSON classes) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg rounded-t-[24px] border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_24px_rgba(44,52,53,0.04)] font-['Inter'] text-xs font-semibold">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span>Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-blue-600 transition-all" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span>Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-100 rounded-2xl px-5 py-2 transition-transform duration-300 ease-out active:scale-95" href="#">
+<span class="material-symbols-outlined filled-icon" style="font-variation-settings: 'FILL' 1;">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<script>
+function filtrarResenas(estrellas, boton) {
+
+    let cards = document.querySelectorAll("article[data-calificacion]");
+
+    cards.forEach(card => {
+        let rating = parseInt(card.dataset.calificacion);
+
+        if (estrellas === 0 || rating === estrellas) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".filtro-btn").forEach(btn => {
+        btn.classList.remove("bg-slate-800","text-white");
+        btn.classList.remove("bg-primary","text-on-primary");
+        btn.classList.add("bg-surface-container-high","text-on-surface");
+    });
+
+    boton.classList.remove("bg-surface-container-high","text-on-surface");
+    boton.classList.add("bg-slate-800","text-white");
+}
+</script>
+
+<script>
+function ordenarResenas(tipo){
+
+    let container = document.querySelector("section.space-y-8");
+    let cards = Array.from(document.querySelectorAll("article[data-calificacion]"));
+
+    cards.sort((a,b)=>{
+
+        let ratingA = parseInt(a.dataset.calificacion);
+        let ratingB = parseInt(b.dataset.calificacion);
+
+        let fechaA = new Date(a.dataset.fecha);
+        let fechaB = new Date(b.dataset.fecha);
+
+        if(tipo==="mejor") return ratingB-ratingA;
+        if(tipo==="peor") return ratingA-ratingB;
+
+        return fechaB-fechaA;
+    });
+
+    cards.forEach(card => container.appendChild(card));
+}
+</script>
+</body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mi Perfil | Scholar Stay</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings:
+                    'FILL' 0,
+                    'wght' 400,
+                    'GRAD' 0,
+                    'opsz' 24;
+            }
+        </style>
+    </head>
+
+    <body class="bg-slate-50 text-slate-800">
+
+        <nav class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-10 h-24 max-w-full text-base tracking-tight shadow-sm">
+
+            <div class="flex items-center gap-14">
+                <span class="text-3xl font-bold tracking-tighter text-sky-900">
+                    Scholar Stay
+                </span>
+
+                <div class="hidden md:flex gap-10">
+                    <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" th:href="@{/explorar-residencias}">
+                        Alojamiento
+                    </a>
+                    <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">
+                        Comunidad
+                    </a>
+                    <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">
+                        Eventos
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-8">
+
+                <a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer text-slate-500 hover:text-primary transition-colors">
+                    notifications
+                </a>
+
+                <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-500">
+                    chat_bubble
+                </a>
+
+                <a th:href="@{/perfil}" class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1">
+                    Mi Perfil
+                </a>
+
+                <a th:href="@{/editar-perfil-escolar}">
+                    <img
+                        class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                        th:src="${perfil.avatar != null}
+                        ? @{/uploads/{img}(img=${perfil.avatar})}
+                        : 'https://via.placeholder.com/100x100?text=Avatar'"
+                        alt="Avatar"
+                        />
+                </a>
+
+            </div>
+
+        </nav>
+        <main class="max-w-5xl mx-auto px-8 py-12">
+            <a th:href="@{/explorar-residencias}" class="inline-flex items-center gap-2 text-blue-900 font-semibold mb-6 hover:underline">
+                <span>←</span>
+                <span>Volver al Dashboard</span>
+            </a>
+            <section class="bg-white rounded-3xl shadow p-10 grid md:grid-cols-3 gap-10">
+
+                <div class="flex flex-col items-center text-center">
+                    <img class="w-48 h-64 rounded-2xl object-cover shadow"
+                         th:src="${perfil.avatar != null}
+                         ? @{/uploads/{img}(img=${perfil.avatar})}
+                         : 'https://via.placeholder.com/300x400?text=Avatar'"
+                         alt="Foto de perfil">
+
+                    <h1 class="text-3xl font-bold mt-6" th:text="${usuario.nombre}">
+                        Richard
+                    </h1>
+
+                    <p class="text-slate-500 mt-2" th:text="${perfil.carrera}">
+                        Estudiante de Ingeniería, 7to Ciclo
+                    </p>
+
+                    <a th:href="@{/editar-perfil-escolar}"
+                       class="mt-6 bg-blue-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800">
+                        Editar Perfil
+                    </a>
+                </div>
+
+                <div class="md:col-span-2 space-y-8">
+
+                    <div>
+                        <h2 class="text-2xl font-bold mb-3">Sobre mí</h2>
+                        <p class="text-slate-600 leading-relaxed"
+                           th:text="${perfil.biografia != null && !perfil.biografia.isEmpty() ? perfil.biografia : 'Aún no has agregado una biografía.'}">
+                            Biografía del estudiante.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4">Preferencias de convivencia</h2>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+
+                            <div class="bg-slate-100 rounded-2xl p-5">
+                                <p class="text-sm text-slate-500">Nivel de ruido</p>
+                                <p class="font-bold" th:text="${perfil.habitosRuido}">Música de fondo</p>
+                            </div>
+
+                            <div class="bg-slate-100 rounded-2xl p-5">
+                                <p class="text-sm text-slate-500">Horario de estudio</p>
+                                <p class="font-bold" th:text="${perfil.horarioEstudio}">Tarde</p>
+                            </div>
+
+                            <div class="bg-slate-100 rounded-2xl p-5">
+                                <p class="text-sm text-slate-500">Hábitos de sueño</p>
+                                <p class="font-bold" th:text="${perfil.habitosSueno}">Madrugador</p>
+                            </div>
+
+                            <div class="bg-slate-100 rounded-2xl p-5">
+                                <p class="text-sm text-slate-500">Tolerancia</p>
+                                <p class="font-bold" th:text="${perfil.nivelTolerancia}">Alta</p>
+                            </div>
+
+                            <div class="bg-green-100 rounded-2xl p-5">
+                                <p class="text-sm text-green-700">Mascotas</p>
+                                <p class="font-bold"
+                                   th:text="${perfil.mascotas} ? 'Acepta mascotas' : 'No acepta mascotas'">
+                                    Acepta mascotas
+                                </p>
+                            </div>
+
+                            <div class="bg-green-100 rounded-2xl p-5">
+                                <p class="text-sm text-green-700">Humo y vapeo</p>
+                                <p class="font-bold"
+                                   th:text="${perfil.humoVapeo} ? 'Permite humo/vapeo' : 'No permite humo/vapeo'">
+                                    No permite humo/vapeo
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </body>
+</html>
