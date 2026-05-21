@@ -107,7 +107,7 @@ public class WebViewController {
         return "detalleAlojamiento";
     }
 
-     @GetMapping("/perfil")
+   @GetMapping("/perfil")
 public String profile(HttpSession session, Model model) {
     Usuario usuario = (Usuario) session.getAttribute("loggedUser");
 

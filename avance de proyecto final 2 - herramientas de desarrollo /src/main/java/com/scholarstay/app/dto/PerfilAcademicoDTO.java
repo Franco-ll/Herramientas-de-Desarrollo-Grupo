@@ -37,7 +37,7 @@ public class PerfilAcademicoDTO {
 
     public String getNivelTolerancia() { return nivelTolerancia; }
     public void setNivelTolerancia(String nivelTolerancia) { this.nivelTolerancia = nivelTolerancia; }
-
+    
     public Boolean getHumoVapeo() { return humoVapeo; }
     public void setHumoVapeo(Boolean humoVapeo) { this.humoVapeo = humoVapeo; }
     
