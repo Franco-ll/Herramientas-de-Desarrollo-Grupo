@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recibo Digital | Scholarly Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#6a5e46",
+                    "outline": "#757c7d",
+                    "on-primary": "#f5f9ff",
+                    "error": "#a83836",
+                    "secondary-container": "#c7ecc9",
+                    "surface-tint": "#3d637e",
+                    "on-error-container": "#6e0a12",
+                    "tertiary-container": "#feecce",
+                    "primary-dim": "#305771",
+                    "secondary": "#46674b",
+                    "on-tertiary-container": "#635740",
+                    "surface-container-low": "#f0f4f4",
+                    "secondary-fixed-dim": "#b9debc",
+                    "primary-fixed-dim": "#aad1ef",
+                    "on-secondary-fixed-variant": "#426348",
+                    "on-surface-variant": "#596061",
+                    "on-secondary-container": "#39593f",
+                    "secondary-fixed": "#c7ecc9",
+                    "outline-variant": "#acb3b4",
+                    "surface": "#f8fafa",
+                    "on-tertiary-fixed": "#50452f",
+                    "inverse-primary": "#b8dffe",
+                    "error-container": "#fa746f",
+                    "on-background": "#2c3435",
+                    "inverse-surface": "#0b0f0f",
+                    "surface-container-highest": "#dde4e4",
+                    "secondary-dim": "#3a5a40",
+                    "on-primary-fixed-variant": "#335a74",
+                    "primary-container": "#b8dffe",
+                    "primary": "#3d637e",
+                    "surface-dim": "#d4dbdc",
+                    "tertiary-fixed-dim": "#efdec0",
+                    "surface-bright": "#f8fafa",
+                    "on-primary-fixed": "#123e56",
+                    "on-primary-container": "#29506a",
+                    "on-secondary-fixed": "#26462d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#fff8f1",
+                    "surface-container-high": "#e3e9ea",
+                    "tertiary-dim": "#5d523b",
+                    "inverse-on-surface": "#9b9d9e",
+                    "error-dim": "#67040d",
+                    "surface-variant": "#dde4e4",
+                    "primary-fixed": "#b8dffe",
+                    "background": "#f8fafa",
+                    "on-secondary": "#e8ffe7",
+                    "tertiary-fixed": "#feecce",
+                    "surface-container": "#eaefef",
+                    "on-surface": "#2c3435",
+                    "on-error": "#fff7f6",
+                    "on-tertiary-fixed-variant": "#6d614a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .receipt-edge {
+            mask-image: radial-gradient(circle at 10px 0, transparent 10px, white 0);
+            mask-size: 20px 100%;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-[#f8fafa]/80 backdrop-blur-xl docked full-width top-0 z-50 shadow-[0px_24px_24px_rgba(44,52,53,0.04)]">
+<nav class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-[#3d637e]">Scholar Stay</div>
+</nav>
+</header>
+<!-- Main Content: Digital Receipt -->
+<main class="flex-grow flex items-center justify-center p-6 md:p-12 bg-surface-container-low">
+<div class="max-w-md w-full animate-fade-in">
+<!-- Back Button -->
+<button class="flex items-center gap-2 text-outline mb-8 hover:text-primary transition-colors group" onclick="history.back()">
+<span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="font-label font-medium">Volver a mis reservas</span>
+</button>
+<!-- Digital Receipt Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_24px_48px_rgba(44,52,53,0.06)] overflow-hidden relative">
+<!-- Decorative Receipt Top -->
+<div class="h-2 bg-primary w-full"></div>
+<div class="p-8 md:p-10">
+<!-- Brand Identity -->
+<div class="flex flex-col items-center text-center mb-10">
+<div class="w-16 h-16 bg-primary-container text-primary rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+<h1 class="font-headline text-2xl font-extrabold tracking-tight text-on-surface">Confirmación de Pago</h1>
+<p class="text-outline text-sm mt-1">Scholar Stay: Tu Santuario Académico</p>
+</div>
+<!-- Main Transaction Info -->
+<div class="text-center py-6 bg-surface-container-low rounded-xl mb-8">
+    <p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">ID DE RESERVA</p>
+    <p class="font-headline text-xl font-bold text-on-surface mb-4" th:text="${'#SS-' + reserva.id + '-RES'}">#SS-2024-8832</p>
+    <div class="h-px w-12 bg-outline-variant/30 mx-auto mb-4"></div>
+    <p class="font-label text-xs uppercase tracking-widest text-outline font-semibold mb-1">MONTO TOTAL</p>
+    <p class="font-headline text-4xl font-extrabold text-primary tracking-tighter" th:text="${'S/ ' + reserva.precioTotal}">S/ 1,240.00</p>
+</div>
+<!-- Minimal Breakdown -->
+<div class="space-y-4 mb-10 border-t border-b border-surface-container-high py-6">
+    <div class="flex justify-between items-start gap-4">
+        <span class="text-on-surface-variant font-medium text-sm">Alojamiento</span>
+        <span class="text-on-surface font-extrabold text-right leading-tight max-w-[200px]" th:text="${reserva.alojamiento.titulo}">Nombre del Alojamiento Seleccionado</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Periodo</span>
+        <span class="text-on-surface font-semibold" th:text="${reserva.fechaInicio + ' al ' + reserva.fechaFin}">Sep 2024 - Ene 2025</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Estudiante</span>
+        <span class="text-on-surface font-semibold" th:text="${usuario.nombre}">Nombre</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Fecha Emisión</span>
+        <span class="text-on-surface font-semibold" th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}">15 de Mayo, 2024</span>
+    </div>
+</div>
+<!-- Compatibility Badge (Design System Specific) -->
+<div class="bg-secondary-container rounded-lg p-4 flex items-center justify-between mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-4 border-secondary flex items-center justify-center bg-surface-container-lowest">
+<span class="text-xs font-bold text-secondary">98%</span>
+</div>
+<div>
+<p class="text-on-secondary-container font-bold text-sm">Match Académico</p>
+<p class="text-on-secondary-container/80 text-xs">Perfil verificado</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-2 gap-4">
+<button class="bg-surface-container-high text-on-surface py-3 px-6 rounded-full font-label font-bold text-sm hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                            PDF
+                        </button>
+<button class="bg-primary text-on-primary py-3 px-6 rounded-full font-label font-bold text-sm hover:bg-primary-dim transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">share</span>
+                            Compartir
+                        </button>
+</div>
+</div>
+<!-- Receipt Bottom Perforation -->
+<div class="absolute bottom-0 left-0 right-0 flex justify-between px-2 transform translate-y-1/2">
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+<div class="w-4 h-4 bg-surface-container-low rounded-full"></div>
+</div>
+</div>
+<!-- Support Link -->
+<p class="text-center text-outline text-sm mt-10">
+                ¿Tienes alguna duda? <a class="text-primary font-semibold underline decoration-2 underline-offset-4" href="#">Contacta con soporte</a>
+</p>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-[24px] bg-[#f8fafa] shadow-[0px_-4px_20px_rgba(0,0,0,0.03)]">
+<div class="flex justify-around items-center w-full px-4 pb-6 pt-2">
+<a class="flex flex-col items-center text-[#acb3b4] py-2" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-['Inter'] text-[12px] font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center text-[#acb3b4] py-2" href="#">
+<span class="material-symbols-outlined">bedtime</span>
+<span class="font-['Inter'] text-[12px] font-medium">Stays</span>
+</a>
+<a class="flex flex-col items-center text-[#acb3b4] py-2" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] text-[12px] font-medium">Matches</span>
+</a>
+<a class="flex flex-col items-center bg-[#dde4e4] text-[#3d637e] rounded-2xl px-5 py-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Inter'] text-[12px] font-medium">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

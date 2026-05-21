@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es"><head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eaefef",
+                        "on-surface": "#2c3435",
+                        "primary": "#3d637e",
+                        "on-tertiary": "#fff8f1",
+                        "surface-container-high": "#e3e9ea",
+                        "secondary-fixed": "#c7ecc9",
+                        "on-secondary-container": "#39593f",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "on-primary-fixed": "#123e56",
+                        "secondary-dim": "#3a5a40",
+                        "on-surface-variant": "#596061",
+                        "tertiary-fixed": "#feecce",
+                        "outline-variant": "#acb3b4",
+                        "error": "#a83836",
+                        "surface-tint": "#3d637e",
+                        "on-primary": "#f5f9ff",
+                        "surface-dim": "#d4dbdc",
+                        "secondary-fixed-dim": "#b9debc",
+                        "on-tertiary-fixed": "#50452f",
+                        "surface": "#f8fafa",
+                        "inverse-primary": "#b8dffe",
+                        "primary-container": "#b8dffe",
+                        "on-background": "#2c3435",
+                        "secondary": "#46674b",
+                        "surface-container-highest": "#dde4e4",
+                        "primary-fixed": "#b8dffe",
+                        "on-tertiary-container": "#635740",
+                        "surface-container-low": "#f0f4f4",
+                        "tertiary-dim": "#5d523b",
+                        "tertiary-container": "#feecce",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "secondary-container": "#c7ecc9",
+                        "tertiary": "#6a5e46",
+                        "background": "#f8fafa",
+                        "on-secondary-fixed-variant": "#426348",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-secondary-fixed": "#26462d",
+                        "outline": "#757c7d",
+                        "surface-bright": "#f8fafa",
+                        "on-secondary": "#e8ffe7",
+                        "primary-fixed-dim": "#aad1ef",
+                        "on-error-container": "#6e0a12",
+                        "inverse-surface": "#0b0f0f",
+                        "on-primary-fixed-variant": "#335a74",
+                        "error-dim": "#67040d",
+                        "surface-variant": "#dde4e4",
+                        "error-container": "#fa746f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#29506a",
+                        "primary-dim": "#305771"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full font-manrope text-base tracking-tight">
+<div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1 hover:text-sky-700 transition-colors" th:href="@{/explorar-residencias}">Alojamiento</a>
+<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Comunidad</a>
+<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Eventos</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 text-slate-600">
+<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700">notifications</a>
+<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700">chat_bubble</a>
+</div>
+<a th:href="@{/editar-perfil-escolar}" class="bg-primary text-on-primary px-5 py-2 rounded-full font-semibold transition-transform active:scale-95">Mi Perfil</a>
+</div>
+</header>
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Form Section -->
+<div class="lg:col-span-7 space-y-10">
+<section>
+    <a th:href="@{/alojamiento/{id}(id=${alojamiento.id})}" class="flex items-center gap-2 text-primary font-bold mb-6 hover:underline group">
+        <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        Volver al detalle del alojamiento
+    </a>
+    <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-on-surface">Confirma tu estancia</h1>
+    <p class="text-on-surface-variant text-lg">Revisa los detalles de tu reserva antes de proceder al pago seguro.</p>
+</section>
+<!-- Custom Calendar Selection Container -->
+<div class="bg-surface-container-low p-8 rounded-xl space-y-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<h2 class="text-xl font-bold">Selección de Fechas</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm">
+        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Llegada</label>
+        <input type="date" id="fecha-inicio" class="w-full bg-transparent border-none p-0 text-lg font-semibold focus:ring-0" required onchange="calculateTotal()"/>
+    </div>
+    <div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm border-2 border-primary">
+        <label class="block text-xs font-bold uppercase tracking-wider text-primary mb-1">Salida</label>
+        <input type="date" id="fecha-fin" class="w-full bg-transparent border-none p-0 text-lg font-semibold focus:ring-0" required onchange="calculateTotal()"/>
+    </div>
+</div>
+<!-- Simplified Calendar Visual -->
+<div class="bg-surface-container-lowest p-6 rounded-lg text-center">
+    <p class="text-on-surface-variant italic">Usa el selector de arriba para definir tus fechas académicas.</p>
+    <div id="date-validation-error" class="hidden mt-4 p-3 bg-error-container text-on-error-container rounded-lg text-sm font-bold">
+        La fecha de salida debe ser posterior a la de llegada.
+    </div>
+</div>
+</div>
+<!-- Price Breakdown & Services -->
+<div class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+<h2 class="text-xl font-bold">Desglose Mensual</h2>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center">
+    <span class="text-on-surface-variant">Renta mensual base</span>
+    <span class="font-semibold" th:text="${'S/ ' + #numbers.formatDecimal(alojamiento.precioMensual, 1, 2)}">S/ 650,00</span>
+</div>
+<div class="flex justify-between items-center">
+    <span class="text-on-surface-variant">Cantidad de tiempo</span>
+    <span id="duracion-reserva" class="font-semibold">--</span>
+</div>
+<div class="flex justify-between items-center">
+    <span class="text-on-surface-variant">Servicios (Wifi, Agua, Luz)</span>
+    <span class="text-secondary font-medium italic">Incluido</span>
+</div>
+<div class="pt-4 border-t border-surface-container-high flex justify-between items-center">
+    <span class="text-lg font-bold">Total estimado</span>
+    <span id="precio-total" class="text-2xl font-extrabold text-primary" th:data-precio-base="${alojamiento.precioMensual}">S/ 0,00</span>
+</div>
+</div>
+<div class="bg-primary-container/30 px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary scale-75">info</span>
+<p class="text-sm text-on-primary-container font-medium">Se requiere un depósito de fianza equivalente a un mes (S/ 650) que se abonará tras la confirmación.</p>
+</div>
+</div>
+</div>
+<div class="pt-6">
+    <button id="btn-confirmar" onclick="proceedToPayment()" class="w-full bg-primary hover:bg-primary-dim text-on-primary text-xl font-bold py-6 rounded-full transition-all shadow-lg shadow-primary/20 flex justify-center items-center gap-3 active:scale-[0.98] opacity-50 cursor-not-allowed" disabled>
+                            Confirmar Pago
+                            <span class="material-symbols-outlined">lock</span>
+    </button>
+    <p class="text-center mt-4 text-sm text-outline">Transacción encriptada y segura. Al confirmar, aceptas nuestros términos de servicio.</p>
+</div>
+
+<script th:inline="javascript">
+    const precioBase = /*[[${alojamiento.precioMensual}]]*/ 0;
+    const alojamientoId = /*[[${alojamiento.id}]]*/ 0;
+
+    function calculateTotal() {
+        const arrival = document.getElementById('fecha-inicio').value;
+        const departure = document.getElementById('fecha-fin').value;
+        const btn = document.getElementById('btn-confirmar');
+        const errorMsg = document.getElementById('date-validation-error');
+
+        if (!arrival || !departure) return;
+
+        const d1 = new Date(arrival);
+        const d2 = new Date(departure);
+
+        if (d2 <= d1) {
+            errorMsg.classList.remove('hidden');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('duracion-reserva').innerText = "Error fechas";
+            document.getElementById('precio-total').innerText = "S/ 0.00";
+            return;
+        }
+
+        errorMsg.classList.add('hidden');
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        const diffTime = Math.abs(d2 - d1);
+        const diffDaysTotal = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        let duracionText = "";
+        let total = 0;
+
+        const months = Math.floor(diffDaysTotal / 30);
+        const remainingDays = diffDaysTotal % 30;
+
+        if (months > 0) {
+            duracionText = months === 1 ? "1 mes" : `${months} meses`;
+            if (remainingDays > 0) {
+                const daysText = remainingDays === 1 ? "1 día" : `${remainingDays} días`;
+                duracionText += ` y ${daysText}`;
+            }
+        } else {
+            duracionText = diffDaysTotal === 1 ? "1 día" : `${diffDaysTotal} días`;
+        }
+
+        total = (precioBase * (diffDaysTotal / 30)).toFixed(2);
+
+        document.getElementById('duracion-reserva').innerText = duracionText;
+        document.getElementById('precio-total').innerText = "S/ " + total;
+        document.getElementById('precio-total').dataset.calculatedTotal = total;
+    }
+
+    function proceedToPayment() {
+        const arrival = document.getElementById('fecha-inicio').value;
+        const departure = document.getElementById('fecha-fin').value;
+        const total = document.getElementById('precio-total').dataset.calculatedTotal;
+        
+        window.location.href = `/pasarelaPagos?alojamientoId=${alojamientoId}&fechaInicio=${arrival}&fechaFin=${departure}&total=${total}`;
+    }
+</script>
+</div>
+<!-- Property Card Section (Sidebar) -->
+<div class="lg:col-span-5 sticky top-28">
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<!-- Asymmetric Hero for Sidebar -->
+<div class="relative h-64">
+    <img th:src="@{/images/{img}(img=${alojamiento.imagen})}" alt="Alojamiento" class="w-full h-full object-cover" />
+    <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-4 py-2 rounded-full font-bold flex items-center gap-1 shadow-md">
+        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span th:text="${alojamiento.calificacionPromedio}">4.9</span>
+    </div>
+</div>
+<div class="p-8 space-y-6">
+<div>
+    <span class="text-xs font-bold uppercase tracking-widest text-primary mb-2 block">Alojamiento Scholar</span>
+    <h3 class="text-2xl font-bold leading-tight" th:text="${alojamiento.titulo}">Nombre Alojamiento</h3>
+    <div class="flex items-center gap-2 text-on-surface-variant mt-2">
+        <span class="material-symbols-outlined scale-75">location_on</span>
+        <span class="text-sm font-medium" th:text="${alojamiento.ubicacion}">Ubicación</span>
+    </div>
+</div>
+<!-- Match Chip -->
+<div class="bg-secondary-container rounded-full px-4 py-2 inline-flex items-center gap-2">
+    <span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">favorite</span>
+    <span class="text-sm font-semibold text-on-secondary-container" th:text="${alojamiento.calificacionPromedio + ' de calificación'}">94% Afinidad</span>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">wifi</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Wifi Alta Vel.</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">fitness_center</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Gimnasio</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">kitchen</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Cocina Equipada</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">laundry</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Lavandería</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center gap-4">
+<img alt="Property manager" class="w-12 h-12 rounded-full object-cover" data-alt="Friendly professional man smiling, property manager portrait, high-end editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-7WzvLcCzy6WdPkFo759qXkTac2etHPSQzUoVmPF0vsphrAvO8sdfnVS4jCjnsq52HvUMtgzkQ71n9R-7MlMW3aUIrB7s9YKZsouv9M-hdW0hO-8pv-9tjG8WVapEmO4WhqQJrRc8Ewk_6lRbH_1BBt5T3PUzZc3wjGZe_H4a3jHqTIHmwTRVYKv4l-qCW8YW_fzwpKtNtxlSjNmE52g6AGni3VCYAN5s1hbGqKqteY2gJTgEou5VDT772q7vd3SIsbjQ-1z0GBg"/>
+<div>
+<p class="text-xs text-on-surface-variant font-medium">Anfitrión</p>
+<p class="font-bold">Sra. Beatriz</p>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 rounded-full bg-white text-primary shadow-sm hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Bottom Bar for Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-slate-50 border-t border-slate-200 flex justify-around items-center h-16 z-50">
+<span class="material-symbols-outlined text-sky-800" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="material-symbols-outlined text-slate-400">search</span>
+<span class="material-symbols-outlined text-slate-400">favorite</span>
+<span class="material-symbols-outlined text-slate-400">person</span>
+</nav>
+</body></html>
