@@ -1,0 +1,310 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>All Matches | Scholar Stay</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#50452f",
+                        "on-error": "#fff7f6",
+                        "surface-dim": "#d4dbdc",
+                        "secondary-container": "#c7ecc9",
+                        "surface": "#f8fafa",
+                        "on-primary-container": "#29506a",
+                        "surface-tint": "#3d637e",
+                        "on-background": "#2c3435",
+                        "on-tertiary-container": "#635740",
+                        "error": "#a83836",
+                        "surface-container-low": "#f0f4f4",
+                        "on-primary": "#f5f9ff",
+                        "outline-variant": "#acb3b4",
+                        "primary-fixed-dim": "#aad1ef",
+                        "on-primary-fixed-variant": "#335a74",
+                        "tertiary-fixed": "#feecce",
+                        "on-surface-variant": "#596061",
+                        "on-error-container": "#6e0a12",
+                        "tertiary-container": "#feecce",
+                        "inverse-primary": "#b8dffe",
+                        "primary-fixed": "#b8dffe",
+                        "primary": "#3d637e",
+                        "error-container": "#fa746f",
+                        "inverse-surface": "#0b0f0f",
+                        "primary-dim": "#305771",
+                        "inverse-on-surface": "#9b9d9e",
+                        "surface-container-high": "#e3e9ea",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#757c7d",
+                        "surface-container": "#eaefef",
+                        "surface-container-highest": "#dde4e4",
+                        "tertiary-dim": "#5d523b",
+                        "secondary": "#46674b",
+                        "surface-variant": "#dde4e4",
+                        "secondary-dim": "#3a5a40",
+                        "on-secondary-container": "#39593f",
+                        "surface-bright": "#f8fafa",
+                        "background": "#f8fafa",
+                        "error-dim": "#67040d",
+                        "tertiary": "#6a5e46",
+                        "on-secondary-fixed-variant": "#426348",
+                        "on-tertiary-fixed-variant": "#6d614a",
+                        "secondary-fixed-dim": "#b9debc",
+                        "on-tertiary": "#fff8f1",
+                        "tertiary-fixed-dim": "#efdec0",
+                        "on-surface": "#2c3435",
+                        "on-secondary-fixed": "#26462d",
+                        "primary-container": "#b8dffe",
+                        "on-secondary": "#e8ffe7",
+                        "on-primary-fixed": "#123e56",
+                        "secondary-fixed": "#c7ecc9"
+                    },
+                    fontFamily: {
+                        headline: ["Manrope"],
+                        display: ["Manrope"],
+                        body: ["Inter"],
+                        label: ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .glass {
+            background: rgba(248, 250, 250, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Header Actions -->
+<div class="flex items-center justify-between mb-8">
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95" onclick="window.history.back()">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-semibold text-sm">Volver</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="text-on-surface-variant text-sm font-medium">Ordenar por:</span>
+<select class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-10"><option>Mayor Afinidad</option><option>Actividad reciente</option><option>Carrera (A-Z)</option></select>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sidebar Filters -->
+<!-- Main Results Grid -->
+<section class="w-full">
+<div class="mb-6">
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Tus Compañeros Ideales</h2>
+<p class="text-on-surface-variant">Hemos encontrado 24 estudiantes que se alinean con tu estilo de vida y metas académicas.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Profile Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10">
+<div class="relative h-48 overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="">
+<div class="absolute top-4 right-4 bg-secondary-container px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm fill">bolt</span>
+<span class="text-on-secondary-container font-bold text-xs">98% Match</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Mateo Ricci</h3>
+<p class="text-primary text-sm font-semibold">Ciencias de la Computación • 3er año</p>
+</div>
+<span class="material-symbols-outlined text-outline hover:text-error transition-colors cursor-pointer">favorite</span>
+</div>
+<div class="flex flex-wrap gap-2 my-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container text-[11px] font-semibold border border-secondary-container/50">
+<span class="material-symbols-outlined text-[14px]">school</span> Misma Universidad
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container/30 text-on-primary-container text-[11px] font-semibold border border-primary-container/50">
+<span class="material-symbols-outlined text-[14px]">interests</span> 5 intereses en común
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/30 text-on-tertiary-container text-[11px] font-semibold border border-tertiary-container/50">
+<span class="material-symbols-outlined text-[14px]">schedule</span> Horarios similares
+</span>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-6 italic leading-relaxed">"Busco un entorno de estudio tranquilo y alguien para compartir proyectos de IA."</p>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-2.5 rounded-full font-bold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+                                    Mensaje
+                                </button>
+<button class="flex-1 bg-surface-container-high text-on-surface py-2.5 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-all active:scale-95">
+                                    Ver Perfil
+                                </button>
+</div>
+</div>
+</div>
+<!-- Profile Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10">
+<div class="relative h-48 overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="">
+<div class="absolute top-4 right-4 bg-secondary-container px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm fill">bolt</span>
+<span class="text-on-secondary-container font-bold text-xs">94% Match</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Elena Vance</h3>
+<p class="text-primary text-sm font-semibold">Bellas Artes • 2do año</p>
+</div>
+<span class="material-symbols-outlined text-outline hover:text-error transition-colors cursor-pointer">favorite</span>
+</div>
+<div class="flex flex-wrap gap-2 my-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container/30 text-on-primary-container text-[11px] font-semibold border border-primary-container/50">
+<span class="material-symbols-outlined text-[14px]">palette</span> Pasión por el arte
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container text-[11px] font-semibold border border-secondary-container/50">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Zona cercana
+</span>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-6 italic leading-relaxed">"Me encanta pintar por las mañanas y busco un compañero que respete el silencio creativo."</p>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-2.5 rounded-full font-bold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+                                    Mensaje
+                                </button>
+<button class="flex-1 bg-surface-container-high text-on-surface py-2.5 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-all active:scale-95">
+                                    Ver Perfil
+                                </button>
+</div>
+</div>
+</div>
+<!-- Profile Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10">
+<div class="relative h-48 overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="">
+<div class="absolute top-4 right-4 bg-secondary-container px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm fill">bolt</span>
+<span class="text-on-secondary-container font-bold text-xs">91% Match</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Julian Thorne</h3>
+<p class="text-primary text-sm font-semibold">Ciencias Biomédicas • 4to año</p>
+</div>
+<span class="material-symbols-outlined text-outline hover:text-error transition-colors cursor-pointer">favorite</span>
+</div>
+<div class="flex flex-wrap gap-2 my-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/30 text-on-tertiary-container text-[11px] font-semibold border border-tertiary-container/50">
+<span class="material-symbols-outlined text-[14px]">fitness_center</span> Estilo de vida activo
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container/30 text-on-primary-container text-[11px] font-semibold border border-primary-container/50">
+<span class="material-symbols-outlined text-[14px]">groups</span> 3 intereses en común
+</span>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-6 italic leading-relaxed">"Estudiante de último año buscando roommate organizado y que le guste el deporte."</p>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-2.5 rounded-full font-bold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+                                    Mensaje
+                                </button>
+<button class="flex-1 bg-surface-container-high text-on-surface py-2.5 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-all active:scale-95">
+                                    Ver Perfil
+                                </button>
+</div>
+</div>
+</div>
+<!-- Profile Card 4 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10">
+<div class="relative h-48 overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="">
+<div class="absolute top-4 right-4 bg-secondary-container px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm fill">bolt</span>
+<span class="text-on-secondary-container font-bold text-xs">89% Match</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Maya Patel</h3>
+<p class="text-primary text-sm font-semibold">Economía • Maestría</p>
+</div>
+<span class="material-symbols-outlined text-outline hover:text-error transition-colors cursor-pointer">favorite</span>
+</div>
+<div class="flex flex-wrap gap-2 my-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container text-[11px] font-semibold border border-secondary-container/50">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span> Enfoque académico
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/30 text-on-tertiary-container text-[11px] font-semibold border border-tertiary-container/50">
+<span class="material-symbols-outlined text-[14px]">restaurant</span> Gustos culinarios
+</span>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-6 italic leading-relaxed">"Enfocada en mi tesis, busco un hogar tranquilo y buena conversación ocasional."</p>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-2.5 rounded-full font-bold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+                                    Mensaje
+                                </button>
+<button class="flex-1 bg-surface-container-high text-on-surface py-2.5 rounded-full font-bold text-sm hover:bg-surface-container-highest transition-all active:scale-95">
+                                    Ver Perfil
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="mt-12 text-center">
+<button class="px-8 py-3 bg-surface-container-high text-on-surface font-bold rounded-full hover:bg-surface-container-highest transition-all flex items-center gap-2 mx-auto active:scale-95">
+<span>Cargar más perfiles</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface dark:bg-surface-dim shadow-[0_-4px_24px_0_rgba(44,52,53,0.04)] rounded-t-xl md:hidden">
+<div class="flex justify-around items-center px-4 pb-4 pt-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all" th:href="@{/comunidad/inicio}">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-xs uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all" th:href="@{/comunidad/matches}">
+<span class="material-symbols-outlined">bed</span>
+<span class="font-label text-xs uppercase tracking-widest mt-1">Stays</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-dim text-on-primary-container dark:text-on-primary rounded-full px-6 py-2" th:href="@{/comunidad/grupos}">
+<span class="material-symbols-outlined fill">groups</span>
+<span class="font-label text-xs uppercase tracking-widest mt-1">Groups</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all" th:href="@{/comunidad/recursos}">
+<span class="material-symbols-outlined">book</span>
+<span class="font-label text-xs uppercase tracking-widest mt-1">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all" th:href="@{/comunidad/perfil-verificado}">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label text-xs uppercase tracking-widest mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple micro-interactions for the matches
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+            if (icon.innerText === 'favorite') {
+                icon.addEventListener('click', function() {
+                    this.classList.toggle('fill');
+                    this.style.color = this.classList.contains('fill') ? '#a83836' : '';
+                });
+            }
+        });
+    </script>
+</body></html>
