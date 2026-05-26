@@ -237,6 +237,84 @@
             </div>
         </div>
     </div>
+
+    <!-- ===== SECCIÓN 3: GESTIÓN DE ADMINISTRADORES ===== -->
+    <div class="mt-8 bg-white rounded-2xl editorial-shadow p-8">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary filled">admin_panel_settings</span>
+            </div>
+            <div>
+                <h2 class="text-xl font-headline font-bold">Gestión de administradores</h2>
+                <p class="text-xs text-on-surface-variant">Asigna o revoca el rol de administrador a cualquier usuario</p>
+            </div>
+        </div>
+
+        <div th:if="${exitoRol}" class="mb-4 bg-secondary-container text-on-secondary-container px-4 py-3 rounded-xl flex items-center gap-2 text-sm">
+            <span class="material-symbols-outlined filled text-secondary text-base">check_circle</span>
+            <span th:text="${exitoRol}"></span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-surface-container-high">
+                        <th class="text-left py-3 px-4 text-[10px] font-bold uppercase tracking-widest text-outline">Usuario</th>
+                        <th class="text-left py-3 px-4 text-[10px] font-bold uppercase tracking-widest text-outline">Email</th>
+                        <th class="text-left py-3 px-4 text-[10px] font-bold uppercase tracking-widest text-outline">Rol actual</th>
+                        <th class="text-left py-3 px-4 text-[10px] font-bold uppercase tracking-widest text-outline">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}"
+                        class="border-b border-surface-container-high/50 hover:bg-surface-container-low transition-colors">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-xs"
+                                     th:text="${usuario.nombre.substring(0,1)}">U</div>
+                                <span class="font-semibold" th:text="${usuario.nombre}">Nombre</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-on-surface-variant" th:text="${usuario.email}">email</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold"
+                                  th:classappend="${usuario.rol != null and usuario.rol.nombre == 'ROLE_ADMIN'} ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-high text-on-surface-variant'"
+                                  th:text="${usuario.rol != null ? usuario.rol.nombre.replace('ROLE_','') : 'SIN ROL'}">ROL</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <!-- Si ya es admin, mostrar boton para quitar admin -->
+                            <form th:if="${usuario.rol != null and usuario.rol.nombre == 'ROLE_ADMIN' and usuario.id != admin.id}"
+                                  th:action="@{/admin/configuracion/rol}" method="post"
+                                  onsubmit="return confirm('¿Quitar rol de administrador a este usuario?')">
+                                <input type="hidden" name="usuarioId" th:value="${usuario.id}"/>
+                                <input type="hidden" name="nuevoRol" value="ROLE_ESTUDIANTE"/>
+                                <button type="submit"
+                                        class="text-xs font-bold text-error border border-error px-3 py-1.5 rounded-lg hover:bg-error/10 transition-colors">
+                                    Quitar admin
+                                </button>
+                            </form>
+                            <!-- Si no es admin, mostrar boton para hacer admin -->
+                            <form th:if="${usuario.rol == null or usuario.rol.nombre != 'ROLE_ADMIN'}"
+                                  th:action="@{/admin/configuracion/rol}" method="post"
+                                  onsubmit="return confirm('¿Asignar rol de administrador a este usuario?')">
+                                <input type="hidden" name="usuarioId" th:value="${usuario.id}"/>
+                                <input type="hidden" name="nuevoRol" value="ROLE_ADMIN"/>
+                                <button type="submit"
+                                        class="text-xs font-bold text-primary border border-primary px-3 py-1.5 rounded-lg hover:bg-primary/10 transition-colors">
+                                    Hacer admin
+                                </button>
+                            </form>
+                            <!-- Si es el admin actual, mostrar badge -->
+                            <span th:if="${usuario.id == admin.id}"
+                                  class="text-xs text-on-surface-variant italic">Tu cuenta</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </main>
+
 </body>
 </html>
