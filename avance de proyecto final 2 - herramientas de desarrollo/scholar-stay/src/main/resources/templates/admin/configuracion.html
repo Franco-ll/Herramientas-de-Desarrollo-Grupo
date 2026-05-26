@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Configuración - Scholar Stay Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          theme: { extend: { colors: {
+            "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+            "primary-container": "#b8dffe", "on-primary-container": "#29506a",
+            "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+            "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
+            "surface-container-high": "#e3e9ea", "surface-container-highest": "#dde4e4",
+            "surface-container-lowest": "#ffffff", "on-surface": "#2c3435",
+            "on-surface-variant": "#596061", "outline": "#757c7d", "outline-variant": "#acb3b4",
+            "error": "#a83836",
+          }, fontFamily: { "headline": ["Manrope"] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 4px 24px rgba(44,52,53,0.06); }
+        .field-label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #757c7d; margin-bottom: 6px; }
+        .field-input { width: 100%; background: #f0f4f4; border: 1px solid rgba(172,179,180,0.4); color: #2c3435; font-size: 0.875rem; border-radius: 0.5rem; padding: 10px 14px; outline: none; transition: border 0.15s, box-shadow 0.15s; }
+        .field-input:focus { border-color: #3d637e; box-shadow: 0 0 0 3px rgba(61,99,126,0.12); }
+    </style>
+</head>
+<body class="text-on-surface">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
+    <div class="mb-8">
+        <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
+        <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
+        <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
+                 th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
+            <div>
+                <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                <p class="text-[10px] text-outline">Gestión Académica</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/dashboard}">
+            <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
+            <span class="material-symbols-outlined">group</span><span>Residentes</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/propiedades}">
+            <span class="material-symbols-outlined">apartment</span><span>Propiedades</span>
+        </a>
+        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
+            <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
+        </a>
+        <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/configuracion}">
+            <span class="material-symbols-outlined filled">settings</span><span>Configuración</span>
+        </a>
+    </nav>
+    <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
+        <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
+            <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-8 min-h-screen bg-surface">
+
+    <!-- Header -->
+    <header class="mb-8">
+        <h1 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface mb-2">Configuración</h1>
+        <p class="text-on-surface-variant">Gestiona tu perfil y la configuración general del sistema.</p>
+    </header>
+
+    <!-- Mensajes flash -->
+    <div th:if="${exito}" class="mb-6 bg-secondary-container text-on-secondary-container px-5 py-4 rounded-xl flex items-center gap-3 editorial-shadow">
+        <span class="material-symbols-outlined filled text-secondary">check_circle</span>
+        <span th:text="${exito}"></span>
+    </div>
+    <div th:if="${exitoContrasena}" class="mb-6 bg-secondary-container text-on-secondary-container px-5 py-4 rounded-xl flex items-center gap-3 editorial-shadow">
+        <span class="material-symbols-outlined filled text-secondary">check_circle</span>
+        <span th:text="${exitoContrasena}"></span>
+    </div>
+    <div th:if="${errorContrasena}" class="mb-6 bg-red-100 text-error px-5 py-4 rounded-xl flex items-center gap-3 editorial-shadow">
+        <span class="material-symbols-outlined filled">error</span>
+        <span th:text="${errorContrasena}"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- ===== SECCIÓN 1: PERFIL DEL ADMIN ===== -->
+        <div class="space-y-6">
+
+            <!-- Datos del perfil -->
+            <div class="bg-white rounded-2xl editorial-shadow p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary filled">manage_accounts</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-headline font-bold">Datos del perfil</h2>
+                        <p class="text-xs text-on-surface-variant">Actualiza tu nombre y correo de administrador</p>
+                    </div>
+                </div>
+
+                <form th:action="@{/admin/configuracion/perfil}" method="post" class="space-y-5">
+                    <div>
+                        <label class="field-label">Nombre</label>
+                        <input type="text" name="nombre" required class="field-input"
+                               th:value="${admin != null ? admin.nombre : ''}"
+                               placeholder="Nombre del administrador"/>
+                    </div>
+                    <div>
+                        <label class="field-label">Correo electrónico</label>
+                        <input type="email" name="email" required class="field-input"
+                               th:value="${admin != null ? admin.email : ''}"
+                               placeholder="admin@scholarstay.com"/>
+                    </div>
+                    <button type="submit"
+                            class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-xl font-headline font-bold text-sm hover:bg-primary-dim transition-all">
+                        <span class="material-symbols-outlined text-[16px]">save</span>
+                        Guardar cambios
+                    </button>
+                </form>
+            </div>
+
+            <!-- Cambiar contraseña -->
+            <div class="bg-white rounded-2xl editorial-shadow p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary filled">lock</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-headline font-bold">Cambiar contraseña</h2>
+                        <p class="text-xs text-on-surface-variant">Mínimo 6 caracteres</p>
+                    </div>
+                </div>
+
+                <form th:action="@{/admin/configuracion/contrasena}" method="post" class="space-y-5">
+                    <div>
+                        <label class="field-label">Nueva contraseña</label>
+                        <input type="password" name="passwordNueva" required class="field-input"
+                               placeholder="••••••••" minlength="6"/>
+                    </div>
+                    <div>
+                        <label class="field-label">Confirmar nueva contraseña</label>
+                        <input type="password" name="passwordConfirmar" required class="field-input"
+                               placeholder="••••••••" minlength="6"/>
+                    </div>
+                    <button type="submit"
+                            class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-xl font-headline font-bold text-sm hover:bg-primary-dim transition-all">
+                        <span class="material-symbols-outlined text-[16px]">lock_reset</span>
+                        Actualizar contraseña
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ===== SECCIÓN 2: CONFIGURACIÓN DEL SISTEMA ===== -->
+        <div>
+            <div class="bg-white rounded-2xl editorial-shadow p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary filled">tune</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-headline font-bold">Configuración del sistema</h2>
+                        <p class="text-xs text-on-surface-variant">Parámetros generales de la plataforma</p>
+                    </div>
+                </div>
+
+                <form th:action="@{/admin/configuracion/sistema}" method="post" class="space-y-5">
+                    <div>
+                        <label class="field-label">Nombre de la plataforma</label>
+                        <input type="text" name="nombrePlataforma" required class="field-input"
+                               th:value="${config != null ? config.nombrePlataforma : 'Scholar Stay'}"
+                               placeholder="Scholar Stay"/>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="field-label">Precio mínimo (S/)</label>
+                            <input type="number" name="precioMinimo" required min="0" step="0.01" class="field-input"
+                                   th:value="${config != null ? config.precioMinimo : 100}"
+                                   placeholder="100.00"/>
+                        </div>
+                        <div>
+                            <label class="field-label">Precio máximo (S/)</label>
+                            <input type="number" name="precioMaximo" required min="0" step="0.01" class="field-input"
+                                   th:value="${config != null ? config.precioMaximo : 5000}"
+                                   placeholder="5000.00"/>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="field-label">Máximo de reservas por usuario</label>
+                        <input type="number" name="maxReservasPorUsuario" required min="1" max="10" class="field-input"
+                               th:value="${config != null ? config.maxReservasPorUsuario : 3}"
+                               placeholder="3"/>
+                        <p class="text-xs text-on-surface-variant mt-1">Número máximo de reservas activas que puede tener un estudiante.</p>
+                    </div>
+
+                    <!-- Info actual -->
+                    <div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/30">
+                        <p class="text-xs font-bold uppercase tracking-widest text-outline mb-3">Configuración actual</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Plataforma</span>
+                                <span class="font-semibold" th:text="${config != null ? config.nombrePlataforma : 'Scholar Stay'}">Scholar Stay</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Rango de precios</span>
+                                <span class="font-semibold">
+                                    S/ <span th:text="${config != null ? config.precioMinimo : 100}">100</span>
+                                    — S/ <span th:text="${config != null ? config.precioMaximo : 5000}">5000</span>
+                                </span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Max. reservas por usuario</span>
+                                <span class="font-semibold" th:text="${config != null ? config.maxReservasPorUsuario : 3}">3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-sm hover:bg-primary-dim transition-all">
+                        <span class="material-symbols-outlined text-[16px]">save</span>
+                        Guardar configuración
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
