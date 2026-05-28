@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.model.Notificacion;
 import com.scholarstay.app.model.PerfilAcademico;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.service.AlojamientoService;
@@ -81,6 +82,7 @@ public class WebViewController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("alojamientos", alojamientoService.listar());
         model.addAttribute("notificaciones", notificacionService.obtenerNoLeidas(usuario.getId()));
+        model.addAttribute("noLeidas", notificacionService.obtenerNoLeidas(usuario.getId()).size());
         return "explorarResidencias";
     }
 
@@ -222,7 +224,41 @@ public String notifications(HttpSession session, Model model) {
 
     return "notificaciones";
 }
+@GetMapping("/notificaciones/{id}")
+public String verNotificacion(@PathVariable Long id,
+                              HttpSession session,
+                              Model model) {
 
+    Usuario usuario = getLoggedUser();
+
+    if (usuario == null)
+        return "redirect:/login";
+
+    Notificacion notificacion =
+            notificacionService.obtenerPorId(id);
+
+    if (notificacion == null)
+        return "redirect:/notificaciones";
+
+    if (!notificacion.getUsuario()
+            .getId()
+            .equals(usuario.getId())) {
+
+        return "redirect:/notificaciones";
+    }
+
+    if (!notificacion.getLeido()) {
+
+        notificacionService.marcarComoLeida(id);
+
+        notificacion.setLeido(true);
+    }
+
+    model.addAttribute("usuario", usuario);
+    model.addAttribute("notificacion", notificacion);
+
+    return "detalle-notificacion";
+}
     // --- Booking Flow ---
 
     @GetMapping("/confirmar-reserva-escolar")

@@ -18,22 +18,47 @@ public class NotificacionService {
     }
 
     public Notificacion crearNotificacion(Usuario usuario, String mensaje, String tipo) {
-        Notificacion notificacion = new Notificacion(usuario, mensaje, tipo);
+
+        Notificacion notificacion =
+                new Notificacion(usuario, mensaje, tipo);
+
         return notificacionRepository.save(notificacion);
     }
 
     public List<Notificacion> obtenerNotificaciones(Long usuarioId) {
         return notificacionRepository.findByUsuarioIdOrderByFechaDesc(usuarioId);
     }
-    
+
     public List<Notificacion> obtenerNoLeidas(Long usuarioId) {
-        return notificacionRepository.findByUsuarioIdAndLeidoFalseOrderByFechaDesc(usuarioId);
+        return notificacionRepository
+                .findByUsuarioIdAndLeidoFalseOrderByFechaDesc(usuarioId);
     }
 
     public void marcarComoLeida(Long notificacionId) {
-        notificacionRepository.findById(notificacionId).ifPresent(notificacion -> {
+
+        notificacionRepository.findById(notificacionId)
+                .ifPresent(notificacion -> {
+
+                    notificacion.setLeido(true);
+
+                    notificacionRepository.save(notificacion);
+                });
+    }
+
+    public void marcarTodasComoLeidas(Long usuarioId) {
+
+        List<Notificacion> notificaciones =
+                notificacionRepository
+                        .findByUsuarioIdAndLeidoFalseOrderByFechaDesc(usuarioId);
+
+        for (Notificacion notificacion : notificaciones) {
             notificacion.setLeido(true);
-            notificacionRepository.save(notificacion);
-        });
+        }
+
+        notificacionRepository.saveAll(notificaciones);
+    }
+
+    public Notificacion obtenerPorId(Long id) {
+        return notificacionRepository.findById(id).orElse(null);
     }
 }

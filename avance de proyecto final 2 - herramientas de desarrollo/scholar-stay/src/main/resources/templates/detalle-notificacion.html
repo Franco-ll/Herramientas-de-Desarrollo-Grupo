@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+    <head>
+
+        <meta charset="UTF-8">
+
+        <title>
+            Detalle de Notificación
+        </title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    </head>
+
+    <body class="bg-slate-100 min-h-screen">
+
+        <div class="max-w-4xl mx-auto py-10 px-6">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h1 class="text-3xl font-bold text-slate-800">
+                        Notificación
+                    </h1>
+
+                    <p class="text-slate-500 mt-1">
+                        Vista detallada del mensaje
+                    </p>
+
+                </div>
+
+                <a th:href="@{/notificaciones}"
+                   class="bg-slate-800 text-white px-5 py-2 rounded-lg hover:bg-slate-700 transition">
+
+                    Volver
+
+                </a>
+
+            </div>
+
+            <!-- Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+
+                <!-- Tipo -->
+                <div class="mb-6">
+
+                    <span class="text-sm text-slate-500">
+                        Tipo
+                    </span>
+
+                    <h2 class="text-xl font-bold text-slate-800"
+                        th:text="${notificacion.tipo}">
+                        RESERVA
+                    </h2>
+
+                </div>
+
+                <!-- Fecha -->
+                <div class="mb-6">
+
+                    <span class="text-sm text-slate-500">
+                        Fecha
+                    </span>
+
+                    <p class="text-slate-700"
+                       th:text="${#temporals.format(notificacion.fecha, 'dd/MM/yyyy HH:mm')}">
+                    </p>
+
+                </div>
+
+                <!-- Estado -->
+                <div class="mb-6">
+
+                    <span class="text-sm text-slate-500">
+                        Estado
+                    </span>
+
+                    <div class="mt-2">
+
+                        <span th:if="${notificacion.leido}"
+                              class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+
+                            Leído
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Mensaje -->
+                <div>
+
+                    <span class="text-sm text-slate-500 block mb-3">
+                        Contenido del mensaje
+                    </span>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-slate-700 leading-relaxed">
+
+                        <p th:text="${notificacion.mensaje}">
+                            Mensaje
+                        </p>
+
+                    </div>
+                    <!-- Botón recibo -->
+
+                    <div th:if="${notificacion.tipo == 'RESERVA'}"
+                         class="mt-6">
+
+                        <a th:href="@{/reciboDigital}"
+                           class="inline-flex items-center gap-2 bg-blue-900 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-800 transition">
+
+                            <span class="material-symbols-outlined">
+                                receipt_long
+                            </span>
+
+                            Ver recibo digital
+
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

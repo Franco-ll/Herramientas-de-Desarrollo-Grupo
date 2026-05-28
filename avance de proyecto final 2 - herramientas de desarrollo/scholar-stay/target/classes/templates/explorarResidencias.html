@@ -100,7 +100,21 @@
 </div>
 <div class="flex items-center gap-6">
 <div class="flex items-center gap-4 text-slate-600">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications</a>
+<div class="relative">
+
+    <a th:href="@{/notificaciones}"
+       class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">
+
+        notifications
+
+    </a>
+
+    <!-- Indicador -->
+    <span th:if="${noLeidas > 0}"
+          class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full">
+    </span>
+
+</div>
 <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
 </div>
 <div class="flex items-center gap-4">

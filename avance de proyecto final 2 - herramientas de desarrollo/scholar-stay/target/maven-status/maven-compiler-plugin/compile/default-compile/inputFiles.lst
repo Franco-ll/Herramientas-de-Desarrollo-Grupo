@@ -1,60 +1,60 @@
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\CustomAuthenticationSuccessHandler.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\PerfilAcademico.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\NotificacionRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Rol.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminFinanzasVM.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\PagoService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminDashboardVM.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\config\DataInitializer.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\ReservaRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\ResenaDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\AlojamientoRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\PerfilAcademicoDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\ReservaDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\RolRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\RolRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AdminDashboardService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\PerfilAcademicoRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\NotificacionRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\WebAuthController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\CompatibilidadRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\NotificacionService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\AlojamientoRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\UsuarioService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\GlobalExceptionHandler.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\CompatibilidadDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Usuario.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\UsuarioRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\NotificacionDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\LoginRequest.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Reserva.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\PagoRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\AdminController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\CompatibilidadRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\UsuarioRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\ResenaRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AlojamientoService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Alojamiento.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\CompatibilidadService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\PerfilAcademicoRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\WebViewController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Notificacion.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\PerfilAcademicoService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\SecurityConfig.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\ReservaService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\ResenaService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\PagoRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Compatibilidad.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\ReservaRepository.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\UserDetailsServiceImpl.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\RolService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Resena.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminPropiedadesVM.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\config\WebConfig.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminResidentesVM.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\ResenaRestController.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AuthService.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\UsuarioDTO.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Pago.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\ScholarStayApplication.java
-C:\Users\Richard\Downloads\Nueva carpeta\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\CustomUserDetails.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\GlobalExceptionHandler.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Reserva.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Rol.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminDashboardVM.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AuthService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Usuario.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\RolRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminResidentesVM.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\NotificacionRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\PerfilAcademicoRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AdminDashboardService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\CompatibilidadRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\CompatibilidadService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\ReservaService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Notificacion.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\config\WebConfig.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\ResenaRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\NotificacionRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\ResenaService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\PerfilAcademicoRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\UsuarioDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\ReservaRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\WebViewController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\ReservaDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\UsuarioService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Pago.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\PerfilAcademicoService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminPropiedadesVM.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\PagoRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\CompatibilidadRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\AdminController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\CompatibilidadDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\PagoService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\UsuarioRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\AlojamientoRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\web\WebAuthController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\ScholarStayApplication.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\UsuarioRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\RolService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\PerfilAcademico.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\ResenaDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\PagoRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\LoginRequest.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\CustomUserDetails.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\CustomAuthenticationSuccessHandler.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\AlojamientoService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\SecurityConfig.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\config\DataInitializer.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\ReservaRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\viewmodel\AdminFinanzasVM.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\NotificacionDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Alojamiento.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\dto\PerfilAcademicoDTO.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Resena.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\service\NotificacionService.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\model\Compatibilidad.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\RolRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\controller\api\ResenaRestController.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\repository\AlojamientoRepository.java
+C:\Users\Richard\Downloads\para la semana 10\avance de proyecto final 2 - herramientas de desarrollo\scholar-stay\src\main\java\com\scholarstay\app\security\UserDetailsServiceImpl.java
