@@ -1,6 +1,12 @@
 package com.scholarstay.app.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "perfiles_academicos")
@@ -16,6 +22,11 @@ public class PerfilAcademico {
     private String habitosSueno; // e.g., "Madrugador", "Noctámbulo"
     private String nivelTolerancia; // e.g., "Alto", "Medio", "Bajo"
     private String biografia;
+    // Campos adicionales para el módulo Comunidad
+    private String universidad;
+    private String ciclo; // e.g., "4to año", "Maestría"
+    // Intereses almacenados como lista separada por comas
+    private String intereses;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -43,6 +54,15 @@ public class PerfilAcademico {
 
     public String getBiografia() { return biografia; }
     public void setBiografia(String biografia) { this.biografia = biografia; }
+
+    public String getUniversidad() { return universidad; }
+    public void setUniversidad(String universidad) { this.universidad = universidad; }
+
+    public String getCiclo() { return ciclo; }
+    public void setCiclo(String ciclo) { this.ciclo = ciclo; }
+
+    public String getIntereses() { return intereses; }
+    public void setIntereses(String intereses) { this.intereses = intereses; }
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }

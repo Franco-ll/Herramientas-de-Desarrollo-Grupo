@@ -86,16 +86,52 @@
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
+        .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(148, 163, 184, 0.4);
+        border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(148, 163, 184, 0.7);
+    }
+        
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container">
-<main class="min-h-screen flex flex-col md:flex-row">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full">
+<div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
+<div class="hidden md:flex items-center gap-8 font-manrope text-base tracking-tight">
+<a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1" th:href="@{/explorar-residencias}">Alojamiento</a>
+<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" th:href="@{/comunidad/inicio}">Comunidad</a>
+<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Eventos</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-slate-600">
+<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications</a>
+<a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
+</div>
+<div class="flex items-center gap-4">
+    <a th:href="@{/perfil}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+        Mi Perfil
+    </a>
+    <a th:href="@{/logout}" class="flex items-center gap-2 text-error font-bold text-sm hover:text-error-dim transition-colors px-3 py-2 rounded-lg hover:bg-error/5">
+    <span class="material-symbols-outlined text-lg">logout</span>
+    <span class="hidden lg:inline">Cerrar Sesión</span>
+</a>
+</div>
+</nav>
+<main class="min-h-screen flex flex-col md:flex-row pt-20">
 <!-- Left Sidebar: Ecosystem Filters -->
 <aside class="w-full md:w-80 bg-surface-container-low p-6 md:p-8 overflow-y-auto scrollbar-hide border-r border-outline-variant/10 md:sticky md:top-0 h-screen">
-<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors mb-8 group" onclick="window.history.back()">
-<span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
-<span class="font-display font-bold text-sm">Panel Principal</span>
-</button>
 <div class="space-y-10">
 <!-- Ecosystem Header -->
 <div>
@@ -111,16 +147,16 @@
                     </h3>
 <div class="relative mb-4">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-<input class="w-full bg-surface border-outline-variant/30 rounded-lg py-2 pl-10 pr-4 text-xs focus:ring-primary focus:border-primary" placeholder="Buscar carrera..." type="text">
+<input class="w-full bg-surface border-outline-variant/30 rounded-lg py-2 pl-10 pr-4 text-xs focus:ring-primary focus:border-primary" id="searchCarrera" placeholder="Buscar carrera..." type="text">
 </div>
-<div class="flex flex-wrap gap-2">
-<button class="px-3 py-1.5 rounded-full bg-primary text-on-primary text-xs font-medium">Arquitectura</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Medicina</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Ingeniería</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Derecho</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Psicología</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Biotecnología</button>
-<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20">Economía</button>
+<div class="flex flex-wrap gap-2" id="carreras-container">
+    <th:block th:if="${carreras != null}">
+        <button th:each="carrera : ${carreras}" 
+                th:text="${carrera}"
+                class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20 transition-colors"
+                onclick="toggleCarrera(this)">
+        </button>
+    </th:block>
 </div>
 </div>
 <div>
@@ -128,32 +164,22 @@
 <span class="material-symbols-outlined text-primary text-lg">auto_awesome</span>
                         Intereses
                     </h3>
-<div class="space-y-3">
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Estudio en Silencio</span>
-<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Networking</span>
-<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Deporte</span>
-<input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Fotografía</span>
-<input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Cocina</span>
-<input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
-<label class="flex items-center justify-between group cursor-pointer">
-<span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">Viajes</span>
-<input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
-</label>
+<div id="intereses-container"
+     class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+    <th:block th:if="${intereses != null}">
+        <label th:each="interes : ${intereses}" class="flex items-center justify-between group cursor-pointer">
+            <span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors" th:text="${interes}"></span>
+            <input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface interes-checkbox" type="checkbox" th:value="${interes}">
+        </label>
+    </th:block>
 </div>
+</div>
+<!-- Search Button -->
+<div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-bold text-sm hover:bg-primary-dim transition-all active:scale-95" onclick="ejecutarBusqueda()">
+<span class="material-symbols-outlined text-sm" style="vertical-align: middle; margin-right: 8px;">search</span>
+    Buscar Coincidencias
+</button>
 </div>
 </div>
 </div>
@@ -177,51 +203,33 @@
 <div class="p-8 md:p-16 max-w-6xl mx-auto space-y-20">
 <!-- Featured Section: Compañeros -->
 <div class="space-y-10 scroll-mt-10" id="compañeros">
-<div class="flex items-end justify-between border-b border-outline-variant/10 pb-6">
+    <div class="flex items-end justify-between border-b border-outline-variant/10 pb-6">
 <div>
 <span class="text-secondary font-bold text-xs uppercase tracking-[0.2em] block mb-2">SUGERENCIAS CURADAS</span>
 <h2 class="font-display text-3xl font-extrabold text-on-surface">Potenciales Matches</h2>
 </div>
-<a class="text-primary font-bold text-sm hover:underline flex items-center gap-1" th:href="@{/comunidad/matches}">Ver todos <span class="material-symbols-outlined text-sm">chevron_right</span></a>
+        <a id="ver-todos-link" class="text-primary font-bold text-sm hover:underline flex items-center gap-1" href="#" onclick="openVerTodos(event)">Ver todos <span class="material-symbols-outlined text-sm">chevron_right</span></a>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<!-- Profile Card 1 -->
-<div class="group relative bg-surface-container-low p-6 rounded-2xl border border-outline-variant/5 hover:border-primary/20 transition-all duration-300 cursor-pointer" th:onclick="|window.location.href='@{/comunidad/perfil-verificado}'|">
-<div class="flex items-start gap-4">
-<img alt="Mateo V." class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
-<div>
-<h3 class="font-display font-bold text-lg">Mateo V.</h3>
-<p class="text-xs text-on-surface-variant font-medium">Arquitectura, 4to año</p>
-<div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black">
-                                    98% MATCH
-                                </div>
-</div>
-</div>
-<p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic">"Busco un entorno enfocado durante las entregas finales. Miembro activo del taller de diseño sustentable."</p>
-<div class="mt-6 flex gap-2">
-<button class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-primary hover:text-on-primary transition-colors" th:onclick="|window.location.href='@{/comunidad/chat}'; event.stopPropagation();|">Enviar Mensaje</button>
-<button class="p-2.5 rounded-xl bg-surface-container-high hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">favorite</span></button>
-</div>
-</div>
-<!-- Profile Card 2 -->
-<div class="group relative bg-surface-container-low p-6 rounded-2xl border border-outline-variant/5 hover:border-primary/20 transition-all duration-300 cursor-pointer" th:onclick="|window.location.href='@{/comunidad/perfil-verificado}'|">
-<div class="flex items-start gap-4">
-<img alt="Elena R." class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
-<div>
-<h3 class="font-display font-bold text-lg">Elena R.</h3>
-<p class="text-xs text-on-surface-variant font-medium">Diseño UI, 3er año</p>
-<div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black">
-                                    94% MATCH
-                                </div>
-</div>
-</div>
-<p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic">"Prefiero madrugar para estudiar. Amante del café de especialidad y el orden minimalista."</p>
-<div class="mt-6 flex gap-2">
-<button class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-primary hover:text-on-primary transition-colors" th:onclick="|window.location.href='@{/comunidad/chat}'; event.stopPropagation();|">Enviar Mensaje</button>
-<button class="p-2.5 rounded-xl bg-surface-container-high hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">favorite</span></button>
-</div>
-</div>
-</div>
+<div id="featured-matches-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <th:block th:if="${featuredMatches != null}">
+        <div th:each="m : ${featuredMatches}" class="group relative bg-surface-container-low p-6 rounded-2xl border border-outline-variant/5 hover:border-primary/20 transition-all duration-300 cursor-pointer flex flex-col h-full" th:onclick="|window.location.href='@{/comunidad/perfil/' + ${m.usuarioId} }'|">
+            <div class="flex items-start gap-4">
+                <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
+                <div>
+                    <h3 class="font-display font-bold text-lg" th:text="${m.nombre}"></h3>
+                    <p class="text-xs text-on-surface-variant font-medium" th:text="${m.carrera}"></p>
+                    <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black" th:text="${m.porcentaje} + '% MATCH'"></div>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic flex-1" th:text="${m.biografia != null and m.biografia.length() > 100 ? m.biografia.substring(0,100) + '...' : m.biografia}"></p>
+            <div class="mt-6 flex gap-2">
+                <a class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-surface-container-highest transition-colors text-center flex items-center justify-center" th:href="@{'/comunidad/perfil/' + ${m.usuarioId}}" onclick="event.stopPropagation();">Ver Perfil</a>
+                <button class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-primary hover:text-on-primary transition-colors flex items-center justify-center" th:onclick="|window.location.href='@{/comunidad/chat}'; event.stopPropagation();|">Enviar Mensaje</button>
+                <button class="p-2.5 rounded-xl bg-surface-container-high hover:text-error transition-colors flex items-center justify-center"><span class="material-symbols-outlined text-sm">favorite</span></button>
+            </div>
+        </div>
+    </th:block>
+    </div>
 </div>
 <!-- Featured Section: Círculos -->
 <div class="space-y-10 scroll-mt-10" id="circulos">
@@ -231,36 +239,24 @@
 <h2 class="font-display text-3xl font-extrabold text-on-surface">Círculos de Estudio</h2>
 </div>
 </div>
-<div class="space-y-4">
-<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20" th:onclick="|window.location.href='@{/comunidad/grupos}'|">
-<div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-<img alt="Arquitectura" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="">
-</div>
-<div class="flex-1">
-<div class="flex items-center gap-2 mb-2">
-<span class="px-2 py-0.5 rounded bg-on-tertiary-fixed text-tertiary-fixed text-[9px] font-black uppercase tracking-widest">ARQUITECTURA</span>
-<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">• 12 Scholars</span>
-</div>
-<h3 class="font-display text-xl font-bold mb-2 group-hover:text-primary transition-colors">Sustentabilidad en Espacios Reducidos</h3>
-<p class="text-on-surface-variant text-sm line-clamp-2">Análisis de optimización de m² y su impacto en la salud mental de posgrado.</p>
-</div>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform hidden md:block">arrow_forward</span>
-</div>
-<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20" th:onclick="|window.location.href='@{/comunidad/grupos}'|">
-<div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-<img alt="Medicina" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="">
-</div>
-<div class="flex-1">
-<div class="flex items-center gap-2 mb-2">
-<span class="px-2 py-0.5 rounded bg-on-tertiary-fixed text-tertiary-fixed text-[9px] font-black uppercase tracking-widest">MEDICINA</span>
-<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">• 8 Scholars</span>
-</div>
-<h3 class="font-display text-xl font-bold mb-2 group-hover:text-primary transition-colors">Bioética y el Genoma Humano</h3>
-<p class="text-on-surface-variant text-sm line-clamp-2">Resúmenes de papers sobre edición genética para el examen final de Bioética II.</p>
-</div>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform hidden md:block">arrow_forward</span>
-</div>
-</div>
+    <div class="space-y-4">
+        <th:block th:if="${gruposDestacados != null}">
+            <div th:each="g : ${gruposDestacados}" class="bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20" th:onclick="|window.location.href='@{/comunidad/grupos}'|">
+                <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
+                    <img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="">
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 rounded bg-on-tertiary-fixed text-tertiary-fixed text-[9px] font-black uppercase tracking-widest" th:text="${g.carrera}"></span>
+                        <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter" th:text="'• ' + ${g.miembros} + ' Scholars'"></span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2 group-hover:text-primary transition-colors" th:text="${g.nombre}"></h3>
+                    <p class="text-on-surface-variant text-sm line-clamp-2" th:text="${g.descripcion}"></p>
+                </div>
+                <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform hidden md:block">arrow_forward</span>
+            </div>
+        </th:block>
+    </div>
 </div>
 </div>
 </section>
@@ -285,24 +281,137 @@
 </a>
 </nav>
 <script>
-    // Micro-interactions for Checkboxes
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    let selectedCarrera = null;
+    const selectedIntereses = new Set();
+
+    function toggleCarrera(button) {
+        // Remover clase activa de todos los botones
+        document.querySelectorAll('#carreras-container button').forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-on-primary');
+            btn.classList.add('bg-surface-container-highest', 'text-on-surface');
+        });
+        
+        // Agregar clase activa al botón seleccionado
+        button.classList.remove('bg-surface-container-highest', 'text-on-surface');
+        button.classList.add('bg-primary', 'text-on-primary');
+        selectedCarrera = button.textContent.trim();
+    }
+
+    async function ejecutarBusqueda() {
+        const params = new URLSearchParams();
+        if (selectedCarrera) params.append('carrera', selectedCarrera);
+        const interesesSeleccionados = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
+        if (interesesSeleccionados.length > 0) params.append('interes', interesesSeleccionados[0]);
+
+        // Fetch matches and grupos via API endpoints
+        try {
+            const [matchesRes, gruposRes] = await Promise.all([
+                fetch('/comunidad/api/matches?' + params.toString()),
+                fetch('/comunidad/api/grupos?' + params.toString())
+            ]);
+            if (!matchesRes.ok || !gruposRes.ok) throw new Error('Error al obtener resultados');
+            const matches = await matchesRes.json();
+            const grupos = await gruposRes.json();
+
+            // Renderizar hasta 2 matches
+            const mContainer = document.getElementById('featured-matches-container');
+            if (mContainer) {
+                mContainer.innerHTML = '';
+                const slice = matches.slice(0,2);
+                slice.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = "group relative bg-surface-container-low p-6 rounded-2xl border border-outline-variant/5 hover:border-primary/20 transition-all duration-300 cursor-pointer";
+                    div.onclick = () => { window.location.href = '/comunidad/perfil/' + m.usuarioId };
+                    div.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
+                            <div>
+                                <h3 class="font-display font-bold text-lg">${m.nombre}</h3>
+                                <p class="text-xs text-on-surface-variant font-medium">${m.carrera || ''}</p>
+                                <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black">${m.porcentaje}% MATCH</div>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic">${(m.biografia || '').length > 100 ? (m.biografia.substring(0,100) + '...') : (m.biografia || '')}</p>
+                        <div class="mt-6 flex gap-2">
+                            <a class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-surface-container-highest transition-colors text-center" href="/comunidad/perfil/${m.usuarioId}" onclick="event.stopPropagation();">Ver Perfil</a>
+                            <button class="flex-1 bg-surface-container-high py-2.5 rounded-xl text-xs font-bold hover:bg-primary hover:text-on-primary transition-colors" onclick="event.stopPropagation(); window.location.href='/comunidad/chat'">Enviar Mensaje</button>
+                            <button class="p-2.5 rounded-xl bg-surface-container-high hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">favorite</span></button>
+                        </div>`;
+                    mContainer.appendChild(div);
+                });
+            }
+
+            // Renderizar hasta 2 grupos
+            const gContainerParent = document.querySelector('#circulos .space-y-4');
+            if (gContainerParent) {
+                // recreate inner block
+                gContainerParent.innerHTML = '';
+                const sliceG = grupos.slice(0,2);
+                sliceG.forEach(g => {
+                    const el = document.createElement('div');
+                    el.className = 'bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20';
+                    el.onclick = () => { window.location.href = '/comunidad/grupos' };
+                    el.innerHTML = `
+                        <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0"><img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src=""></div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 rounded bg-on-tertiary-fixed text-tertiary-fixed text-[9px] font-black uppercase tracking-widest">${g.carrera || ''}</span>
+                                <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">• ${g.miembros} Scholars</span>
+                            </div>
+                            <h3 class="font-display text-xl font-bold mb-2 group-hover:text-primary transition-colors">${g.nombre}</h3>
+                            <p class="text-on-surface-variant text-sm line-clamp-2">${g.descripcion || ''}</p>
+                        </div>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform hidden md:block">arrow_forward</span>`;
+                    gContainerParent.appendChild(el);
+                });
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Error al aplicar filtros. Intenta nuevamente.');
+        }
+    }
+
+    // Micro-interactions para checkboxes
+    document.querySelectorAll('.interes-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
             const label = e.target.closest('label').querySelector('span');
             if(e.target.checked) {
                 label.classList.add('text-primary', 'font-bold');
+                selectedIntereses.add(e.target.value);
             } else {
                 label.classList.remove('text-primary', 'font-bold');
+                selectedIntereses.delete(e.target.value);
             }
         });
     });
 
-    // Initialize checkbox styles based on checked state
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        const label = checkbox.closest('label').querySelector('span');
-        if(checkbox.checked) {
-            label.classList.add('text-primary', 'font-bold');
-        }
-    });
+    // Búsqueda por carrera (normaliza acentos y mayúsculas) - compatible
+    function normalizeText(s) {
+        return s ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : '';
+    }
+
+    const searchInput = document.getElementById('searchCarrera');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const raw = e.target.value || '';
+            const search = normalizeText(raw);
+            document.querySelectorAll('#carreras-container button').forEach(btn => {
+                const carreraRaw = btn.textContent || '';
+                const carrera = normalizeText(carreraRaw);
+                btn.style.display = carrera.includes(search) ? '' : 'none';
+            });
+        });
+    }
+
+    // Abrir "Ver todos" preservando los filtros activos
+    function openVerTodos(e) {
+        e.preventDefault();
+        const params = new URLSearchParams();
+        if (selectedCarrera) params.append('carrera', selectedCarrera);
+        const interesesSeleccionados = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
+        if (interesesSeleccionados.length > 0) params.append('interes', interesesSeleccionados[0]);
+        const query = params.toString();
+        window.location.href = '/comunidad/matches' + (query ? ('?' + query) : '');
+    }
 </script>
 </body></html>

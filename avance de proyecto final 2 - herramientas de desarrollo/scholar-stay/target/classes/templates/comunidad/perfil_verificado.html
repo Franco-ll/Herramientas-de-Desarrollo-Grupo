@@ -94,12 +94,12 @@
 <span class="font-medium">Volver</span>
 </button>
 <!-- Large Profile Photo -->
-<div class="relative w-full md:w-5/12 aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
-<img class="w-full h-full object-cover" src="">
+<div class="relative w-full md:w-5/12 aspect-[4/5] rounded-xl overflow-hidden shadow-2xl bg-surface-container-highest">
+<img class="w-full h-full object-cover" th:src="@{/images/login.png}" alt="Foto de perfil" />
 <!-- Match Badge Floating -->
 <div class="absolute top-6 right-6 bg-secondary text-on-secondary px-6 py-3 rounded-full flex items-center gap-2 shadow-lg backdrop-blur-md">
 <span class="material-symbols-outlined text-sm" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="font-headline font-bold text-lg tracking-tight">98% Match</span>
+<span class="font-headline font-bold text-lg tracking-tight" th:text="${perfil.porcentajeCompatibilidad != null ? perfil.porcentajeCompatibilidad + '% Match' : 'Ver Perfil'}"></span>
 </div>
 </div>
 <!-- Profile Details Content -->
@@ -121,42 +121,44 @@ Correo institucional confirmado
 </div>
 <div>
 <span class="font-label text-sm uppercase tracking-widest text-primary font-bold">Estudiante Destacado</span>
-<h1 class="font-display text-5xl md:text-6xl font-extrabold text-on-surface mt-2 tracking-tight">Mateo Ricci</h1>
+<h1 class="font-display text-5xl md:text-6xl font-extrabold text-on-surface mt-2 tracking-tight" th:text="${perfil.nombre}"></h1>
 <div class="flex flex-wrap gap-3 mt-4">
-<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant">Arquitectura</span>
-<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant">PhD Candidato</span>
-<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant">Politécnico de Milán</span>
-</div>
+<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.carrera}"></span>
+<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.ciclo}"></span>
+<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.universidad}"></span>
 </div>
 </div>
 <div class="space-y-4">
 <h2 class="font-headline text-xl font-bold text-on-surface">Sobre Mí</h2>
-<p class="text-lg leading-relaxed text-on-surface-variant font-body max-w-2xl">
-                        Busco un ambiente de convivencia tranquilo que respete el ritmo de investigación doctoral. Mis días suelen transcurrir entre el estudio y el café, valorando profundamente el orden visual y la armonía en los espacios compartidos.
-                    </p>
+<p class="text-lg leading-relaxed text-on-surface-variant font-body max-w-2xl" th:text="${perfil.biografia}"></p>
 </div>
-<!-- Affinity Bars -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-8 bg-surface-container-low rounded-xl">
-<div class="space-y-2">
-<div class="flex justify-between items-center">
-<span class="font-label text-sm font-semibold text-on-surface">Nivel de Silencio</span>
-<span class="text-xs font-bold text-primary">Alto</span>
+<div class="grid grid-cols-1 gap-4 mt-8">
+    <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Nivel de silencio</span>
+                    <span class="text-xs font-semibold text-on-surface-variant" th:text="${perfil.habitosRuido != null ? perfil.habitosRuido : 'No registrado'}"></span>
+                </div>
+                <div class="h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary"
+     th:style="${perfil.habitosRuido != null and perfil.habitosRuido.toLowerCase().contains('silencio')}
+               ? 'width:85%'
+               : 'width:70%'">
+</div>                </div>
+            </div>
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Orden y limpieza</span>
+                    <span class="text-xs font-semibold text-on-surface-variant" th:text="${perfil.nivelTolerancia != null ? perfil.nivelTolerancia : 'No registrado'}"></span>
+                </div>
+<div class="h-2 rounded-full bg-surface-container-highest overflow-hidden">
+    <div class="h-full bg-secondary" style="width:90%"></div>
+</div>                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center">
-<span class="font-label text-sm font-semibold text-on-surface">Orden y Limpieza</span>
-<span class="text-xs font-bold text-secondary">Inmaculado</span>
-</div>
-<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full bg-secondary rounded-full" style="width: 95%"></div>
-</div>
-</div>
-</div>
-<!-- Primary Actions -->
 <div class="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
 <button class="bg-primary hover:bg-primary-dim text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md" th:onclick="|window.location.href='@{/comunidad/chat}'|">
 <span class="material-symbols-outlined" data-icon="send" style="transform: none; transition: transform 0.2s;">send</span>
@@ -171,6 +173,29 @@ Correo institucional confirmado
 <span class="material-symbols-outlined" data-icon="bookmark" style="transform: none; transition: transform 0.2s;">bookmark</span>
 </button>
 </div>
+    <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+        <h3 class="font-headline text-lg font-bold text-on-surface mb-4">Hábitos de estudio</h3>
+        <dl class="grid gap-3 text-sm text-on-surface-variant">
+            <div class="flex justify-between gap-3">
+                <dt class="font-semibold text-on-surface">Horario</dt>
+                <dd th:text="${perfil.horarioEstudio != null ? perfil.horarioEstudio : 'No registrado'}"></dd>
+            </div>
+            <div class="flex justify-between gap-3">
+                <dt class="font-semibold text-on-surface">Ruido</dt>
+                <dd th:text="${perfil.habitosRuido != null ? perfil.habitosRuido : 'No registrado'}"></dd>
+            </div>
+            <div class="flex justify-between gap-3">
+                <dt class="font-semibold text-on-surface">Rutina</dt>
+                <dd th:text="${perfil.habitosSueno != null ? perfil.habitosSueno : 'No registrado'}"></dd>
+            </div>
+            <div class="flex justify-between gap-3">
+                <dt class="font-semibold text-on-surface">Tolerancia</dt>
+                <dd th:text="${perfil.nivelTolerancia != null ? perfil.nivelTolerancia : 'No registrado'}"></dd>
+            </div>
+        </dl>
+    </div>
+</div>
+</div>
 </div>
 </div>
 <!-- Detailed Info Sections -->
@@ -178,72 +203,116 @@ Correo institucional confirmado
 <!-- Compatibility Section -->
 <div class="col-span-1 lg:col-span-2 space-y-6">
 <div class="bg-primary-container/20 border border-primary-container/30 rounded-2xl p-8">
-<div class="flex items-center justify-between mb-8">
-<h3 class="font-headline text-2xl font-bold flex items-center gap-3 text-on-primary-container">
-<span class="material-symbols-outlined text-primary text-3xl" data-icon="handshake">handshake</span>
-                            Compatibilidad Contigo
-                        </h3>
-<div class="bg-primary text-white px-4 py-1.5 rounded-full text-sm font-bold">Excelente Afinidad</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="space-y-4">
-<h4 class="font-label text-xs uppercase tracking-widest text-primary font-bold">Intereses Compartidos</h4>
-<ul class="space-y-3">
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle">check_circle</span>
-<span class="font-medium">Arquitectura Sostenible</span>
-</li>
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle">check_circle</span>
-<span class="font-medium">Música Clásica y Jazz</span>
-</li>
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle">check_circle</span>
-<span class="font-medium">Diseño Urbano Contemporáneo</span>
-</li>
-</ul>
-</div>
-<div class="space-y-4">
-<h4 class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Hábitos Compatibles</h4>
-<ul class="space-y-3">
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-secondary text-xl" data-icon="task_alt">task_alt</span>
-<span class="font-medium">Preferencia por mañanas productivas</span>
-</li>
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-secondary text-xl" data-icon="task_alt">task_alt</span>
-<span class="font-medium">Espacios de trabajo libres de humo</span>
-</li>
-<li class="flex items-center gap-3 text-on-surface">
-<span class="material-symbols-outlined text-secondary text-xl" data-icon="task_alt">task_alt</span>
-<span class="font-medium">Comunicación directa y asertiva</span>
-</li>
-</ul>
-</div>
-</div>
+
+    <h3 class="font-headline text-xl font-bold text-on-surface mb-8">
+        Compatibilidad Contigo
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Intereses Compartidos -->
+        <div>
+            <h4 class="font-bold text-primary mb-4 uppercase tracking-wider text-sm">
+                Intereses Compartidos
+            </h4>
+
+            <ul class="space-y-3 text-on-surface text-sm">
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Desarrollo Web
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Inteligencia Artificial
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Bases de Datos
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Ciberseguridad
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Hábitos Compatibles -->
+        <div>
+            <h4 class="font-bold text-primary mb-4 uppercase tracking-wider text-sm">
+                Hábitos Compatibles
+            </h4>
+
+            <ul class="space-y-3 text-on-surface text-sm">
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Sesiones de estudio y programación nocturnas
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Preferencia por espacios silenciosos
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Comunicación colaborativa para proyectos
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
+                        ✓
+                    </span>
+                    Interés por nuevas tecnologías
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
 </div>
 <div class="bg-white rounded-xl p-8 shadow-sm border border-outline-variant/10">
 <h3 class="font-headline text-lg font-bold mb-6 flex items-center gap-2 text-on-surface">
 <span class="material-symbols-outlined text-primary" data-icon="lifestyle">style</span>
                         Estilo de Vida
                     </h3>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-8">
-<div class="space-y-1">
-<p class="text-xs font-bold text-outline uppercase tracking-tighter">Mascotas</p>
-<p class="text-on-surface font-medium">No permitidas</p>
-</div>
-<div class="space-y-1">
-<p class="text-xs font-bold text-outline uppercase tracking-tighter">Fumador</p>
-<p class="text-on-surface font-medium">No fumador</p>
-</div>
-<div class="space-y-1">
-<p class="text-xs font-bold text-outline uppercase tracking-tighter">Horario</p>
-<p class="text-on-surface font-medium">Madrugador (6:00 AM)</p>
-</div>
-<div class="space-y-1">
-<p class="text-xs font-bold text-outline uppercase tracking-tighter">Visitas</p>
-<p class="text-on-surface font-medium">Fines de semana</p>
-</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-surface-container-lowest p-5 rounded-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest text-outline">Horario</p>
+        <p class="text-on-surface text-sm mt-2" th:text="${perfil.horarioEstudio != null ? perfil.horarioEstudio : 'No definido'}"></p>
+    </div>
+    <div class="bg-surface-container-lowest p-5 rounded-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest text-outline">Ruido</p>
+        <p class="text-on-surface text-sm mt-2" th:text="${perfil.habitosRuido != null ? perfil.habitosRuido : 'No definido'}"></p>
+    </div>
+    <div class="bg-surface-container-lowest p-5 rounded-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest text-outline">Rutina</p>
+        <p class="text-on-surface text-sm mt-2" th:text="${perfil.habitosSueno != null ? perfil.habitosSueno : 'No definido'}"></p>
+    </div>
+    <div class="bg-surface-container-lowest p-5 rounded-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest text-outline">Tolerancia</p>
+        <p class="text-on-surface text-sm mt-2" th:text="${perfil.nivelTolerancia != null ? perfil.nivelTolerancia : 'No definido'}"></p>
+    </div>
 </div>
 </div>
 </div>
@@ -252,11 +321,17 @@ Correo institucional confirmado
 <div class="z-10">
 <h3 class="font-headline text-xl font-bold text-on-secondary-container mb-4">Potencial de Colaboración</h3>
 <p class="text-on-secondary-fixed-variant text-base leading-relaxed mb-6">
-                            Dada su trayectoria en el Politécnico de Milán, Mateo podría ser un mentor excepcional para proyectos de investigación.
-                        </p>
-<div class="flex gap-2 flex-wrap">
-<span class="bg-secondary text-white px-3 py-1 rounded-md text-xs font-bold">Mentoría</span>
-<span class="bg-secondary text-white px-3 py-1 rounded-md text-xs font-bold">Networking</span>
+    Gracias a su experiencia en desarrollo de software y participación en
+    proyectos universitarios, este estudiante puede aportar conocimientos
+    valiosos en programación, análisis de sistemas y trabajo colaborativo.
+    Su perfil resulta ideal para formar grupos de estudio, desarrollar
+    aplicaciones y compartir buenas prácticas tecnológicas.
+</p>
+<div class="flex gap-2 flex-wrap" th:if="${perfil.intereses != null and !perfil.intereses.trim().isEmpty()}">
+    <span th:each="interes : ${#strings.split(perfil.intereses, ',')}"
+          th:if="${interes != null and interes.trim() != ''}"
+          th:text="${interes.trim()}"
+          class="bg-secondary text-white px-3 py-1 rounded-md text-xs font-bold"></span>
 </div>
 </div>
 <div class="z-10 mt-8 flex -space-x-3">

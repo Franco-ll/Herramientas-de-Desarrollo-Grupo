@@ -94,13 +94,43 @@
     </style>
 </head>
 <body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
-<!-- Top Navigation -->
-<nav class="fixed top-0 left-0 right-0 z-50 glass-header bg-surface/80 border-b border-outline-variant/10">
-<div class="flex items-center w-full px-8 py-4 max-w-7xl mx-auto">
-<button class="group flex items-center gap-2 text-on-surface-variant hover:text-primary transition-all" onclick="window.history.back()">
-<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
-<span class="font-medium">Volver</span>
-</button>
+<!-- Global Top Navigation -->
+<!--<nav class="fixed top-0 left-0 right-0 z-50 glass-header bg-surface/80 border-b border-outline-variant/10">
+    <div class="flex items-center w-full px-8 py-3 max-w-7xl mx-auto gap-6">
+        <a class="font-display text-xl font-bold text-primary" th:href="@{/}">Scholar Stay</a>
+        <div class="ml-6 flex gap-4">
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/explorarResidencias}">Alojamiento</a>
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/comunidad/inicio}">Comunidad</a>
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/eventos}">Eventos</a>
+        </div>
+        <div class="ml-auto flex items-center gap-4">
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/perfil}">Mi Perfil</a>
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/logout}">Cerrar Sesión</a>
+        </div>
+    </div>
+</nav>-->
+
+<!-- Filtros Dinámicos -->
+<!--<div class="flex items-center gap-4 ml-auto flex-wrap">
+    <div class="flex gap-2 items-center">
+        <span class="text-xs font-bold text-on-surface-variant uppercase">Carrera:</span>
+        <select id="filterCarrera" class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-8" onchange="reApplyGrupoFilters()">
+            <option value="">Todas</option>
+            <th:block th:if="${carreras != null}">
+                <option th:each="c : ${carreras}" th:value="${c}" th:text="${c}" th:selected="${c == selectedCarrera}"></option>
+            </th:block>
+        </select>
+    </div>
+    <div class="flex gap-2 items-center">
+        <span class="text-xs font-bold text-on-surface-variant uppercase">Interés:</span>
+        <select id="filterInteres" class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-8" onchange="reApplyGrupoFilters()">
+            <option value="">Todos</option>
+            <th:block th:if="${intereses != null}">
+                <option th:each="i : ${intereses}" th:value="${i}" th:text="${i}" th:selected="${i == selectedInteres}"></option>
+            </th:block>
+        </select>
+    </div>
+</div>-->
 </div>
 </nav>
 <!-- Main Content Canvas -->
@@ -329,7 +359,7 @@
 <img alt="Atmospheric Study" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="">
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
 <p class="text-white font-display font-bold leading-tight">"El espacio influye en cómo pensamos."</p>
-<span class="text-white/60 text-xs mt-2 uppercase tracking-widest">— Curated Scholar Moments</span>
+<span class="text-white/60 text-xs mt-2 uppercase tracking-widest">— Momentos académicos seleccionados</span>
 </div>
 </div>
 </aside>
@@ -355,14 +385,30 @@
 </a>
 </nav>
 <script>
+        function reApplyGrupoFilters() {
+            const carrera = document.getElementById('filterCarrera').value;
+            const interes = document.getElementById('filterInteres').value;
+            
+            let url = '/comunidad/grupos';
+            const params = new URLSearchParams();
+            
+            if (carrera) params.append('carrera', carrera);
+            if (interes) params.append('interes', interes);
+            
+            const query = params.toString();
+            window.location.href = url + (query ? '?' + query : '');
+        }
+
         // Micro-interaction for the discussion input
         const textarea = document.querySelector('textarea');
-        textarea.addEventListener('focus', () => {
-            textarea.parentElement.parentElement.classList.add('ring-2', 'ring-primary/20');
-        });
-        textarea.addEventListener('blur', () => {
-            textarea.parentElement.parentElement.classList.remove('ring-2', 'ring-primary/20');
-        });
+        if (textarea) {
+            textarea.addEventListener('focus', () => {
+                textarea.parentElement.parentElement.classList.add('ring-2', 'ring-primary/20');
+            });
+            textarea.addEventListener('blur', () => {
+                textarea.parentElement.parentElement.classList.remove('ring-2', 'ring-primary/20');
+            });
+        }
 
         // Simple scroll reveal effect for headers
         window.addEventListener('scroll', () => {
