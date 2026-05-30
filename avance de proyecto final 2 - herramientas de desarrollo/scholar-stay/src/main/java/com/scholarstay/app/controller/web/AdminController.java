@@ -1,12 +1,15 @@
 package com.scholarstay.app.controller.web;
 
 import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.model.Rol;
 import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.repository.RolRepository;
 import com.scholarstay.app.repository.UsuarioRepository;
 import com.scholarstay.app.security.CustomUserDetails;
 import com.scholarstay.app.service.AdminDashboardService;
 import com.scholarstay.app.service.AlojamientoService;
 import com.scholarstay.app.service.ConfiguracionService;
+import com.scholarstay.app.service.LogService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,17 +38,23 @@ public class AdminController {
     private final AlojamientoService alojamientoService;
     private final ConfiguracionService configuracionService;
     private final PasswordEncoder passwordEncoder;
+    private final RolRepository rolRepository;
+    private final LogService logService;
 
     public AdminController(AdminDashboardService adminDashboardService,
                            UsuarioRepository usuarioRepository,
                            AlojamientoService alojamientoService,
                            ConfiguracionService configuracionService,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           RolRepository rolRepository,
+                           LogService logService) {
         this.adminDashboardService = adminDashboardService;
         this.usuarioRepository = usuarioRepository;
         this.alojamientoService = alojamientoService;
         this.configuracionService = configuracionService;
         this.passwordEncoder = passwordEncoder;
+        this.rolRepository = rolRepository;
+        this.logService = logService;
     }
 
     private Usuario getAdminUser() {
@@ -123,9 +132,11 @@ public class AdminController {
                                           @RequestParam String email,
                                           RedirectAttributes ra) {
         usuarioRepository.findById(id).ifPresent(u -> {
+            String nombreAnterior = u.getNombre();
             u.setNombre(nombre);
             u.setEmail(email);
             usuarioRepository.save(u);
+            logService.registrar(getAdminUser(), "Editó residente", "Residente: " + nombreAnterior + " → " + nombre);
         });
         ra.addFlashAttribute("exito", "Residente actualizado correctamente.");
         return "redirect:/admin/residentes";
@@ -142,6 +153,7 @@ public class AdminController {
             ra.addFlashAttribute("error", "No se puede eliminar una cuenta de administrador.");
             return "redirect:/admin/residentes";
         }
+        logService.registrar(getAdminUser(), "Eliminó residente", "Residente: " + target.getNombre() + " (" + target.getEmail() + ")");
         usuarioRepository.deleteById(id);
         ra.addFlashAttribute("exito", "Residente eliminado correctamente.");
         return "redirect:/admin/residentes";
@@ -215,6 +227,7 @@ public class AdminController {
         }
 
         alojamientoService.save(a);
+        logService.registrar(getAdminUser(), "Añadió propiedad", "Propiedad: " + titulo);
         ra.addFlashAttribute("exito", "Propiedad \"" + titulo + "\" añadida correctamente.");
         return "redirect:/admin/propiedades";
     }
@@ -274,6 +287,7 @@ public class AdminController {
         }
 
         alojamientoService.save(a);
+        logService.registrar(getAdminUser(), "Editó propiedad", "Propiedad: " + titulo);
         ra.addFlashAttribute("exito", "Propiedad \"" + titulo + "\" actualizada correctamente.");
         return "redirect:/admin/propiedades";
     }
@@ -282,8 +296,10 @@ public class AdminController {
     public String eliminarPropiedad(@PathVariable Long id, RedirectAttributes ra) {
         Alojamiento a = alojamientoService.obtenerPorId(id);
         if (a != null) {
+            String titulo = a.getTitulo();
             try {
                 alojamientoService.eliminar(id);
+                logService.registrar(getAdminUser(), "Eliminó propiedad", "Propiedad: " + titulo);
                 ra.addFlashAttribute("exito", "Propiedad eliminada.");
             } catch (Exception e) {
                 ra.addFlashAttribute("error", "No se puede eliminar: la propiedad tiene reservas asociadas.");
@@ -311,6 +327,7 @@ public class AdminController {
     public String configuracion(Model model) {
         model.addAttribute("admin", getAdminUser());
         model.addAttribute("config", configuracionService.obtener());
+        model.addAttribute("usuarios", usuarioRepository.findAll());
         return "admin/configuracion";
     }
 
@@ -322,6 +339,7 @@ public class AdminController {
             @RequestParam Integer maxReservasPorUsuario,
             RedirectAttributes ra) {
         configuracionService.guardarConfiguracion(nombrePlataforma, precioMinimo, precioMaximo, maxReservasPorUsuario);
+        logService.registrar(getAdminUser(), "Actualizó configuración del sistema", "Plataforma: " + nombrePlataforma);
         ra.addFlashAttribute("exito", "Configuracion del sistema actualizada correctamente.");
         return "redirect:/admin/configuracion";
     }
@@ -338,8 +356,44 @@ public class AdminController {
                 u.setEmail(email.trim());
                 usuarioRepository.save(u);
             });
+            logService.registrar(admin, "Actualizó su perfil", "Nombre: " + nombre + ", Email: " + email);
             ra.addFlashAttribute("exito", "Perfil actualizado correctamente.");
         }
+        return "redirect:/admin/configuracion";
+    }
+
+    @PostMapping("/configuracion/rol")
+    public String cambiarRol(
+            @RequestParam Long usuarioId,
+            @RequestParam String nuevoRol,
+            RedirectAttributes ra) {
+        Usuario admin = getAdminUser();
+        if (admin == null) return "redirect:/login";
+
+        if (admin.getId().equals(usuarioId)) {
+            ra.addFlashAttribute("exitoRol", "No puedes cambiar tu propio rol.");
+            return "redirect:/admin/configuracion";
+        }
+
+        Usuario target = usuarioRepository.findById(usuarioId).orElse(null);
+        if (target == null) {
+            ra.addFlashAttribute("exitoRol", "Usuario no encontrado.");
+            return "redirect:/admin/configuracion";
+        }
+
+        if ("admin@scholarstay.com".equals(target.getEmail())) {
+            ra.addFlashAttribute("exitoRol", "No se puede modificar el rol del administrador principal.");
+            return "redirect:/admin/configuracion";
+        }
+
+        Rol rol = rolRepository.findByNombre(nuevoRol);
+        if (rol != null) {
+            target.setRol(rol);
+            usuarioRepository.save(target);
+            logService.registrar(admin, "Cambió rol de usuario", "Usuario: " + target.getNombre() + " → " + nuevoRol);
+            ra.addFlashAttribute("exitoRol", "Rol actualizado correctamente.");
+        }
+
         return "redirect:/admin/configuracion";
     }
 
@@ -364,7 +418,19 @@ public class AdminController {
             u.setPassword(passwordEncoder.encode(passwordNueva));
             usuarioRepository.save(u);
         });
+        logService.registrar(admin, "Cambió su contraseña", "Contraseña actualizada");
         ra.addFlashAttribute("exitoContrasena", "Contrasena actualizada correctamente.");
         return "redirect:/admin/configuracion";
+    }
+
+    // ============================================================
+    // HISTORIAL DE ACTIVIDAD
+    // ============================================================
+
+    @GetMapping("/historial")
+    public String historial(Model model) {
+        model.addAttribute("admin", getAdminUser());
+        model.addAttribute("logs", logService.obtenerTodos());
+        return "admin/historial";
     }
 }
