@@ -6,73 +6,42 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Scholar Stay - Panel de Administración</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "surface-container": "#eaefef",
-                        "on-surface": "#2c3435",
-                        "primary": "#3d637e",
-                        "on-primary": "#f5f9ff",
-                        "primary-dim": "#305771",
-                        "secondary": "#46674b",
-                        "on-secondary": "#e8ffe7",
-                        "secondary-container": "#c7ecc9",
-                        "on-secondary-container": "#39593f",
-                        "tertiary": "#6a5e46",
-                        "tertiary-container": "#feecce",
-                        "on-tertiary-container": "#635740",
-                        "surface": "#f8fafa",
-                        "surface-container-low": "#f0f4f4",
-                        "surface-container-high": "#e3e9ea",
-                        "surface-container-highest": "#dde4e4",
-                        "surface-container-lowest": "#ffffff",
-                        "on-surface-variant": "#596061",
-                        "outline": "#757c7d",
-                        "outline-variant": "#acb3b4",
-                        "error": "#a83836",
-                        "primary-container": "#b8dffe",
-                        "on-primary-container": "#29506a",
+                        "surface-container": "#eaefef", "on-surface": "#2c3435",
+                        "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+                        "secondary": "#46674b", "on-secondary": "#e8ffe7",
+                        "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+                        "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
+                        "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
+                        "surface-container-high": "#e3e9ea", "surface-container-highest": "#dde4e4",
+                        "surface-container-lowest": "#ffffff", "on-surface-variant": "#596061",
+                        "outline": "#757c7d", "outline-variant": "#acb3b4", "error": "#a83836",
+                        "primary-container": "#b8dffe", "on-primary-container": "#29506a",
                         "secondary-fixed": "#c7ecc9",
                     },
-                    fontFamily: {
-                        "headline": ["Manrope", "sans-serif"],
-                        "body": ["Inter", "sans-serif"],
-                    }
+                    fontFamily: { "headline": ["Manrope", "sans-serif"], "body": ["Inter", "sans-serif"] }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafa;
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        .editorial-shadow {
-            box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04);
-        }
-
-        .filled {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04); }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     </style>
 </head>
 
 <body class="text-on-surface">
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar -->
     <aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
         <div class="mb-8">
             <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
@@ -81,55 +50,41 @@
                 <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
                     th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
                 <div>
-                    <p class="font-bold text-sm text-sky-900 leading-tight"
-                        th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                    <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
                     <p class="text-[10px] text-outline">Gestión Académica</p>
                 </div>
             </div>
         </div>
         <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
-            <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm"
-                th:href="@{/admin/dashboard}">
-                <span class="material-symbols-outlined filled">dashboard</span>
-                <span>Panel Control</span>
+            <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/dashboard}">
+                <span class="material-symbols-outlined filled">dashboard</span><span>Panel Control</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/residentes}">
-                <span class="material-symbols-outlined">group</span>
-                <span>Residentes</span>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
+                <span class="material-symbols-outlined">group</span><span>Residentes</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/propiedades}">
-                <span class="material-symbols-outlined">apartment</span>
-                <span>Propiedades</span>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/propiedades}">
+                <span class="material-symbols-outlined">apartment</span><span>Propiedades</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/finanzas}">
-                <span class="material-symbols-outlined">payments</span>
-                <span>Finanzas</span>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
+                <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/configuracion}">
-                <span class="material-symbols-outlined">settings</span>
-                <span>Configuración</span>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/configuracion}">
+                <span class="material-symbols-outlined">settings</span><span>Configuración</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/historial}">
-                <span class="material-symbols-outlined">history</span>
-                <span>Historial</span>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/historial}">
+                <span class="material-symbols-outlined">history</span><span>Historial</span>
             </a>
         </nav>
         <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
-            <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all"
-                th:href="@{/logout}">
-                <span class="material-symbols-outlined">logout</span>
-                <span>Cerrar Sesión</span>
+            <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
+                <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
             </a>
         </div>
     </aside>
 
     <!-- Main Content -->
     <main class="ml-64 p-8 min-h-screen bg-surface">
+
         <!-- Header -->
         <header class="flex justify-between items-end mb-12">
             <div class="space-y-1">
@@ -137,22 +92,18 @@
                 <p class="text-on-surface-variant">Aquí está el pulso de tu comunidad hoy.</p>
             </div>
             <div class="flex gap-4 items-center">
-                <div
-                    class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20">
+                <div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20">
                     <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
                     <span class="text-sm font-semibold text-on-surface">Sistema Activo</span>
                 </div>
             </div>
         </header>
 
-        <!-- Metrics KPI Grid -->
+        <!-- KPI Grid -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <!-- Occupancy -->
-            <div
-                class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow relative overflow-hidden flex flex-col justify-between h-56">
+            <div class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow relative overflow-hidden flex flex-col justify-between h-56">
                 <div class="z-10">
-                    <p class="text-on-surface-variant font-body text-sm font-semibold uppercase tracking-widest mb-2">
-                        Ocupación Total</p>
+                    <p class="text-on-surface-variant font-body text-sm font-semibold uppercase tracking-widest mb-2">Ocupación Total</p>
                     <h3 class="text-5xl font-headline font-extrabold text-primary">
                         <span th:text="${stats.ocupacionTotal}">94.2</span>%
                     </h3>
@@ -165,11 +116,9 @@
                     <span class="material-symbols-outlined text-[12rem]">apartment</span>
                 </div>
             </div>
-            <!-- Income -->
             <div class="bg-primary text-on-primary rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
                 <div>
-                    <p class="text-on-primary/70 text-sm font-semibold uppercase tracking-widest mb-2">Ingresos
-                        Mensuales</p>
+                    <p class="text-on-primary/70 text-sm font-semibold uppercase tracking-widest mb-2">Ingresos Mensuales</p>
                     <h3 class="text-5xl font-headline font-extrabold">
                         S/ <span th:text="${#numbers.formatDecimal(stats.ingresosMensuales, 1, 2)}">0.00</span>
                     </h3>
@@ -179,12 +128,9 @@
                     <span>Reservas confirmadas este mes</span>
                 </div>
             </div>
-            <!-- Active Residents -->
-            <div
-                class="bg-secondary-container text-on-secondary-container rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
+            <div class="bg-secondary-container text-on-secondary-container rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
                 <div>
-                    <p class="text-on-secondary-container/70 text-sm font-semibold uppercase tracking-widest mb-2">
-                        Residentes Activos</p>
+                    <p class="text-on-secondary-container/70 text-sm font-semibold uppercase tracking-widest mb-2">Residentes Activos</p>
                     <h3 class="text-5xl font-headline font-extrabold" th:text="${stats.residentesActivos}">0</h3>
                 </div>
                 <div class="flex items-center gap-2 text-sm font-semibold">
@@ -194,61 +140,46 @@
             </div>
         </section>
 
-        <!-- Activity & Residents Section -->
+        <!-- Activity & Residents -->
         <section class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
-            <!-- Transacciones Recientes -->
             <div class="lg:col-span-3 bg-surface-container-lowest rounded-xl editorial-shadow overflow-hidden">
                 <div class="p-8 border-b border-surface-container-high flex justify-between items-center">
                     <h4 class="text-xl font-headline font-bold text-on-surface">Transacciones Recientes</h4>
                     <a th:href="@{/admin/finanzas}" class="text-primary text-sm font-bold hover:underline">Ver todas</a>
                 </div>
-                <div th:if="${stats.transaccionesRecientes.empty}" class="p-8 text-center text-on-surface-variant">
-                    No hay transacciones aún.
-                </div>
+                <div th:if="${stats.transaccionesRecientes.empty}" class="p-8 text-center text-on-surface-variant">No hay transacciones aún.</div>
                 <div th:each="reserva : ${stats.transaccionesRecientes}"
                     class="flex items-center justify-between px-8 py-4 border-b border-surface-container-high last:border-0 hover:bg-surface-container-low/50 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm"
-                            th:text="${reserva.nombreUsuario != null ? reserva.nombreUsuario.substring(0,1) : '?'}">?
-                        </div>
+                            th:text="${reserva.nombreUsuario != null ? reserva.nombreUsuario.substring(0,1) : '?'}">?</div>
                         <div>
                             <p class="text-sm font-bold" th:text="${reserva.nombreUsuario}">Usuario</p>
                             <p class="text-[10px] text-outline" th:text="${reserva.tituloAlojamiento}">Alojamiento</p>
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="font-black text-sm" th:text="${'S/ ' + #numbers.formatDecimal(reserva.monto, 1, 2)}">
-                            S/ 0</p>
-                        <span th:if="${reserva.estado == 'CONFIRMADA'}"
-                            class="text-[10px] font-bold text-secondary bg-secondary-container px-2 py-0.5 rounded-full">Pagado</span>
-                        <span th:if="${reserva.estado == 'PENDIENTE'}"
-                            class="text-[10px] font-bold text-tertiary bg-tertiary-container px-2 py-0.5 rounded-full">Pendiente</span>
-                        <span th:if="${reserva.estado == 'CANCELADA'}"
-                            class="text-[10px] font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">Cancelado</span>
+                        <p class="font-black text-sm" th:text="${'S/ ' + #numbers.formatDecimal(reserva.monto, 1, 2)}">S/ 0</p>
+                        <span th:if="${reserva.estado == 'CONFIRMADA'}" class="text-[10px] font-bold text-secondary bg-secondary-container px-2 py-0.5 rounded-full">Pagado</span>
+                        <span th:if="${reserva.estado == 'PENDIENTE'}" class="text-[10px] font-bold text-tertiary bg-tertiary-container px-2 py-0.5 rounded-full">Pendiente</span>
+                        <span th:if="${reserva.estado == 'CANCELADA'}" class="text-[10px] font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">Cancelado</span>
                     </div>
                 </div>
             </div>
-
-            <!-- Nuevos Residentes -->
             <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-8 editorial-shadow">
                 <div class="flex justify-between items-center mb-6">
                     <h4 class="text-xl font-headline font-bold text-on-surface">Nuevos Residentes</h4>
-                    <a th:href="@{/admin/residentes}" class="text-primary text-sm font-bold hover:underline">Ver
-                        todos</a>
+                    <a th:href="@{/admin/residentes}" class="text-primary text-sm font-bold hover:underline">Ver todos</a>
                 </div>
                 <div class="space-y-5">
-                    <div th:if="${stats.nuevosResidentes.empty}" class="text-center text-on-surface-variant text-sm">
-                        No hay residentes aún.
-                    </div>
+                    <div th:if="${stats.nuevosResidentes.empty}" class="text-center text-on-surface-variant text-sm">No hay residentes aún.</div>
                     <div th:each="residente : ${stats.nuevosResidentes}" class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm"
                                 th:text="${residente.nombre.substring(0,1)}">U</div>
                             <div>
                                 <p class="text-sm font-bold text-on-surface" th:text="${residente.nombre}">Nombre</p>
-                                <p class="text-xs text-on-surface-variant"
-                                    th:text="${residente.carrera != null ? residente.carrera : 'Estudiante'}">Carrera
-                                </p>
+                                <p class="text-xs text-on-surface-variant" th:text="${residente.carrera != null ? residente.carrera : 'Estudiante'}">Carrera</p>
                             </div>
                         </div>
                         <div class="bg-secondary-container px-2.5 py-1 rounded-full">
@@ -260,24 +191,18 @@
         </section>
 
         <!-- Quick Links -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a th:href="@{/admin/propiedades}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <a th:href="@{/admin/propiedades}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <span class="material-symbols-outlined text-primary">apartment</span>
                 </div>
                 <div>
                     <p class="font-bold text-on-surface">Gestionar Propiedades</p>
-                    <p class="text-xs text-on-surface-variant"
-                        th:text="${vm_props != null ? vm_props.totalPropiedades + ' activas' : 'Ver listado'}">Ver
-                        listado</p>
+                    <p class="text-xs text-on-surface-variant" th:text="${vm_props != null ? vm_props.totalPropiedades + ' activas' : 'Ver listado'}">Ver listado</p>
                 </div>
             </a>
-            <a th:href="@{/admin/residentes}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+            <a th:href="@{/admin/residentes}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
                     <span class="material-symbols-outlined text-secondary">group</span>
                 </div>
                 <div>
@@ -285,10 +210,8 @@
                     <p class="text-xs text-on-surface-variant">Ver todos los estudiantes</p>
                 </div>
             </a>
-            <a th:href="@{/admin/finanzas}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary/20 transition-colors">
+            <a th:href="@{/admin/finanzas}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary/20 transition-colors">
                     <span class="material-symbols-outlined text-tertiary">monitoring</span>
                 </div>
                 <div>
@@ -297,7 +220,104 @@
                 </div>
             </a>
         </section>
+
+        <!-- ===== GRAFICOS ===== -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+
+            <!-- Top 5 Propiedades mas reservadas -->
+            <div class="bg-surface-container-lowest rounded-2xl editorial-shadow p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h4 class="text-xl font-headline font-bold text-on-surface">Propiedades mas reservadas</h4>
+                        <p class="text-xs text-on-surface-variant mt-1">Top 5 con mas reservas confirmadas</p>
+                    </div>
+                    <div class="p-3 bg-primary-container/30 rounded-xl">
+                        <span class="material-symbols-outlined text-primary">apartment</span>
+                    </div>
+                </div>
+                <canvas id="chartPropiedades" height="220"></canvas>
+            </div>
+
+            <!-- Ingresos por mes -->
+            <div class="bg-surface-container-lowest rounded-2xl editorial-shadow p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h4 class="text-xl font-headline font-bold text-on-surface">Ingresos por mes</h4>
+                        <p class="text-xs text-on-surface-variant mt-1">Ultimos 6 meses - reservas confirmadas</p>
+                    </div>
+                    <div class="p-3 bg-secondary-container/30 rounded-xl">
+                        <span class="material-symbols-outlined text-secondary">bar_chart</span>
+                    </div>
+                </div>
+                <canvas id="chartIngresos" height="220"></canvas>
+            </div>
+
+        </section>
+
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            const topNombres = /*[[${stats.topPropiedadesNombres}]]*/ [];
+            const topReservas = /*[[${stats.topPropiedadesReservas}]]*/ [];
+            const mesesLabels = /*[[${stats.mesesLabels}]]*/ [];
+            const ingresosMes = /*[[${stats.ingresosPorMes}]]*/ [];
+
+            new Chart(document.getElementById("chartPropiedades"), {
+                type: "bar",
+                data: {
+                    labels: topNombres,
+                    datasets: [{
+                        label: "Reservas",
+                        data: topReservas,
+                        backgroundColor: "rgba(61,99,126,0.15)",
+                        borderColor: "#3d637e",
+                        borderWidth: 2,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    indexAxis: "y",
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: ctx => " " + ctx.parsed.x + " reservas" } }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { stepSize: 1, font: { family: "Inter", size: 11 } }, grid: { color: "rgba(0,0,0,0.04)" } },
+                        y: { ticks: { font: { family: "Inter", size: 11 } }, grid: { display: false } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById("chartIngresos"), {
+                type: "bar",
+                data: {
+                    labels: mesesLabels,
+                    datasets: [{
+                        label: "Ingresos S/",
+                        data: ingresosMes,
+                        backgroundColor: "rgba(70,103,75,0.15)",
+                        borderColor: "#46674b",
+                        borderWidth: 2,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: ctx => " S/ " + ctx.parsed.y.toFixed(2) } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { font: { family: "Inter", size: 11 }, callback: val => "S/ " + val.toLocaleString() }, grid: { color: "rgba(0,0,0,0.04)" } },
+                        x: { ticks: { font: { family: "Inter", size: 11 } }, grid: { display: false } }
+                    }
+                }
+            });
+            /*]]>*/
+        </script>
+
     </main>
 </body>
-
 </html>

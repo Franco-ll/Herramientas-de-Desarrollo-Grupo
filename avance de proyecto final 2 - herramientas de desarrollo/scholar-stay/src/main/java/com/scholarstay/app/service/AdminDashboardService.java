@@ -1,5 +1,16 @@
 package com.scholarstay.app.service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.scholarstay.app.dto.ReservaDTO;
 import com.scholarstay.app.dto.UsuarioDTO;
 import com.scholarstay.app.model.Alojamiento;
@@ -12,11 +23,6 @@ import com.scholarstay.app.viewmodel.AdminDashboardVM;
 import com.scholarstay.app.viewmodel.AdminFinanzasVM;
 import com.scholarstay.app.viewmodel.AdminPropiedadesVM;
 import com.scholarstay.app.viewmodel.AdminResidentesVM;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AdminDashboardService {
@@ -35,63 +41,93 @@ public class AdminDashboardService {
 
     public AdminDashboardVM getDashboardStats() {
         AdminDashboardVM vm = new AdminDashboardVM();
-        
+
         List<Alojamiento> alojamientos = alojamientoRepository.findAll();
         List<Reserva> reservas = reservaRepository.findAll();
         List<Usuario> usuarios = usuarioRepository.findAll();
 
-        // Occupancy calculation
+        // Ocupacion
         int totalHabitaciones = alojamientos.stream().mapToInt(a -> a.getHabitaciones() != null ? a.getHabitaciones() : 0).sum();
         long reservasActivas = reservas.stream()
-                .filter(r -> "CONFIRMADA".equals(r.getEstado()) && 
-                        !r.getFechaInicio().isAfter(LocalDate.now()) && 
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()) &&
+                        !r.getFechaInicio().isAfter(LocalDate.now()) &&
                         !r.getFechaFin().isBefore(LocalDate.now()))
                 .count();
-        
         double ocupacion = totalHabitaciones > 0 ? (double) reservasActivas / totalHabitaciones * 100 : 0;
         vm.setOcupacionTotal(Math.round(ocupacion * 10.0) / 10.0);
-        vm.setCrecimientoOcupacion(2.4); // Mocked for now
+        vm.setCrecimientoOcupacion(2.4);
 
-        // Monthly Income
+        // Ingresos mensuales
         double ingresos = reservas.stream()
-                .filter(r -> "CONFIRMADA".equals(r.getEstado()) && 
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()) &&
                         r.getFechaInicio().getMonth() == LocalDate.now().getMonth() &&
                         r.getFechaInicio().getYear() == LocalDate.now().getYear())
-                .mapToDouble(Reserva::getPrecioTotal)
-                .sum();
+                .mapToDouble(Reserva::getPrecioTotal).sum();
         vm.setIngresosMensuales(ingresos);
 
-        // Active Residents — con rol corregido ROLE_ESTUDIANTE
+        // Residentes activos
         long residentes = reservas.stream()
                 .filter(r -> "CONFIRMADA".equals(r.getEstado())
                         && !r.getFechaInicio().isAfter(LocalDate.now())
                         && !r.getFechaFin().isBefore(LocalDate.now()))
-                .map(r -> r.getUsuario().getId())
-                .distinct()
-                .count();
+                .map(r -> r.getUsuario().getId()).distinct().count();
         vm.setResidentesActivos((int) residentes);
 
-        // Recent Transactions
+        // Transacciones recientes
         vm.setTransaccionesRecientes(reservas.stream()
                 .sorted((a, b) -> b.getId().compareTo(a.getId()))
-                .limit(5)
-                .map(this::mapToReservaDTO)
-                .collect(Collectors.toList()));
+                .limit(5).map(this::mapToReservaDTO).collect(Collectors.toList()));
 
-        // New Residents — últimos 5 usuarios con reserva reciente
+        // Nuevos residentes
         List<Long> idsConReserva = reservas.stream()
                 .sorted((a, b) -> b.getId().compareTo(a.getId()))
-                .map(r -> r.getUsuario().getId())
-                .distinct()
-                .limit(5)
-                .collect(Collectors.toList());
-
+                .map(r -> r.getUsuario().getId()).distinct().limit(5).collect(Collectors.toList());
         List<UsuarioDTO> nuevosResidentes = idsConReserva.stream()
                 .map(uid -> usuarios.stream().filter(u -> u.getId().equals(uid)).findFirst().orElse(null))
                 .filter(u -> u != null)
-                .map(u -> mapToUsuarioDTOConReserva(u, reservas))
-                .collect(Collectors.toList());
+                .map(u -> mapToUsuarioDTOConReserva(u, reservas)).collect(Collectors.toList());
         vm.setNuevosResidentes(nuevosResidentes);
+
+        // ===== TOP 5 PROPIEDADES MAS RESERVADAS =====
+        Map<String, Long> reservasPorPropiedad = reservas.stream()
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                .collect(Collectors.groupingBy(r -> r.getAlojamiento().getTitulo(), Collectors.counting()));
+
+        List<Map.Entry<String, Long>> topPropiedades = reservasPorPropiedad.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(5).collect(Collectors.toList());
+
+        // Acortar nombres largos para el grafico
+        vm.setTopPropiedadesNombres(topPropiedades.stream()
+                .map(e -> e.getKey().length() > 25 ? e.getKey().substring(0, 22) + "..." : e.getKey())
+                .collect(Collectors.toList()));
+        vm.setTopPropiedadesReservas(topPropiedades.stream()
+                .map(e -> e.getValue().intValue()).collect(Collectors.toList()));
+
+        // ===== INGRESOS POR MES (ultimos 6 meses) =====
+        List<String> meses = new ArrayList<>();
+        List<Double> ingresosMes = new ArrayList<>();
+        LocalDate hoy = LocalDate.now();
+
+        for (int i = 5; i >= 0; i--) {
+            LocalDate mes = hoy.minusMonths(i);
+            Month month = mes.getMonth();
+            int year = mes.getYear();
+
+            String label = month.getDisplayName(TextStyle.SHORT, new Locale("es", "PE"))
+                    + " " + year;
+            meses.add(label);
+
+            double total = reservas.stream()
+                    .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                    .filter(r -> r.getFechaInicio().getMonth() == month &&
+                            r.getFechaInicio().getYear() == year)
+                    .mapToDouble(Reserva::getPrecioTotal).sum();
+            ingresosMes.add(Math.round(total * 100.0) / 100.0);
+        }
+
+        vm.setMesesLabels(meses);
+        vm.setIngresosPorMes(ingresosMes);
 
         return vm;
     }
@@ -100,21 +136,16 @@ public class AdminDashboardService {
         AdminFinanzasVM vm = new AdminFinanzasVM();
         List<Reserva> reservas = reservaRepository.findAll();
 
-        double total = reservas.stream()
-                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+        double total = reservas.stream().filter(r -> "CONFIRMADA".equals(r.getEstado()))
                 .mapToDouble(Reserva::getPrecioTotal).sum();
-
         double mensual = reservas.stream()
                 .filter(r -> "CONFIRMADA".equals(r.getEstado())
                         && r.getFechaInicio().getMonth() == LocalDate.now().getMonth()
                         && r.getFechaInicio().getYear() == LocalDate.now().getYear())
                 .mapToDouble(Reserva::getPrecioTotal).sum();
-
-        double pendiente = reservas.stream()
-                .filter(r -> "PENDIENTE".equals(r.getEstado()))
+        double pendiente = reservas.stream().filter(r -> "PENDIENTE".equals(r.getEstado()))
                 .mapToDouble(Reserva::getPrecioTotal).sum();
 
-        // Meta mensual dinámica: promedio de los últimos 3 meses o meta fija de 5000
         double metaFija = 5000.0;
         double porcentajeMeta = metaFija > 0 ? Math.min((mensual / metaFija) * 100, 100) : 0;
 
@@ -122,10 +153,8 @@ public class AdminDashboardService {
         vm.setIngresosMensuales(mensual);
         vm.setPagosPendientes(pendiente);
         vm.setMetaMensualPorcentaje(Math.round(porcentajeMeta * 10.0) / 10.0);
-        vm.setTransacciones(reservas.stream()
-                .sorted((a, b) -> b.getId().compareTo(a.getId()))
-                .map(this::mapToReservaDTO)
-                .collect(Collectors.toList()));
+        vm.setTransacciones(reservas.stream().sorted((a, b) -> b.getId().compareTo(a.getId()))
+                .map(this::mapToReservaDTO).collect(Collectors.toList()));
 
         return vm;
     }
@@ -135,45 +164,28 @@ public class AdminDashboardService {
         List<Reserva> reservas = reservaRepository.findAll();
         List<Usuario> usuarios = usuarioRepository.findAll();
 
-        // Usuarios que tienen al menos una reserva (son residentes)
-        List<Long> idsResidentes = reservas.stream()
-                .map(r -> r.getUsuario().getId())
-                .distinct()
-                .collect(Collectors.toList());
-
+        List<Long> idsResidentes = reservas.stream().map(r -> r.getUsuario().getId())
+                .distinct().collect(Collectors.toList());
         List<Usuario> residentes = usuarios.stream()
-                .filter(u -> idsResidentes.contains(u.getId()))
-                .collect(Collectors.toList());
+                .filter(u -> idsResidentes.contains(u.getId())).collect(Collectors.toList());
 
-        // Nuevos este mes: reservas cuya fechaInicio cae en el mes actual
         long nuevosEsteMes = reservas.stream()
                 .filter(r -> r.getFechaInicio().getMonth() == LocalDate.now().getMonth()
                         && r.getFechaInicio().getYear() == LocalDate.now().getYear())
-                .map(r -> r.getUsuario().getId())
-                .distinct()
-                .count();
+                .map(r -> r.getUsuario().getId()).distinct().count();
 
-        // Carreras únicas para filtro
         List<String> carreras = residentes.stream()
                 .filter(u -> u.getPerfilAcademico() != null && u.getPerfilAcademico().getCarrera() != null)
-                .map(u -> u.getPerfilAcademico().getCarrera())
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+                .map(u -> u.getPerfilAcademico().getCarrera()).distinct().sorted().collect(Collectors.toList());
 
-        // Propiedades únicas para filtro
         List<String> propiedades = reservas.stream()
-                .map(r -> r.getAlojamiento().getTitulo())
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+                .map(r -> r.getAlojamiento().getTitulo()).distinct().sorted().collect(Collectors.toList());
 
         vm.setTotalResidentes(residentes.size());
         vm.setNuevosEsteMes((int) nuevosEsteMes);
         vm.setCarrerasDisponibles(carreras);
         vm.setPropiedadesDisponibles(propiedades);
-        vm.setResidentes(residentes.stream()
-                .map(u -> mapToUsuarioDTOConReserva(u, reservas))
+        vm.setResidentes(residentes.stream().map(u -> mapToUsuarioDTOConReserva(u, reservas))
                 .collect(Collectors.toList()));
 
         return vm;
@@ -187,12 +199,9 @@ public class AdminDashboardService {
         vm.setTotalHabitaciones(alojamientos.stream()
                 .mapToInt(a -> a.getHabitaciones() != null ? a.getHabitaciones() : 0).sum());
 
-        // Calificación promedio calculada en el servicio (no en Thymeleaf)
         double promedioCalif = alojamientos.stream()
                 .filter(a -> a.getCalificacionPromedio() != null)
-                .mapToDouble(Alojamiento::getCalificacionPromedio)
-                .average()
-                .orElse(0.0);
+                .mapToDouble(Alojamiento::getCalificacionPromedio).average().orElse(0.0);
         vm.setCalificacionPromedioTotal(Math.round(promedioCalif * 10.0) / 10.0);
         vm.setPropiedades(alojamientos);
 
@@ -217,36 +226,27 @@ public class AdminDashboardService {
         dto.setNombre(u.getNombre());
         dto.setEmail(u.getEmail());
         dto.setRol(u.getRol() != null ? u.getRol().getNombre() : "—");
-        if (u.getPerfilAcademico() != null) {
-            dto.setCarrera(u.getPerfilAcademico().getCarrera());
-        }
+        if (u.getPerfilAcademico() != null) dto.setCarrera(u.getPerfilAcademico().getCarrera());
         return dto;
     }
 
     private UsuarioDTO mapToUsuarioDTOConReserva(Usuario u, List<Reserva> todasLasReservas) {
         UsuarioDTO dto = mapToUsuarioDTO(u);
-
-        // Buscar la reserva activa o más reciente
         Reserva reservaActiva = todasLasReservas.stream()
                 .filter(r -> r.getUsuario().getId().equals(u.getId()))
                 .filter(r -> "CONFIRMADA".equals(r.getEstado()))
-                .filter(r -> !r.getFechaInicio().isAfter(LocalDate.now())
-                        && !r.getFechaFin().isBefore(LocalDate.now()))
-                .findFirst()
-                .orElse(null);
+                .filter(r -> !r.getFechaInicio().isAfter(LocalDate.now()) && !r.getFechaFin().isBefore(LocalDate.now()))
+                .findFirst().orElse(null);
 
         if (reservaActiva == null) {
-            // Si no hay activa, tomar la más reciente
             reservaActiva = todasLasReservas.stream()
                     .filter(r -> r.getUsuario().getId().equals(u.getId()))
-                    .max((a, b) -> a.getId().compareTo(b.getId()))
-                    .orElse(null);
+                    .max((a, b) -> a.getId().compareTo(b.getId())).orElse(null);
         }
 
         if (reservaActiva != null) {
             dto.setPropiedadAsignada(reservaActiva.getAlojamiento().getTitulo());
             dto.setEstadoReserva(reservaActiva.getEstado());
-            // Compatibilidad basada en calificación del alojamiento (escala 0-5 → 0-100)
             double calificacion = reservaActiva.getAlojamiento().getCalificacionPromedio() != null
                     ? reservaActiva.getAlojamiento().getCalificacionPromedio() : 0;
             dto.setCompatibilidad((int) Math.round(calificacion * 20));
@@ -255,7 +255,6 @@ public class AdminDashboardService {
             dto.setEstadoReserva("SIN_RESERVA");
             dto.setCompatibilidad(0);
         }
-
         return dto;
     }
 }
