@@ -404,6 +404,20 @@ public String verNotificacion(@PathVariable Long id,
         return "ver_todas_las_resenas";
     }
 
+     @GetMapping("/eventos")
+    public String eventos(HttpSession session, Model model) {
+
+    Usuario usuario = getLoggedUser();
+
+    if (usuario == null) {
+        return "redirect:/login";
+    }
+
+    model.addAttribute("usuario", usuario);
+
+    return "eventos";
+    }
+
     @GetMapping("/resenas_academicas")
     public String writeReviewPage(@org.springframework.web.bind.annotation.RequestParam Long alojamientoId,
             HttpSession session, Model model) {
