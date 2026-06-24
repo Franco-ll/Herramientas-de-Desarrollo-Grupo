@@ -1,379 +1,295 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Eventos | Scholar Stay</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface-container": "#eaefef",
-                      "on-surface": "#2c3435",
-                      "primary": "#3d637e",
-                      "on-tertiary": "#fff8f1",
-                      "surface-container-high": "#e3e9ea",
-                      "secondary-fixed": "#c7ecc9",
-                      "on-secondary-container": "#39593f",
-                      "on-error": "#fff7f6",
-                      "on-tertiary-fixed-variant": "#6d614a",
-                      "on-primary-fixed": "#123e56",
-                      "secondary-dim": "#3a5a40",
-                      "on-surface-variant": "#596061",
-                      "tertiary-fixed": "#feecce",
-                      "outline-variant": "#acb3b4",
-                      "error": "#a83836",
-                      "surface-tint": "#3d637e",
-                      "on-primary": "#f5f9ff",
-                      "surface-dim": "#d4dbdc",
-                      "secondary-fixed-dim": "#b9debc",
-                      "on-tertiary-fixed": "#50452f",
-                      "surface": "#f8fafa",
-                      "inverse-primary": "#b8dffe",
-                      "primary-container": "#b8dffe",
-                      "on-background": "#2c3435",
-                      "secondary": "#46674b",
-                      "surface-container-highest": "#dde4e4",
-                      "primary-fixed": "#b8dffe",
-                      "on-tertiary-container": "#635740",
-                      "surface-container-low": "#f0f4f4",
-                      "tertiary-dim": "#5d523b",
-                      "tertiary-container": "#feecce",
-                      "tertiary-fixed-dim": "#efdec0",
-                      "secondary-container": "#c7ecc9",
-                      "tertiary": "#6a5e46",
-                      "background": "#f8fafa",
-                      "on-secondary-fixed-variant": "#426348",
-                      "inverse-on-surface": "#9b9d9e",
-                      "on-secondary-fixed": "#26462d",
-                      "outline": "#757c7d",
-                      "surface-bright": "#f8fafa",
-                      "on-secondary": "#e8ffe7",
-                      "primary-fixed-dim": "#aad1ef",
-                      "on-error-container": "#6e0a12",
-                      "inverse-surface": "#0b0f0f",
-                      "on-primary-fixed-variant": "#335a74",
-                      "error-dim": "#67040d",
-                      "surface-variant": "#dde4e4",
-                      "error-container": "#fa746f",
-                      "surface-container-lowest": "#ffffff",
-                      "on-primary-container": "#29506a",
-                      "primary-dim": "#305771"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "fontFamily": {
-                      "headline": ["Manrope"],
-                      "body": ["Inter"],
-                      "label": ["Inter"]
-              }
-            },
-          },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
-    </style>
-</head>
-<body class="bg-surface text-on-surface">
-<!-- TopNavBar (Shared Component) -->
-<nav class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full">
-<div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
-<div class="hidden md:flex items-center gap-8 font-manrope text-base tracking-tight">
-<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors"th:href="@{/explorar-residencias}">Alojamiento</a>
-<a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Comunidad</a>
-<a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1" th:href="@{/eventos}">Eventos</a>
-</div>
-<div class="flex items-center gap-6">
-<div class="flex items-center gap-4 text-slate-600">
-<div class="relative">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>Eventos | Scholar Stay</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        "colors": {
+                            "surface-container": "#eaefef",
+                            "on-surface": "#2c3435",
+                            "primary": "#3d637e",
+                            "on-tertiary": "#fff8f1",
+                            "surface-container-high": "#e3e9ea",
+                            "secondary-fixed": "#c7ecc9",
+                            "on-secondary-container": "#39593f",
+                            "on-error": "#fff7f6",
+                            "on-tertiary-fixed-variant": "#6d614a",
+                            "on-primary-fixed": "#123e56",
+                            "secondary-dim": "#3a5a40",
+                            "on-surface-variant": "#596061",
+                            "tertiary-fixed": "#feecce",
+                            "outline-variant": "#acb3b4",
+                            "error": "#a83836",
+                            "surface-tint": "#3d637e",
+                            "on-primary": "#f5f9ff",
+                            "surface-dim": "#d4dbdc",
+                            "secondary-fixed-dim": "#b9debc",
+                            "on-tertiary-fixed": "#50452f",
+                            "surface": "#f8fafa",
+                            "inverse-primary": "#b8dffe",
+                            "primary-container": "#b8dffe",
+                            "on-background": "#2c3435",
+                            "secondary": "#46674b",
+                            "surface-container-highest": "#dde4e4",
+                            "primary-fixed": "#b8dffe",
+                            "on-tertiary-container": "#635740",
+                            "surface-container-low": "#f0f4f4",
+                            "tertiary-dim": "#5d523b",
+                            "tertiary-container": "#feecce",
+                            "tertiary-fixed-dim": "#efdec0",
+                            "secondary-container": "#c7ecc9",
+                            "tertiary": "#6a5e46",
+                            "background": "#f8fafa",
+                            "on-secondary-fixed-variant": "#426348",
+                            "inverse-on-surface": "#9b9d9e",
+                            "on-secondary-fixed": "#26462d",
+                            "outline": "#757c7d",
+                            "surface-bright": "#f8fafa",
+                            "on-secondary": "#e8ffe7",
+                            "primary-fixed-dim": "#aad1ef",
+                            "on-error-container": "#6e0a12",
+                            "inverse-surface": "#0b0f0f",
+                            "on-primary-fixed-variant": "#335a74",
+                            "error-dim": "#67040d",
+                            "surface-variant": "#dde4e4",
+                            "error-container": "#fa746f",
+                            "surface-container-lowest": "#ffffff",
+                            "on-primary-container": "#29506a",
+                            "primary-dim": "#305771"
+                        },
+                        "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                        },
+                        "fontFamily": {
+                            "headline": ["Manrope"],
+                            "body": ["Inter"],
+                            "label": ["Inter"]
+                        }
+                    },
+                },
+            }
+        </script>
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            h1, h2, h3 {
+                font-family: 'Manrope', sans-serif;
+            }
+        </style>
+    </head>
+    <body class="bg-surface text-on-surface">
+        <!-- TopNavBar (Shared Component) -->
+        <nav class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-md flex justify-between items-center px-8 h-20 max-w-full">
+            <div class="text-2xl font-bold tracking-tighter text-sky-900">Scholar Stay</div>
+            <div class="hidden md:flex items-center gap-8 font-manrope text-base tracking-tight">
+                <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors"th:href="@{/explorar-residencias}">Alojamiento</a>
+                <a class="text-slate-600 font-medium hover:text-sky-700 transition-colors" href="#">Comunidad</a>
+                <a class="text-sky-800 font-bold border-b-2 border-sky-800 pb-1" th:href="@{/eventos}">Eventos</a>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-4 text-slate-600">
+                    <div class="relative">
 
-    <a th:href="@{/notificaciones}"
-       class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">
+                        <a th:href="@{/notificaciones}"
+                           class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">
 
-        notifications
+                            notifications
 
-    </a>
+                        </a>
 
-    <!-- Indicador -->
-    <span th:if="${noLeidas > 0}"
-          class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full">
-    </span>
+                        <!-- Indicador -->
+                        <span th:if="${noLeidas > 0}"
+                              class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full">
+                        </span>
 
-</div>
-<a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
-</div>
-<div class="flex items-center gap-4">
-    <a th:href="@{/perfil}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
-        Mi Perfil
-    </a>
-    <a th:href="@{/logout}" class="flex items-center gap-2 text-error font-bold text-sm hover:text-error-dim transition-colors px-3 py-2 rounded-lg hover:bg-error/5">
-    <span class="material-symbols-outlined text-lg">logout</span>
-    <span class="hidden lg:inline">Cerrar Sesión</span>
-</a>
-</div>
-</nav>
-<main class="pt-28 pb-20 px-8 max-w-7xl mx-auto">
-
-    <!-- HERO -->
-    <header class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
-
-        <div>
-            <h1 class="text-7xl font-black tracking-tight text-on-surface leading-none">
-                Próximos
-                <span class="text-primary italic">
-                    Eventos
-                </span>
-                Académicos.
-            </h1>
-
-            <p class="mt-8 text-xl text-on-surface-variant max-w-xl">
-                Descubre talleres, hackathones, conferencias y actividades diseñadas para impulsar tu desarrollo profesional y académico.
-            </p>
-        </div>
-
-        <div class="bg-surface-container rounded-[1.5rem] p-8">
-
-            <div class="flex items-center gap-5">
-
-                <div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center">
-
-                    <span class="material-symbols-outlined text-on-secondary-container">
-                        event
-                    </span>
-
+                    </div>
+                    <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
                 </div>
+                <div class="flex items-center gap-4">
+                    <a th:href="@{/perfil}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all active:scale-95 shadow-sm">
+                        Mi Perfil
+                    </a>
+                    <a th:href="@{/logout}" class="flex items-center gap-2 text-error font-bold text-sm hover:text-error-dim transition-colors px-3 py-2 rounded-lg hover:bg-error/5">
+                        <span class="material-symbols-outlined text-lg">logout</span>
+                        <span class="hidden lg:inline">Cerrar Sesión</span>
+                    </a>
+                </div>
+        </nav>
+        <main class="pt-28 pb-20 px-8 max-w-7xl mx-auto">
+
+            <!-- HERO -->
+            <header class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
 
                 <div>
-
-                    <h3 class="font-bold text-xl">
-                        EVENTOS VERIFICADOS
-                    </h3>
-
-                    <p class="text-on-surface-variant">
-                        Todos los eventos son organizados por instituciones y comunidades universitarias verificadas.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </header>
-
-    <!-- BUSCADOR -->
-    <div class="bg-surface-container-low rounded-full p-4 flex gap-4 mb-12">
-
-        <input
-                type="text"
-                placeholder="Buscar eventos..."
-                class="flex-1 bg-transparent outline-none px-4">
-
-        <button
-                class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold">
-            Buscar
-        </button>
-
-    </div>
-
-    <!-- GRID EVENTOS -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-        <!-- Evento 1 -->
-        <article class="group cursor-pointer">
-
-            <div class="bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col gap-4">
-
-                <div class="relative h-64 overflow-hidden rounded-[1.5rem]">
-
-                    <img
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3">
-
-                    <div class="absolute top-4 left-4">
-
-                        <span class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold">
-                            Tecnología
+                    <h1 class="text-7xl font-black tracking-tight text-on-surface leading-none">
+                        Vive tu
+                        <span class="text-primary italic">
+                            Experiencia
                         </span>
+                        Universitaria.
+                    </h1>
 
-                    </div>
-
+                    <p class="mt-8 text-xl text-on-surface-variant max-w-xl">
+                        Participa en actividades de integración, convivencia y desarrollo personal pensadas para estudiantes que viven lejos de casa.
+                    </p>
                 </div>
 
-                <div class="px-2">
+                <div class="bg-surface-container rounded-[1.5rem] p-8">
 
-                    <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-5">
 
-                        <h3 class="text-lg font-bold">
-                            Hackathon Scholar Stay
-                        </h3>
+                        <div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center">
 
-                        <div class="flex items-center gap-1 text-secondary font-bold text-sm">
-
-                            <span class="material-symbols-outlined">
-                                groups
+                            <span class="material-symbols-outlined text-on-secondary-container">
+                                event
                             </span>
 
-                            <span>150</span>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-xl">
+                                Comunidad Scholar Stay
+                            </h3>
+
+                            <p class="text-on-surface-variant">
+                                Conecta con otros estudiantes, participa en actividades de convivencia y aprovecha oportunidades para adaptarte a tu nueva etapa universitaria.
+                            </p>
 
                         </div>
 
                     </div>
 
-                    <p class="text-on-surface-variant text-sm mb-3">
-                        UTP Piura
-                    </p>
-
-                    <div class="border-t border-outline-variant/10 pt-4">
-
-                        <p class="font-bold text-primary">
-                            15 Julio 2026
-                        </p>
-
-                    </div>
-
                 </div>
+
+            </header>
+
+            <!-- BUSCADOR -->
+            <div class="bg-surface-container-low rounded-full p-4 flex gap-4 mb-12">
+
+                <input
+                    type="text"
+                    placeholder="Buscar eventos..."
+                    class="flex-1 bg-transparent outline-none px-4">
+
+                <button
+                    class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold">
+                    Buscar
+                </button>
 
             </div>
 
-        </article>
+            <!-- GRID EVENTOS -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-        <!-- Evento 2 -->
-        <article class="group cursor-pointer">
+                <article th:each="evento : ${eventos}"
+                         class="group cursor-pointer">
 
-            <div class="bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col gap-4">
+                    <div class="bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col gap-4">
 
-                <div class="relative h-64 overflow-hidden rounded-[1.5rem]">
+                        <div class="relative h-64 overflow-hidden rounded-[1.5rem]">
 
-                    <img
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0">
+                            <img
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                th:src="${evento.imagen}"
+                                alt="Evento">
 
-                    <div class="absolute top-4 left-4">
+                            <div class="absolute top-4 left-4">
 
-                        <span class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold">
-                            Networking
-                        </span>
+                                <span class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold"
+                                      th:text="${evento.categoria}">
+                                    Categoría
+                                </span>
 
-                    </div>
+                            </div>
 
-                </div>
+                        </div>
 
-                <div class="px-2">
+                        <div class="px-2">
 
-                    <div class="flex justify-between items-start mb-2">
+                            <div class="flex justify-between items-start mb-2">
 
-                        <h3 class="text-lg font-bold">
-                            Encuentro de Emprendedores
-                        </h3>
+                                <h3 class="text-lg font-bold"
+                                    th:text="${evento.titulo}">
+                                    Evento
+                                </h3>
 
-                        <div class="flex items-center gap-1 text-secondary font-bold text-sm">
+                                <div class="flex items-center gap-1 text-secondary font-bold text-sm">
 
-                            <span class="material-symbols-outlined">
-                                groups
-                            </span>
+                                    <span class="material-symbols-outlined">
+                                        groups
+                                    </span>
 
-                            <span>80</span>
+                                    <span th:text="${evento.plazas}">
+                                        0
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <p class="text-on-surface-variant text-sm mb-3"
+                               th:text="${evento.ubicacion}">
+                                Ubicación
+                            </p>
+
+                            <div class="border-t border-outline-variant/10 pt-4">
+
+                                <p class="font-bold text-primary"
+                                   th:text="${evento.fecha}">
+                                    Fecha
+                                </p>
+
+
+                                <div class="mt-4">
+
+                                    <a th:href="@{/evento/accion/{id}(id=${evento.id})}"
+                                       th:class="${misEventos.contains(evento.id)} 
+                                       ? 'bg-gray-300 text-gray-700 px-6 py-3 rounded-full font-bold text-center block'
+                                       : 'bg-primary text-white px-6 py-3 rounded-full font-bold text-center block'">
+
+
+                                        <span th:if="${misEventos.contains(evento.id)}">
+                                            ✓ Ya inscrito - Cancelar
+                                        </span>
+
+
+                                        <span th:unless="${misEventos.contains(evento.id)}">
+                                            Inscribirme
+                                        </span>
+
+
+                                    </a>
+
+                                </div>
+
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <p class="text-on-surface-variant text-sm mb-3">
-                        Universidad de Piura
-                    </p>
+                </article>
 
-                    <div class="border-t border-outline-variant/10 pt-4">
+            </section>
 
-                        <p class="font-bold text-primary">
-                            22 Julio 2026
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <!-- Evento 3 -->
-        <article class="group cursor-pointer">
-
-            <div class="bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col gap-4">
-
-                <div class="relative h-64 overflow-hidden rounded-[1.5rem]">
-
-                    <img
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
-
-                    <div class="absolute top-4 left-4">
-
-                        <span class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold">
-                            Académico
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="px-2">
-
-                    <div class="flex justify-between items-start mb-2">
-
-                        <h3 class="text-lg font-bold">
-                            Taller de Investigación
-                        </h3>
-
-                        <div class="flex items-center gap-1 text-secondary font-bold text-sm">
-
-                            <span class="material-symbols-outlined">
-                                groups
-                            </span>
-
-                            <span>60</span>
-
-                        </div>
-
-                    </div>
-
-                    <p class="text-on-surface-variant text-sm mb-3">
-                        Campus Principal
-                    </p>
-
-                    <div class="border-t border-outline-variant/10 pt-4">
-
-                        <p class="font-bold text-primary">
-                            30 Julio 2026
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </section>
-
-</main>
-</body>
+        </main>
+    </body>
 </html>

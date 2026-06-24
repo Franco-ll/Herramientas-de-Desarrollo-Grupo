@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.model.Evento;
 import com.scholarstay.app.model.Notificacion;
 import com.scholarstay.app.model.PerfilAcademico;
 import com.scholarstay.app.model.Usuario;
@@ -18,6 +19,8 @@ import com.scholarstay.app.service.ResenaService;
 import com.scholarstay.app.service.ReservaService;
 import com.scholarstay.app.service.UsuarioService;
 import com.scholarstay.app.security.CustomUserDetails;
+import com.scholarstay.app.service.EventoService;
+import com.scholarstay.app.service.InscripcionEventoService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -34,16 +37,21 @@ public class WebViewController {
     private final UsuarioService usuarioService;
     private final ReservaService reservaService;
     private final ResenaService resenaService;
+    private final EventoService eventoService;
+    private final InscripcionEventoService inscripcionEventoService;
 
     public WebViewController(AlojamientoService alojamientoService, NotificacionService notificacionService,
             PerfilAcademicoService perfilAcademicoService, UsuarioService usuarioService,
-            ReservaService reservaService, ResenaService resenaService) {
+            ReservaService reservaService, ResenaService resenaService,EventoService eventoService,
+            InscripcionEventoService inscripcionEventoService) {
         this.alojamientoService = alojamientoService;
         this.notificacionService = notificacionService;
         this.perfilAcademicoService = perfilAcademicoService;
         this.usuarioService = usuarioService;
         this.reservaService = reservaService;
         this.resenaService = resenaService;
+        this.eventoService = eventoService;
+        this.inscripcionEventoService = inscripcionEventoService;
     }
 
     private Usuario getLoggedUser() {
@@ -407,15 +415,65 @@ public String verNotificacion(@PathVariable Long id,
      @GetMapping("/eventos")
     public String eventos(HttpSession session, Model model) {
 
-    Usuario usuario = getLoggedUser();
+        Usuario usuario = getLoggedUser();
 
-    if (usuario == null) {
-        return "redirect:/login";
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+
+        model.addAttribute(
+                "eventos",
+                eventoService.listar()
+        );
+
+        model.addAttribute(
+                "misEventos",
+                inscripcionEventoService.obtenerIdsEventosInscritos(usuario)
+        );
+
+        return "eventos";
+
     }
+    
+    @GetMapping("/evento/accion/{id}")
+    public String accionEvento(
+            @PathVariable Long id,
+            HttpSession session) {
 
-    model.addAttribute("usuario", usuario);
+        Usuario usuario = getLoggedUser();
 
-    return "eventos";
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        Evento evento = eventoService.obtenerPorId(id);
+
+        if (evento == null) {
+            return "redirect:/eventos";
+        }
+
+        if (inscripcionEventoService.estaInscrito(
+                usuario,
+                evento)) {
+
+            inscripcionEventoService.desinscribir(
+                    usuario,
+                    evento
+            );
+
+        } else {
+
+            inscripcionEventoService.inscribir(
+                    usuario,
+                    evento
+            );
+
+        }
+
+        return "redirect:/eventos";
+
     }
 
     @GetMapping("/resenas_academicas")
