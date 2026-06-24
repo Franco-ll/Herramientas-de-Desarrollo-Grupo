@@ -1,10 +1,11 @@
 package com.scholarstay.app.service;
 
-import com.scholarstay.app.model.Alojamiento;
-import com.scholarstay.app.repository.AlojamientoRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.repository.AlojamientoRepository;
 
 @Service
 public class AlojamientoService {
@@ -18,12 +19,16 @@ public class AlojamientoService {
     public List<Alojamiento> listar() {
         return alojamientoRepository.findAll();
     }
-    
+
     public Alojamiento obtenerPorId(Long id) {
         return alojamientoRepository.findById(id).orElse(null);
     }
-    
+
     public Alojamiento save(Alojamiento alojamiento) {
         return alojamientoRepository.save(alojamiento);
+    }
+
+    public void eliminar(Long id) {
+        alojamientoRepository.deleteById(id);
     }
 }

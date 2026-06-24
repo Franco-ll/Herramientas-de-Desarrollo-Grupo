@@ -18,6 +18,7 @@ public class PerfilDTO {
     private String nivelTolerancia;
     private String estiloVida;
     private Double porcentajeCompatibilidad;
+    private String avatar;
 
     public PerfilDTO() {}
 
@@ -75,4 +76,7 @@ public class PerfilDTO {
 
     public Double getPorcentajeCompatibilidad() { return porcentajeCompatibilidad; }
     public void setPorcentajeCompatibilidad(Double porcentajeCompatibilidad) { this.porcentajeCompatibilidad = porcentajeCompatibilidad; }
+
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 }

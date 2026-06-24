@@ -1,0 +1,54 @@
+# =====================
+# Maven
+# =====================
+target/
+*.jar
+*.war
+*.ear
+
+# Maven wrapper
+.mvn/
+
+# =====================
+# IDE
+# =====================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.settings/
+.classpath
+.project
+.metadata/
+bin/
+out/
+
+# =====================
+# OS
+# =====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# =====================
+# Docker & env
+# =====================
+.env
+
+# =====================
+# Crash logs
+# =====================
+hs_err_pid*

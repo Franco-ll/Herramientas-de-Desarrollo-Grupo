@@ -99,8 +99,8 @@ public class SecurityConfig {
                 // Protección CSRF está activa por defecto, solo nos aseguramos de que no se
                 // deshabilite
                 // Es vital para proteger formularios contra ataques Cross-Site Request Forgery
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**")) // Excluimos APIs si tuvieran otro tipo de auth
-                                                                       // en un futuro
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**", "/perfil/avatar")) // AJAX upload no usa form CSRF token
 
                 // Manejo de errores de acceso (Access Denied)
                 .exceptionHandling(ex -> ex

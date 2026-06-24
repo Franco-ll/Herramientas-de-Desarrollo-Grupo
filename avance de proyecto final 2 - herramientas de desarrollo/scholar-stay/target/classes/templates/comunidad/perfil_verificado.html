@@ -95,7 +95,9 @@
 </button>
 <!-- Large Profile Photo -->
 <div class="relative w-full md:w-5/12 aspect-[4/5] rounded-xl overflow-hidden shadow-2xl bg-surface-container-highest">
-<img class="w-full h-full object-cover" th:src="@{/images/login.png}" alt="Foto de perfil" />
+<img class="w-full h-full object-cover"
+     th:src="${perfil.avatar != null and !perfil.avatar.isEmpty()} ? @{'/images/' + ${perfil.avatar}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(perfil.nombre,' ','+')} + '&background=3d637e&color=f5f9ff&size=600'"
+     alt="Foto de perfil" />
 <!-- Match Badge Floating -->
 <div class="absolute top-6 right-6 bg-secondary text-on-secondary px-6 py-3 rounded-full flex items-center gap-2 shadow-lg backdrop-blur-md">
 <span class="material-symbols-outlined text-sm" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
@@ -124,7 +126,6 @@ Correo institucional confirmado
 <h1 class="font-display text-5xl md:text-6xl font-extrabold text-on-surface mt-2 tracking-tight" th:text="${perfil.nombre}"></h1>
 <div class="flex flex-wrap gap-3 mt-4">
 <span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.carrera}"></span>
-<span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.ciclo}"></span>
 <span class="bg-surface-container-highest px-4 py-1 rounded-full text-label-md font-semibold text-on-surface-variant" th:text="${perfil.universidad}"></span>
 </div>
 </div>
@@ -137,23 +138,31 @@ Correo institucional confirmado
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
                 <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Nivel de silencio</span>
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Nivel de Ruido</span>
                     <span class="text-xs font-semibold text-on-surface-variant" th:text="${perfil.habitosRuido != null ? perfil.habitosRuido : 'No registrado'}"></span>
                 </div>
                 <div class="h-2 rounded-full bg-surface-container-highest overflow-hidden">
 <div class="h-full bg-primary"
      th:style="${perfil.habitosRuido != null and perfil.habitosRuido.toLowerCase().contains('silencio')}
                ? 'width:85%'
-               : 'width:70%'">
+               : (${perfil.habitosRuido != null and perfil.habitosRuido.toLowerCase().contains('normal')}
+                  ? 'width:55%'
+                  : 'width:70%')">
 </div>                </div>
             </div>
             <div>
                 <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Orden y limpieza</span>
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-bold">Nivel de Tolerancia</span>
                     <span class="text-xs font-semibold text-on-surface-variant" th:text="${perfil.nivelTolerancia != null ? perfil.nivelTolerancia : 'No registrado'}"></span>
                 </div>
 <div class="h-2 rounded-full bg-surface-container-highest overflow-hidden">
-    <div class="h-full bg-secondary" style="width:90%"></div>
+    <div class="h-full bg-secondary"
+         th:style="${perfil.nivelTolerancia != null and perfil.nivelTolerancia.toLowerCase().contains('alta')}
+                   ? 'width:90%'
+                   : (${perfil.nivelTolerancia != null and perfil.nivelTolerancia.toLowerCase().contains('media')}
+                      ? 'width:60%'
+                      : 'width:30%')">
+    </div>
 </div>                </div>
             </div>
         </div>
@@ -173,27 +182,7 @@ Correo institucional confirmado
 <span class="material-symbols-outlined" data-icon="bookmark" style="transform: none; transition: transform 0.2s;">bookmark</span>
 </button>
 </div>
-    <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
-        <h3 class="font-headline text-lg font-bold text-on-surface mb-4">Hábitos de estudio</h3>
-        <dl class="grid gap-3 text-sm text-on-surface-variant">
-            <div class="flex justify-between gap-3">
-                <dt class="font-semibold text-on-surface">Horario</dt>
-                <dd th:text="${perfil.horarioEstudio != null ? perfil.horarioEstudio : 'No registrado'}"></dd>
-            </div>
-            <div class="flex justify-between gap-3">
-                <dt class="font-semibold text-on-surface">Ruido</dt>
-                <dd th:text="${perfil.habitosRuido != null ? perfil.habitosRuido : 'No registrado'}"></dd>
-            </div>
-            <div class="flex justify-between gap-3">
-                <dt class="font-semibold text-on-surface">Rutina</dt>
-                <dd th:text="${perfil.habitosSueno != null ? perfil.habitosSueno : 'No registrado'}"></dd>
-            </div>
-            <div class="flex justify-between gap-3">
-                <dt class="font-semibold text-on-surface">Tolerancia</dt>
-                <dd th:text="${perfil.nivelTolerancia != null ? perfil.nivelTolerancia : 'No registrado'}"></dd>
-            </div>
-        </dl>
-    </div>
+</div>
 </div>
 </div>
 </div>
@@ -210,81 +199,51 @@ Correo institucional confirmado
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-        <!-- Intereses Compartidos -->
+        <!-- Intereses Compartidos: renderizados desde perfil.intereses -->
         <div>
             <h4 class="font-bold text-primary mb-4 uppercase tracking-wider text-sm">
-                Intereses Compartidos
+                Intereses
             </h4>
-
-            <ul class="space-y-3 text-on-surface text-sm">
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Desarrollo Web
-                </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Inteligencia Artificial
-                </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Bases de Datos
-                </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Ciberseguridad
-                </li>
-
-            </ul>
+            <th:block th:if="${perfil.intereses != null and !perfil.intereses.trim().isEmpty()}">
+                <ul class="space-y-3 text-on-surface text-sm">
+                    <li th:each="interes : ${#strings.split(perfil.intereses, ',')}"
+                        th:if="${interes != null and interes.trim() != ''}"
+                        class="flex items-center gap-3">
+                        <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">✓</span>
+                        <span th:text="${interes.trim()}"></span>
+                    </li>
+                </ul>
+            </th:block>
+            <th:block th:if="${perfil.intereses == null or perfil.intereses.trim().isEmpty()}">
+                <p class="text-sm text-on-surface-variant italic">Sin intereses registrados.</p>
+            </th:block>
         </div>
 
-        <!-- Hábitos Compatibles -->
+        <!-- Hábitos Compatibles: generados desde los campos de hábitos del perfil -->
         <div>
             <h4 class="font-bold text-primary mb-4 uppercase tracking-wider text-sm">
-                Hábitos Compatibles
+                Hábitos
             </h4>
-
             <ul class="space-y-3 text-on-surface text-sm">
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Sesiones de estudio y programación nocturnas
+                <li th:if="${perfil.horarioEstudio != null and !perfil.horarioEstudio.isEmpty()}" class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">✓</span>
+                    <span th:text="'Horario de estudio: ' + ${perfil.horarioEstudio}"></span>
                 </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Preferencia por espacios silenciosos
+                <li th:if="${perfil.habitosRuido != null and !perfil.habitosRuido.isEmpty()}" class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">✓</span>
+                    <span th:text="'Preferencia de ruido: ' + ${perfil.habitosRuido}"></span>
                 </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Comunicación colaborativa para proyectos
+                <li th:if="${perfil.habitosSueno != null and !perfil.habitosSueno.isEmpty()}" class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">✓</span>
+                    <span th:text="'Rutina de sueño: ' + ${perfil.habitosSueno}"></span>
                 </li>
-
-                <li class="flex items-center gap-3">
-                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">
-                        ✓
-                    </span>
-                    Interés por nuevas tecnologías
+                <li th:if="${perfil.nivelTolerancia != null and !perfil.nivelTolerancia.isEmpty()}" class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px]">✓</span>
+                    <span th:text="'Tolerancia: ' + ${perfil.nivelTolerancia}"></span>
                 </li>
-
+                <li th:if="${perfil.horarioEstudio == null and perfil.habitosRuido == null and perfil.habitosSueno == null and perfil.nivelTolerancia == null}">
+                    <p class="text-sm text-on-surface-variant italic">Sin hábitos registrados.</p>
+                </li>
             </ul>
         </div>
 
@@ -320,13 +279,10 @@ Correo institucional confirmado
 <div class="bg-secondary-container rounded-2xl p-8 h-full flex flex-col justify-between relative overflow-hidden group">
 <div class="z-10">
 <h3 class="font-headline text-xl font-bold text-on-secondary-container mb-4">Potencial de Colaboración</h3>
-<p class="text-on-secondary-fixed-variant text-base leading-relaxed mb-6">
-    Gracias a su experiencia en desarrollo de software y participación en
-    proyectos universitarios, este estudiante puede aportar conocimientos
-    valiosos en programación, análisis de sistemas y trabajo colaborativo.
-    Su perfil resulta ideal para formar grupos de estudio, desarrollar
-    aplicaciones y compartir buenas prácticas tecnológicas.
+<!-- Párrafo generado desde estiloVida calculado por ComunidadService -->
+<p class="text-on-secondary-fixed-variant text-base leading-relaxed mb-6" th:text="${perfil.estiloVida != null and !perfil.estiloVida.isEmpty()} ? ${perfil.estiloVida} : 'Perfil con estilo de vida flexible y abierto a distintas dinámicas de convivencia académica.'">
 </p>
+<!-- Tags de intereses -->
 <div class="flex gap-2 flex-wrap" th:if="${perfil.intereses != null and !perfil.intereses.trim().isEmpty()}">
     <span th:each="interes : ${#strings.split(perfil.intereses, ',')}"
           th:if="${interes != null and interes.trim() != ''}"
@@ -334,10 +290,21 @@ Correo institucional confirmado
           class="bg-secondary text-white px-3 py-1 rounded-md text-xs font-bold"></span>
 </div>
 </div>
+<!-- Iconos dinámicos según carrera -->
 <div class="z-10 mt-8 flex -space-x-3">
-<div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined" data-icon="architecture">architecture</div>
-<div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined" data-icon="piano">piano</div>
-<div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined" data-icon="forest">forest</div>
+    <div th:if="${perfil.carrera != null and (perfil.carrera.toLowerCase().contains('comput') or perfil.carrera.toLowerCase().contains('sistemas') or perfil.carrera.toLowerCase().contains('software') or perfil.carrera.toLowerCase().contains('inform'))}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">code</div>
+    <div th:if="${perfil.carrera != null and perfil.carrera.toLowerCase().contains('arquitect')}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">architecture</div>
+    <div th:if="${perfil.carrera != null and (perfil.carrera.toLowerCase().contains('medic') or perfil.carrera.toLowerCase().contains('salud') or perfil.carrera.toLowerCase().contains('enferm'))}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">medical_services</div>
+    <div th:if="${perfil.carrera != null and (perfil.carrera.toLowerCase().contains('derecho') or perfil.carrera.toLowerCase().contains('leyes') or perfil.carrera.toLowerCase().contains('jurídic'))}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">gavel</div>
+    <div th:if="${perfil.carrera != null and (perfil.carrera.toLowerCase().contains('arte') or perfil.carrera.toLowerCase().contains('diseño') or perfil.carrera.toLowerCase().contains('música'))}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">palette</div>
+    <!-- Icono genérico cuando ninguna carrera específica coincide o carrera es null -->
+    <div th:if="${perfil.carrera == null or (  !perfil.carrera.toLowerCase().contains('comput') and !perfil.carrera.toLowerCase().contains('sistemas') and !perfil.carrera.toLowerCase().contains('software') and !perfil.carrera.toLowerCase().contains('inform') and !perfil.carrera.toLowerCase().contains('arquitect') and !perfil.carrera.toLowerCase().contains('medic') and !perfil.carrera.toLowerCase().contains('salud') and !perfil.carrera.toLowerCase().contains('enferm') and !perfil.carrera.toLowerCase().contains('derecho') and !perfil.carrera.toLowerCase().contains('leyes') and !perfil.carrera.toLowerCase().contains('arte') and !perfil.carrera.toLowerCase().contains('diseño') and !perfil.carrera.toLowerCase().contains('música'))}"
+         class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white ring-4 ring-secondary-container material-symbols-outlined">school</div>
 </div>
 <!-- Abstract Pattern Background -->
 <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-secondary/10 rounded-full group-hover:scale-125 transition-transform duration-700"></div>

@@ -1,0 +1,39 @@
+# Maven build outputs
+target/
+*.jar
+*.war
+*.ear
+
+# IDE configurations
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.settings/
+.classpath
+.project
+.metadata/
+
+# Docker configuration files (avoid sending them as build context)
+docker-compose*.yml
+Dockerfile
+.dockerignore
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Version control
+.git/
+.gitignore
+
+# Temp and logs
+logs/
+*.log
+tmp/
+temp/
+
+# App uploads / local assets
+uploads/
+mysql_data/

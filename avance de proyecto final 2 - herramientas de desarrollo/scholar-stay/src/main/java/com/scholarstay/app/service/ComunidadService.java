@@ -303,6 +303,7 @@ public class ComunidadService {
             perfil.getNivelTolerancia()
         );
         perfilDTO.setEstiloVida(buildEstiloVida(perfil));
+        perfilDTO.setAvatar(usuario.getAvatar());
         return perfilDTO;
     }
 

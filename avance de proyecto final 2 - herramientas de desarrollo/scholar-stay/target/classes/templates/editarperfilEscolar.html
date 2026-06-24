@@ -122,7 +122,10 @@
 </div>
 <a th:href="@{/perfil}" class="text-sky-800 dark:text-sky-400 font-bold border-b-2 border-sky-800 dark:border-sky-400 pb-1">Mi Perfil</a>
 <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
-<img alt="Avatar del estudiante" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
+<img id="nav-avatar"
+     alt="Avatar del estudiante"
+     class="w-full h-full object-cover"
+     th:src="${usuario.avatar != null and !usuario.avatar.isEmpty()} ? @{'/images/' + ${usuario.avatar}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(usuario.nombre,' ','+')} + '&background=3d637e&color=f5f9ff&size=128'"/>
 </div>
 </div>
 </nav>
@@ -141,10 +144,15 @@
 <aside class="space-y-8">
 <div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center text-center shadow-sm">
 <div class="relative group">
+<!-- Hidden file input -->
+<input type="file" id="avatarFileInput" accept="image/*" class="hidden">
 <div class="w-48 h-64 rounded-xl overflow-hidden mb-6 bg-surface-container-high transform rotate-2 transition-transform hover:rotate-0">
-<img class="w-full h-full object-cover" data-alt="artistic portrait of a young woman with glasses looking thoughtful, soft natural window light, grainy film aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqj5jmTCEptFT0oiEOyFmNjURFXcOJgG2y0LfGbjnugcOrTTu4-F03I8JuB2L01nsoODLiqEyi0R6oIFUy-7kKIYQCgV1I64MCC3de_OxmsNhS-L2qgTYnxU57H4SzhOc0o0CIM8fc7Visi6I6n3DhfwlhTEYVBmlETzZ4vCOp5le8MhP3VpsVVir4CQCnGUoIrBrOy-8xziGGPm0MVj9j1JuvcdKroQSe6WlKerIjh5iNukMmhfj-i5FcBcDSq1Bohw8RzJDTj-Y"/>
+<img id="sidebar-avatar"
+     class="w-full h-full object-cover"
+     alt="Foto de perfil"
+     th:src="${usuario.avatar != null and !usuario.avatar.isEmpty()} ? @{'/images/' + ${usuario.avatar}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(usuario.nombre,' ','+')} + '&background=3d637e&color=f5f9ff&size=300'"/>
 </div>
-<button class="absolute -bottom-2 -right-2 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-dim transition-colors">
+<button type="button" id="cameraBtn" class="absolute -bottom-2 -right-2 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-dim transition-colors">
 <span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
 </button>
 </div>
@@ -266,6 +274,33 @@
 </div>
 </main>
 <script>
+    // --- Avatar upload ---
+    const cameraBtn = document.getElementById('cameraBtn');
+    const avatarInput = document.getElementById('avatarFileInput');
+    cameraBtn.addEventListener('click', () => avatarInput.click());
+
+    avatarInput.addEventListener('change', async () => {
+        const file = avatarInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('avatar', file);
+        try {
+            const res = await fetch('/perfil/avatar', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (res.ok && data.avatarUrl) {
+                const ts = '?t=' + Date.now();
+                document.getElementById('sidebar-avatar').src = data.avatarUrl + ts;
+                document.getElementById('nav-avatar').src = data.avatarUrl + ts;
+            } else {
+                alert('Error al guardar la imagen: ' + (data.error || 'Respuesta inesperada del servidor (HTTP ' + res.status + ')'));
+            }
+        } catch (e) {
+            console.error('Avatar upload error:', e);
+            alert('Error de red al subir la imagen. Verifica tu conexión e inténtalo de nuevo.');
+        }
+    });
+
+    // --- Progress bar ---
     function updateProgress() {
         const fields = [
             'nombre', 'email', 'biografia', 'carrera', 'horarioEstudio', 'habitosRuido', 'habitosSueno', 'nivelTolerancia'
@@ -277,19 +312,17 @@
                 completed++;
             }
         });
-        
         const percentage = Math.round((completed / fields.length) * 100);
         document.getElementById('progress-bar').style.width = percentage + '%';
         document.getElementById('progress-text').innerText = percentage + '% Perfil Completado';
     }
 
-    // Attach listeners to all fields
     document.querySelectorAll('input, textarea, select').forEach(element => {
         element.addEventListener('input', updateProgress);
         element.addEventListener('change', updateProgress);
     });
 
-    // Initial calculation
     window.addEventListener('DOMContentLoaded', updateProgress);
 </script>
 </body></html>
+
