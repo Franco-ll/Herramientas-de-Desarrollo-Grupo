@@ -23,7 +23,7 @@ jobs:
 
     defaults: 
       run: 
-       working-directory: scholar-stay
+       working-directory: avance de proyecto final 2 - herramientas de desarrollo/scholar-stay
 
     steps:
       # -----------------------------------------------------------------
@@ -78,5 +78,5 @@ jobs:
         if: always()
         with:
           name: reporte-tests
-          path: scholar-stay/target/surefire-reports/
+          path: avance de proyecto final 2 - herramientas de desarrollo/scholar-stay/target/surefire-reports/
           retention-days: 7
