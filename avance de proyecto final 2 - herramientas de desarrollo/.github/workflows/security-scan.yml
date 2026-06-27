@@ -13,13 +13,14 @@ on:
   push:
     branches:
       - "**"
+
     paths:
-      - 'pom.xml'           # Solo cuando cambian dependencias
+      - 'scholar-stay/pom.xml'           # Solo cuando cambian dependencias
   pull_request:
     branches:
       - main
     paths:
-      - 'pom.xml'
+      - 'scholar-stay/pom.xml'
   schedule:
     # Ejecutar todos los lunes a las 8:00 AM (hora Perú = UTC-5, entonces 13:00 UTC)
     # Detecta nuevas CVEs publicadas durante la semana aunque no hayas commiteado.
@@ -44,7 +45,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('scholar-stay/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
@@ -57,9 +58,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository/org/owasp/dependency-check-data
-          key: owasp-nvd-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}
+          key: owasp-nvd-${{ hashFiles('scholar-stay/pom.xml') }}
           restore-keys: |
-            owasp-nvd-${{ hashFiles('**/pom.xml') }}-
             owasp-nvd-
 
       # -----------------------------------------------------------------
@@ -74,8 +74,8 @@ jobs:
         run: |
           mvn org.owasp:dependency-check-maven:check \
             -B \
+            -f scholar-stay/pom.xml \
             -DfailBuildOnCVSS=9 \
-            -DsuppressionFile=.github/owasp-suppressions.xml \
             -Dformat=HTML \
             -DprettyPrint=true
         continue-on-error: true   # Reportar sin bloquear en fase académica
@@ -90,7 +90,7 @@ jobs:
         if: always()
         with:
           name: owasp-dependency-report
-          path: target/dependency-check-report.html
+          path: scholar-stay/target/dependency-check-report.html
           retention-days: 14
 
       # -----------------------------------------------------------------
