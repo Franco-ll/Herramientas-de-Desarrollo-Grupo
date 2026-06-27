@@ -13,9 +13,8 @@ on:
   push:
     branches:
       - "**"
-
     paths:
-      - 'scholar-stay/pom.xml'           # Solo cuando cambian dependencias
+      - 'scholar-stay/pom.xml'  # Solo cuando cambian dependencias
   pull_request:
     branches:
       - main
@@ -64,9 +63,6 @@ jobs:
 
       # -----------------------------------------------------------------
       # Ejecuta OWASP Dependency-Check.
-      # --failBuildOnCVSS 9: Solo falla el build en CVEs CRÍTICAS (9+/10).
-      # CVEs de severidad media/alta se reportan pero no bloquean.
-      # Ajusta el umbral según la madurez del proyecto:
       #   - Académico: 9 (solo críticas)
       #   - Producción: 7 (altas y críticas)
       # -----------------------------------------------------------------

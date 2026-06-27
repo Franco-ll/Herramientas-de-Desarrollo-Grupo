@@ -1,8 +1,8 @@
 # =============================================================================
 # WORKFLOW: Verificar Build de Docker
-# PROPÓSITO: Confirma que el Dockerfile construye correctamente la imagen.
-#            Detecta problemas en la imagen ANTES de llegar a producción.
-#            Solo se ejecuta cuando cambian archivos relevantes para Docker.
+# PROPÓSITO: Confirma que el Dockerfile construye correctamente la imagen. 
+# Detecta problemas en la imagen ANTES de llegar a producción. 
+# Solo se ejecuta cuando cambian archivos relevantes para Docker.
 # TRIGGER: Push a main/develop cuando cambia Dockerfile, docker-compose o pom.xml
 # =============================================================================
 
@@ -13,8 +13,7 @@ on:
     branches:
       - "**"
     paths:
-      # Solo se activa si cambia alguno de estos archivos.
-      # Si solo cambia un HTML o un CSS, este workflow NO corre (ahorra minutos).
+      # Rutas relativas desde la RAÍZ del repositorio (scholar-stay/ es subcarpeta)
       - 'scholar-stay/Dockerfile'
       - 'scholar-stay/docker-compose.yml'
       - 'scholar-stay/pom.xml'
@@ -58,7 +57,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./scholar-stay
-          file: ./scholar-stay/Dockerfile
           push: false       # Solo construir, NO subir a ningún registry
           load: true        # Cargar imagen en Docker local del runner
           tags: scholar-stay:test

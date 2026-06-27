@@ -1,7 +1,8 @@
 # =============================================================================
 # WORKFLOW: CI - Build y Tests
-# PROPÓSITO: Verifica que el proyecto compila y los tests pasan en cada push
-#            o Pull Request. Es la red de seguridad base del proyecto.
+
+# PROPÓSITO: Verifica que el proyecto compila y los tests pasan en cada push 
+# o Pull Request. Es la red de seguridad base del proyecto.
 # TRIGGER: Cada push a main/develop y cada Pull Request hacia main
 # =============================================================================
 
@@ -19,10 +20,10 @@ jobs:
   build-and-test:
     name: Compilar y ejecutar tests
     runs-on: ubuntu-latest
-    
+
     defaults: 
       run: 
-        working-directory: scholar-stay
+       working-directory: scholar-stay
 
     steps:
       # -----------------------------------------------------------------
