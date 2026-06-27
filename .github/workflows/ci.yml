@@ -23,7 +23,7 @@ jobs:
 
     defaults: 
       run: 
-       working-directory: scholar-stay
+       working-directory: "avance de proyecto final 2 - herramientas de desarrollo/scholar-stay"
 
     steps:
       # -----------------------------------------------------------------
