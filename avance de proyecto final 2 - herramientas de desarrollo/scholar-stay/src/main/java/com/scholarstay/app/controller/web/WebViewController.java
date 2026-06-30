@@ -1,11 +1,15 @@
 package com.scholarstay.app.controller.web;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.scholarstay.app.model.Alojamiento;
 import com.scholarstay.app.model.PerfilAcademico;
@@ -21,6 +25,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class WebViewController {
@@ -150,6 +162,39 @@ public class WebViewController {
         session.setAttribute("loggedUser", updatedUser);
 
         return "redirect:/perfil?success=true";
+    }
+
+    @PostMapping("/perfil/avatar")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> uploadAvatar(
+            @RequestParam("avatar") MultipartFile file,
+            HttpSession session) {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "No autenticado"));
+        }
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Archivo vacío"));
+        }
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Solo se permiten imágenes"));
+        }
+        try {
+            Path uploadDir = Paths.get("uploads/images").toAbsolutePath();
+            Files.createDirectories(uploadDir);
+            String extension = file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")
+                    ? file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."))
+                    : ".jpg";
+            String filename = "avatar_" + usuario.getId() + "_" + UUID.randomUUID().toString().substring(0, 8) + extension;
+            Path destination = uploadDir.resolve(filename);
+            Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+            usuario.setAvatar(filename);
+            usuarioService.guardar(usuario);
+            return ResponseEntity.ok(Map.of("avatarUrl", "/images/" + filename));
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", "Error al guardar la imagen"));
+        }
     }
 
     @GetMapping("/resenas")

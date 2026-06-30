@@ -1,0 +1,582 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Scholar Stay - Study Hub</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#6e0a12",
+                    "on-background": "#2c3435",
+                    "on-surface": "#2c3435",
+                    "secondary-fixed": "#c7ecc9",
+                    "inverse-primary": "#b8dffe",
+                    "outline-variant": "#acb3b4",
+                    "surface-container-low": "#f0f4f4",
+                    "on-tertiary-container": "#635740",
+                    "on-tertiary": "#fff8f1",
+                    "surface-variant": "#dde4e4",
+                    "surface-tint": "#3d637e",
+                    "on-secondary-fixed-variant": "#426348",
+                    "outline": "#757c7d",
+                    "error-dim": "#67040d",
+                    "on-secondary-container": "#39593f",
+                    "surface-dim": "#d4dbdc",
+                    "secondary": "#46674b",
+                    "tertiary": "#6a5e46",
+                    "tertiary-fixed": "#feecce",
+                    "on-error": "#fff7f6",
+                    "secondary-dim": "#3a5a40",
+                    "on-secondary-fixed": "#26462d",
+                    "inverse-surface": "#0b0f0f",
+                    "primary-dim": "#305771",
+                    "on-secondary": "#e8ffe7",
+                    "background": "#f8fafa",
+                    "on-surface-variant": "#596061",
+                    "tertiary-fixed-dim": "#efdec0",
+                    "secondary-fixed-dim": "#b9debc",
+                    "primary-container": "#b8dffe",
+                    "tertiary-dim": "#5d523b",
+                    "primary": "#3d637e",
+                    "secondary-container": "#c7ecc9",
+                    "surface-container-high": "#e3e9ea",
+                    "surface-bright": "#f8fafa",
+                    "on-primary": "#f5f9ff",
+                    "surface": "#f8fafa",
+                    "surface-container-highest": "#dde4e4",
+                    "tertiary-container": "#feecce",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#aad1ef",
+                    "surface-container": "#eaefef",
+                    "primary-fixed": "#b8dffe",
+                    "on-tertiary-fixed-variant": "#6d614a",
+                    "error": "#a83836",
+                    "on-primary-fixed-variant": "#335a74",
+                    "on-primary-fixed": "#123e56",
+                    "on-tertiary-fixed": "#50452f",
+                    "on-primary-container": "#29506a",
+                    "inverse-on-surface": "#9b9d9e",
+                    "error-container": "#fa746f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "display": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased overflow-hidden">
+<!-- BACKGROUND: Detalle del Círculo de Estudio (SCREEN_34) -->
+<div class="fixed inset-0 z-0 overflow-y-auto filter blur-[2px] opacity-40 pointer-events-none">
+<!-- TopNavBar Mock -->
+<header class="bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50 h-20 flex justify-between items-center px-8 max-w-7xl mx-auto left-0 right-0">
+<span class="font-display text-xl font-extrabold text-primary">Scholar Stay</span>
+<nav class="flex gap-8">
+<span class="text-primary font-bold border-b-2 border-primary pb-1">Circles</span>
+<span class="text-on-surface-variant">Roommates</span>
+<span class="text-on-surface-variant">Market</span>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold">List Room</button>
+</div>
+</header>
+<main class="pt-28 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-12 gap-8">
+<!-- Hero Section Left -->
+<div class="col-span-8">
+<div class="relative h-96 rounded-xl overflow-hidden mb-8">
+<img alt="Modern Study Hall" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXPuuJPFACgbJqQ5Oq7GsmoAwabNxcuJcivp1lBJdZXPgglE2GN0rBwCDRfEtMhrlBNpxeX544CeBVJFmHrm3HjkwofIRVH5tWDmoqp-uQvMeqsw7gGsG289wpjp_zhGgy9unENLNs98OPWVuGjHRZHPhODmNlu1OAh4GtEQaGYhcrMMTZd4G4mxvmdtiIGE3AOZEnAa8ktX3SMeIH99yPYN2w7tDSatXjFU_10ke2yruZmiYJmSXataAkN-hS-uvh_LFwyQrb1pQ">
+<div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/60 to-transparent w-full">
+<h1 class="font-display text-4xl font-bold text-white">Advanced Quantum Physics Hub</h1>
+<p class="text-white/80">Círculo de Estudio • 14 Miembros Activos</p>
+</div>
+</div>
+<div class="h-64 bg-surface-container-low rounded-xl mb-8"></div>
+</div>
+<!-- Sidebar Right -->
+<div class="col-span-4 space-y-8">
+<div class="h-48 bg-surface-container-low rounded-xl"></div>
+<div class="h-80 bg-surface-container-low rounded-xl"></div>
+</div>
+</div>
+</main>
+</div>
+<!-- MODAL OVERLAY -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12">
+<!-- Backdrop Backdrop-blur -->
+<div class="absolute inset-0 bg-on-background/20 backdrop-blur-sm"></div>
+<!-- Modal Container -->
+<div id="studyHubModal"
+     class="relative w-full max-w-4xl max-h-[90vh] bg-surface rounded-[2rem] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300"><!-- Modal Header -->
+<div class="p-8 pb-4 flex justify-between items-start">
+<div>
+<h2 class="font-display text-3xl font-extrabold text-primary tracking-tight">Study Hub</h2>
+<p class="text-on-surface-variant text-sm mt-1">Explora y descarga recursos compartidos por la comunidad</p>
+</div>
+<button class="p-2 hover:bg-surface-container-highest rounded-full transition-colors group" onclick="window.history.back()">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">close</span>
+</button>
+</div>
+<!-- Search & Filter Bar -->
+<div class="px-8 pb-6 space-y-4">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="relative group flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input
+    id="search-files"
+    class="w-full bg-surface-container-highest border-none rounded-2xl py-4 pl-12 pr-6 ..."
+    placeholder="Buscar archivos por nombre o etiqueta..."
+    type="text"></div>
+<div class="flex items-center gap-1 bg-surface-container-high rounded-2xl p-1 shrink-0">
+<button
+    class="top-filter-btn px-4 py-3 rounded-xl bg-surface-container-lowest text-primary font-bold text-sm shadow-sm flex items-center gap-2"
+    data-filter="populares"><span class="material-symbols-outlined text-sm">trending_up</span>
+                            Populares
+                        </button>
+<button
+    class="top-filter-btn px-4 py-3 rounded-xl text-on-surface-variant font-medium text-sm hover:bg-surface-container-highest transition-colors flex items-center gap-2"
+    data-filter="recientes"><span class="material-symbols-outlined text-sm">schedule</span>
+                            Recientes
+                        </button>
+</div>
+</div>
+<div class="flex gap-2 overflow-x-auto scrollbar-hide py-1">
+
+    <button
+        class="category-btn px-5 py-2 rounded-full bg-primary text-on-primary font-semibold text-sm whitespace-nowrap"
+        data-category="all">
+        Todos
+    </button>
+
+    <button
+        class="category-btn px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-medium text-sm whitespace-nowrap hover:bg-surface-container-highest transition-colors"
+        data-category="pdf">
+        PDFs
+    </button>
+
+    <button
+        class="category-btn px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-medium text-sm whitespace-nowrap hover:bg-surface-container-highest transition-colors"
+        data-category="nota">
+        Notas
+    </button>
+
+    <button
+        class="category-btn px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-medium text-sm whitespace-nowrap hover:bg-surface-container-highest transition-colors"
+        data-category="herramienta">
+        Herramientas
+    </button>
+
+    <button
+        class="category-btn px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-medium text-sm whitespace-nowrap hover:bg-surface-container-highest transition-colors"
+        data-category="examen">
+        Exámenes
+    </button>
+
+</div>
+</div>
+<!-- Files List (Content Area) -->
+<div class="flex-1 overflow-y-auto px-8 pb-8 space-y-4">
+<!-- File Item 1 -->
+<div
+    class="file-card flex flex-col md:flex-row md:items-center gap-4 p-5 bg-surface-container-lowest rounded-2xl group hover:bg-surface-container-low transition-all duration-300 border border-transparent hover:border-primary/10 relative"
+    data-category="pdf"><!-- Badge for Popular -->
+<div class="absolute -top-2 -right-2 bg-secondary text-on-secondary text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        DESTACADO
+                    </div>
+<div class="flex items-center gap-4 flex-1">
+<div class="w-14 h-14 rounded-xl bg-error-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-3xl" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-on-surface truncate group-hover:text-primary transition-colors">Mecánica Cuántica - Guía Completa.pdf</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<a class="flex items-center gap-1.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">account_circle</span>
+<span class="text-xs text-on-surface-variant">Compartido por <span class="font-semibold text-primary/80">Dr. Alan Turing</span></span>
+</a>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+<span class="text-xs text-on-surface-variant">24 Oct, 2023</span>
+</div>
+<span class="text-xs font-semibold px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">4.2 MB</span>
+</div>
+</div>
+</div>
+<!-- Quality & Interaction Section -->
+<div class="flex items-center justify-between md:justify-end gap-6 pl-16 md:pl-0 border-t md:border-t-0 pt-3 md:pt-0 mt-3 md:mt-0 border-outline-variant/10">
+<!-- Ratings and Downloads -->
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star_half</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">4.8 (124 ratings)</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex flex-col items-center">
+<span class="text-sm font-bold text-on-surface">1.2k</span>
+<span class="text-[10px] text-on-surface-variant font-medium">descargas</span>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-3 bg-primary/5 hover:bg-primary text-primary hover:text-on-primary rounded-xl transition-all duration-200" title="Descargar">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-3 hover:bg-surface-container-highest rounded-xl transition-colors text-on-surface-variant" title="Más opciones">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- File Item 2 -->
+<div
+    class="file-card flex flex-col md:flex-row md:items-center gap-4 p-5 bg-surface-container-lowest rounded-2xl group hover:bg-surface-container-low transition-all duration-300 border border-transparent hover:border-primary/10 relative"
+    data-category="nota"><!-- Badge for Recent -->
+<div class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">new_releases</span>
+                        NUEVO
+                    </div>
+<div class="flex items-center gap-4 flex-1">
+<div class="w-14 h-14 rounded-xl bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-on-surface truncate group-hover:text-primary transition-colors">Apuntes Semana 04: Ecuaciones de Schrödinger</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<a class="flex items-center gap-1.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">account_circle</span>
+<span class="text-xs text-on-surface-variant">Compartido por <span class="font-semibold text-primary/80">Marta Ruiz</span></span>
+</a>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">schedule</span>
+<span class="text-xs text-on-surface-variant">Hace 2 días</span>
+</div>
+<span class="text-xs font-semibold px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">128 KB</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pl-16 md:pl-0 border-t md:border-t-0 pt-3 md:pt-0 mt-3 md:mt-0 border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">5.0 (12 ratings)</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex flex-col items-center">
+<span class="text-sm font-bold text-on-surface">45</span>
+<span class="text-[10px] text-on-surface-variant font-medium">descargas</span>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-3 bg-primary/5 hover:bg-primary text-primary hover:text-on-primary rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-3 hover:bg-surface-container-highest rounded-xl transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- File Item 3 -->
+<div
+    class="file-card flex flex-col md:flex-row md:items-center gap-4 p-5 bg-surface-container-lowest rounded-2xl group hover:bg-surface-container-low transition-all duration-300 border border-transparent hover:border-primary/10"
+    data-category="herramienta"><div class="flex items-center gap-4 flex-1">
+<div class="w-14 h-14 rounded-xl bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-on-surface truncate group-hover:text-primary transition-colors">Simulador_Probabilidades_v1.zip</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<a class="flex items-center gap-1.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">account_circle</span>
+<span class="text-xs text-on-surface-variant">Compartido por <span class="font-semibold text-primary/80">Carlos Dev</span></span>
+</a>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+<span class="text-xs text-on-surface-variant">15 Oct, 2023</span>
+</div>
+<span class="text-xs font-semibold px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">15.8 MB</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pl-16 md:pl-0 border-t md:border-t-0 pt-3 md:pt-0 mt-3 md:mt-0 border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm text-outline-variant/40">star</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">4.1 (56 ratings)</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex flex-col items-center">
+<span class="text-sm font-bold text-on-surface">312</span>
+<span class="text-[10px] text-on-surface-variant font-medium">descargas</span>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-3 bg-primary/5 hover:bg-primary text-primary hover:text-on-primary rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-3 hover:bg-surface-container-highest rounded-xl transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- File Item 4 -->
+<div
+    class="file-card flex flex-col md:flex-row md:items-center gap-4 p-5 bg-surface-container-lowest rounded-2xl group hover:bg-surface-container-low transition-all duration-300 border border-transparent hover:border-primary/10"
+    data-category="examen"><div class="flex items-center gap-4 flex-1">
+<div class="w-14 h-14 rounded-xl bg-tertiary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings: 'FILL' 1;">article</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-on-surface truncate group-hover:text-primary transition-colors">Resumen Lectura: El Gato de Schrödinger</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<a class="flex items-center gap-1.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">account_circle</span>
+<span class="text-xs text-on-surface-variant">Compartido por <span class="font-semibold text-primary/80">Elena P.</span></span>
+</a>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">schedule</span>
+<span class="text-xs text-on-surface-variant">Hoy</span>
+</div>
+<span class="text-xs font-semibold px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">890 KB</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pl-16 md:pl-0 border-t md:border-t-0 pt-3 md:pt-0 mt-3 md:mt-0 border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm text-outline-variant/40">star</span>
+<span class="material-symbols-outlined text-sm text-outline-variant/40">star</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">3.0 (8 ratings)</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex flex-col items-center">
+<span class="text-sm font-bold text-on-surface">14</span>
+<span class="text-[10px] text-on-surface-variant font-medium">descargas</span>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-3 bg-primary/5 hover:bg-primary text-primary hover:text-on-primary rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-3 hover:bg-surface-container-highest rounded-xl transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 bg-surface-container-low flex flex-col md:flex-row justify-between items-center gap-4 border-t border-outline-variant/10">
+<p class="text-xs text-on-surface-variant font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    8 archivos totales • Última actualización hoy a las 14:00
+                </p>
+<div class="flex gap-3">
+
+    <button
+        onclick="closeModal()"
+        class="flex-1 md:flex-none px-6 py-3 rounded-full bg-surface-container-highest text-on-surface font-bold text-sm hover:bg-surface-variant transition-colors">
+        Cancelar
+    </button>
+
+    <button
+        class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-on-primary font-bold text-sm shadow-lg shadow-primary/20 hover:bg-primary-dim transition-all active:scale-95">
+
+        <span class="material-symbols-outlined text-sm">
+            upload
+        </span>
+
+        Subir Archivo
+
+    </button>
+
+</div>
+</div>
+</div>
+</div>
+<script>
+
+    // ==========================
+    // CERRAR MODAL (SIMULACIÓN)
+    // ==========================
+
+    const overlay =
+        document.querySelector('.fixed.inset-0.z-\\[100\\]');
+
+    if (overlay) {
+
+        overlay.addEventListener('click', (e) => {
+
+            if (e.target === overlay.children[0]) {
+
+                // Aquí puedes colocar lógica para cerrar modal
+
+            }
+
+        });
+
+    }
+
+    // ==========================
+    // BUSCADOR
+    // ==========================
+
+    const searchInput =
+        document.querySelector('input[placeholder*="Buscar archivos"]');
+
+    if (searchInput) {
+
+        searchInput.addEventListener('keyup', function () {
+
+            const text =
+                this.value.toLowerCase();
+
+            const cards =
+                document.querySelectorAll('.file-card');
+
+            cards.forEach(card => {
+
+                const content =
+                    card.textContent.toLowerCase();
+
+                if (content.includes(text)) {
+
+                    card.style.display = 'flex';
+
+                } else {
+
+                    card.style.display = 'none';
+
+                }
+
+            });
+
+        });
+
+    }
+
+    // ==========================
+    // FILTRO DE CATEGORÍAS
+    // ==========================
+
+    const categoryButtons =
+        document.querySelectorAll('.category-btn');
+
+    categoryButtons.forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            // Limpiar botones
+            categoryButtons.forEach(btn => {
+
+                btn.classList.remove(
+                    'bg-primary',
+                    'text-on-primary',
+                    'font-semibold'
+                );
+
+                btn.classList.add(
+                    'bg-surface-container-high',
+                    'text-on-surface-variant'
+                );
+
+            });
+
+            // Activar botón seleccionado
+            button.classList.remove(
+                'bg-surface-container-high',
+                'text-on-surface-variant'
+            );
+
+            button.classList.add(
+                'bg-primary',
+                'text-on-primary',
+                'font-semibold'
+            );
+
+            const category =
+                button.dataset.category;
+
+            document
+                .querySelectorAll('.file-card')
+                .forEach(card => {
+
+                    if (
+                        category === 'all' ||
+                        card.dataset.category === category
+                    ) {
+
+                        card.style.display = 'flex';
+
+                    } else {
+
+                        card.style.display = 'none';
+
+                    }
+
+                });
+
+        });
+
+    });
+      function closeModal() {
+
+        window.history.back();
+
+    }
+
+</script>
+</body></html>
