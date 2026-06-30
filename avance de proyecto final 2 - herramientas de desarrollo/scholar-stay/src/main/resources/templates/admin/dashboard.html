@@ -82,10 +82,9 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="ml-64 p-8 min-h-screen bg-surface">
 
-        <!-- Header -->
         <header class="flex justify-between items-end mb-12">
             <div class="space-y-1">
                 <h2 class="text-4xl font-headline font-extrabold tracking-tighter text-on-surface">Panel Control</h2>
@@ -99,7 +98,7 @@
             </div>
         </header>
 
-        <!-- KPI Grid -->
+        <!-- KPI -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow relative overflow-hidden flex flex-col justify-between h-56">
                 <div class="z-10">
@@ -221,75 +220,33 @@
             </a>
         </section>
 
-        <!-- ===== GRAFICOS ===== -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
-
-            <!-- Top 5 Propiedades mas reservadas -->
-            <div class="bg-surface-container-lowest rounded-2xl editorial-shadow p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h4 class="text-xl font-headline font-bold text-on-surface">Propiedades mas reservadas</h4>
-                        <p class="text-xs text-on-surface-variant mt-1">Top 5 con mas reservas confirmadas</p>
-                    </div>
-                    <div class="p-3 bg-primary-container/30 rounded-xl">
-                        <span class="material-symbols-outlined text-primary">apartment</span>
-                    </div>
-                </div>
-                <canvas id="chartPropiedades" height="220"></canvas>
-            </div>
-
-            <!-- Ingresos por mes -->
+        <!-- GRAFICO INGRESOS POR MES -->
+        <section class="mt-4" th:if="${stats.mesesLabels != null and !stats.mesesLabels.empty}">
             <div class="bg-surface-container-lowest rounded-2xl editorial-shadow p-8">
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h4 class="text-xl font-headline font-bold text-on-surface">Ingresos por mes</h4>
-                        <p class="text-xs text-on-surface-variant mt-1">Ultimos 6 meses - reservas confirmadas</p>
+                        <p class="text-xs text-on-surface-variant mt-1">Últimos 6 meses — reservas confirmadas</p>
                     </div>
                     <div class="p-3 bg-secondary-container/30 rounded-xl">
                         <span class="material-symbols-outlined text-secondary">bar_chart</span>
                     </div>
                 </div>
-                <canvas id="chartIngresos" height="220"></canvas>
+                <div style="position:relative; height:220px;">
+                    <canvas id="chartIngresos"></canvas>
+                </div>
             </div>
-
         </section>
 
-        <!-- Chart.js -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            const topNombres = /*[[${stats.topPropiedadesNombres}]]*/ [];
-            const topReservas = /*[[${stats.topPropiedadesReservas}]]*/ [];
-            const mesesLabels = /*[[${stats.mesesLabels}]]*/ [];
-            const ingresosMes = /*[[${stats.ingresosPorMes}]]*/ [];
+    </main>
 
-            new Chart(document.getElementById("chartPropiedades"), {
-                type: "bar",
-                data: {
-                    labels: topNombres,
-                    datasets: [{
-                        label: "Reservas",
-                        data: topReservas,
-                        backgroundColor: "rgba(61,99,126,0.15)",
-                        borderColor: "#3d637e",
-                        borderWidth: 2,
-                        borderRadius: 8,
-                    }]
-                },
-                options: {
-                    indexAxis: "y",
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: ctx => " " + ctx.parsed.x + " reservas" } }
-                    },
-                    scales: {
-                        x: { beginAtZero: true, ticks: { stepSize: 1, font: { family: "Inter", size: 11 } }, grid: { color: "rgba(0,0,0,0.04)" } },
-                        y: { ticks: { font: { family: "Inter", size: 11 } }, grid: { display: false } }
-                    }
-                }
-            });
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const mesesLabels = /*[[${stats.mesesLabels != null ? stats.mesesLabels : {}}]]*/ [];
+        const ingresosMes = /*[[${stats.ingresosPorMes != null ? stats.ingresosPorMes : {}}]]*/ [];
 
+        document.addEventListener("DOMContentLoaded", function () {
             new Chart(document.getElementById("chartIngresos"), {
                 type: "bar",
                 data: {
@@ -301,23 +258,29 @@
                         borderColor: "#46674b",
                         borderWidth: 2,
                         borderRadius: 8,
+                        borderSkipped: false,
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false },
-                        tooltip: { callbacks: { label: ctx => " S/ " + ctx.parsed.y.toFixed(2) } }
+                        tooltip: { callbacks: { label: ctx => " S/ " + ctx.parsed.y.toLocaleString("es-PE", { minimumFractionDigits: 2 }) } }
                     },
                     scales: {
-                        y: { beginAtZero: true, ticks: { font: { family: "Inter", size: 11 }, callback: val => "S/ " + val.toLocaleString() }, grid: { color: "rgba(0,0,0,0.04)" } },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { family: "Inter", size: 11 }, callback: val => "S/ " + val.toLocaleString("es-PE") },
+                            grid: { color: "rgba(0,0,0,0.04)" }
+                        },
                         x: { ticks: { font: { family: "Inter", size: 11 } }, grid: { display: false } }
                     }
                 }
             });
-            /*]]>*/
-        </script>
+        });
+        /*]]>*/
+    </script>
 
-    </main>
 </body>
 </html>

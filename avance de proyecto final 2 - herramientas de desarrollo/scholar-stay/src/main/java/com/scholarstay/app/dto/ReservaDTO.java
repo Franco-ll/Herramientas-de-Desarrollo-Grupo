@@ -11,6 +11,7 @@ public class ReservaDTO {
     private String estado;
     private Double monto;
     private String nombreUsuario;
+    private Integer capacidadEstudiantes;
 
     public ReservaDTO() {}
 
@@ -34,6 +35,9 @@ public class ReservaDTO {
 
     public String getNombreUsuario() { return nombreUsuario; }
     public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+
+    public Integer getCapacidadEstudiantes() { return capacidadEstudiantes; }
+    public void setCapacidadEstudiantes(Integer capacidadEstudiantes) { this.capacidadEstudiantes = capacidadEstudiantes; }
 
     /**
      * Calcula la duración del alquiler en días y meses.

@@ -1,5 +1,30 @@
 package com.scholarstay.app.controller.web;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.scholarstay.app.model.Alojamiento;
 import com.scholarstay.app.model.Rol;
 import com.scholarstay.app.model.Usuario;
@@ -10,24 +35,7 @@ import com.scholarstay.app.service.AdminDashboardService;
 import com.scholarstay.app.service.AlojamientoService;
 import com.scholarstay.app.service.ConfiguracionService;
 import com.scholarstay.app.service.LogService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import com.scholarstay.app.service.ReporteService;
 
 @Controller
 @RequestMapping("/admin")
@@ -40,6 +48,7 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
     private final RolRepository rolRepository;
     private final LogService logService;
+    private final ReporteService reporteService;
 
     public AdminController(AdminDashboardService adminDashboardService,
                            UsuarioRepository usuarioRepository,
@@ -47,7 +56,8 @@ public class AdminController {
                            ConfiguracionService configuracionService,
                            PasswordEncoder passwordEncoder,
                            RolRepository rolRepository,
-                           LogService logService) {
+                           LogService logService,
+                           ReporteService reporteService) {
         this.adminDashboardService = adminDashboardService;
         this.usuarioRepository = usuarioRepository;
         this.alojamientoService = alojamientoService;
@@ -55,6 +65,7 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
         this.rolRepository = rolRepository;
         this.logService = logService;
+        this.reporteService = reporteService;
     }
 
     private Usuario getAdminUser() {
@@ -198,6 +209,7 @@ public class AdminController {
             @RequestParam String ubicacion,
             @RequestParam(required = false) Integer habitaciones,
             @RequestParam(required = false) Integer banos,
+            @RequestParam(required = false) Integer capacidadEstudiantes,
             @RequestParam(required = false) MultipartFile imagenArchivo,
             @RequestParam(required = false) String servicios,
             @RequestParam(required = false) String reglas,
@@ -210,6 +222,7 @@ public class AdminController {
         a.setUbicacion(ubicacion.trim());
         a.setHabitaciones(habitaciones != null ? habitaciones : 1);
         a.setBanos(banos != null ? banos : 1);
+        a.setCapacidadEstudiantes(capacidadEstudiantes != null ? capacidadEstudiantes : 1);
         a.setCalificacionPromedio(0.0);
 
         String nombreImagen = guardarImagen(imagenArchivo);
@@ -257,6 +270,7 @@ public class AdminController {
             @RequestParam String ubicacion,
             @RequestParam(required = false) Integer habitaciones,
             @RequestParam(required = false) Integer banos,
+            @RequestParam(required = false) Integer capacidadEstudiantes,
             @RequestParam(required = false) MultipartFile imagenArchivo,
             @RequestParam(required = false) String servicios,
             @RequestParam(required = false) String reglas,
@@ -271,6 +285,7 @@ public class AdminController {
         a.setUbicacion(ubicacion.trim());
         if (habitaciones != null) a.setHabitaciones(habitaciones);
         if (banos != null) a.setBanos(banos);
+        if (capacidadEstudiantes != null) a.setCapacidadEstudiantes(capacidadEstudiantes);
 
         String nombreImagen = guardarImagen(imagenArchivo);
         if (nombreImagen != null) a.setImagen(nombreImagen);
@@ -432,5 +447,28 @@ public class AdminController {
         model.addAttribute("admin", getAdminUser());
         model.addAttribute("logs", logService.obtenerTodos());
         return "admin/historial";
+    }
+
+    // ============================================================
+    // REPORTE EXCEL
+    // ============================================================
+
+    @GetMapping("/finanzas/exportar/excel")
+    public ResponseEntity<byte[]> exportarExcel(
+            @RequestParam(defaultValue = "0") int mes,
+            @RequestParam(defaultValue = "0") int anio) {
+        try {
+            LocalDate hoy = LocalDate.now();
+            int mesReal = mes == 0 ? hoy.getMonthValue() : mes;
+            int anioReal = anio == 0 ? hoy.getYear() : anio;
+            byte[] excel = reporteService.generarExcel(mesReal, anioReal, getAdminUser() != null ? getAdminUser().getNombre() : null);
+            String nombreArchivo = "reporte-ingresos-" + anioReal + "-" + String.format("%02d", mesReal) + ".xlsx";
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + nombreArchivo)
+                    .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    .body(excel);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

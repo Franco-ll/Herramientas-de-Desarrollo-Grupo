@@ -70,7 +70,7 @@ public class SecurityConfig {
                         .xssProtection(xss -> xss.disable()) // Deshabilitado en Spring Security 6 por default, se
                                                              // recomienda usar CSP
                         .contentSecurityPolicy(csp -> csp.policyDirectives(
-                                "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; object-src 'none';")))
+                                "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://fonts.googleapis.com; object-src 'none';")))
                 // Configuración de rutas
                 .authorizeHttpRequests(auth -> auth
                         // Rutas públicas (recursos estáticos y vistas iniciales)

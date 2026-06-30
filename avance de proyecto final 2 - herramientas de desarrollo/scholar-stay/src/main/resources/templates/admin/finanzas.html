@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -32,6 +33,18 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
         .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .editorial-shadow { box-shadow: 0 4px 24px rgba(44, 52, 53, 0.06); }
+        .row-hover:hover { background: #f0f4f4; }
+        #modalHistorial {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        #modalHistorial.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
     </style>
 </head>
 
@@ -65,12 +78,10 @@
                 <span class="material-symbols-outlined filled">payments</span><span>Finanzas</span>
             </a>
             <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/configuracion}">
-                <span class="material-symbols-outlined">settings</span>
-                <span>Configuración</span>
+                <span class="material-symbols-outlined">settings</span><span>Configuración</span>
             </a>
             <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/historial}">
-                <span class="material-symbols-outlined">history</span>
-                <span>Historial</span>
+                <span class="material-symbols-outlined">history</span><span>Historial</span>
             </a>
         </nav>
         <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
@@ -80,8 +91,11 @@
         </div>
     </aside>
 
+
+
     <!-- Main -->
     <main class="ml-64 p-8 min-h-screen">
+
         <header class="mb-10">
             <h1 class="text-3xl font-headline font-extrabold text-on-surface tracking-tight mb-1">Resumen Financiero</h1>
             <p class="text-on-surface-variant">Control centralizado de flujos de ingresos y transacciones.</p>
@@ -89,120 +103,159 @@
 
         <!-- KPI Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-xl p-6 editorial-shadow">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-primary-container/30 rounded-xl">
-                        <span class="material-symbols-outlined text-primary">payments</span>
+
+            <!-- Ingresos Totales -->
+            <div class="bg-white rounded-2xl p-6 editorial-shadow border border-surface-container-high">
+                <div class="flex justify-between items-start mb-5">
+                    <div class="p-2.5 bg-primary/10 rounded-xl">
+                        <span class="material-symbols-outlined text-primary text-[22px]">payments</span>
                     </div>
-                    <span class="text-xs font-bold text-secondary flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">trending_up</span> +12.5%
+                    <span class="text-[10px] font-bold text-secondary bg-secondary-container/60 px-2 py-1 rounded-full flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[12px]">trending_up</span> +12.5%
                     </span>
                 </div>
-                <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Ingresos Totales</h3>
-                <div class="text-3xl font-black text-on-surface">
+                <p class="text-outline text-[10px] font-bold uppercase tracking-widest mb-1">Ingresos Totales</p>
+                <div class="text-2xl font-black text-on-surface">
                     S/ <span th:text="${#numbers.formatDecimal(vm.ingresosTotales, 1, 2)}">0.00</span>
                 </div>
+                <p class="text-on-surface-variant text-[11px] mt-1">Suma de reservas confirmadas</p>
             </div>
-            <div class="bg-white rounded-xl p-6 editorial-shadow">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-secondary-container/30 rounded-xl">
-                        <span class="material-symbols-outlined text-secondary">calendar_month</span>
+
+            <!-- Ingresos del Mes -->
+            <div class="bg-white rounded-2xl p-6 editorial-shadow border border-surface-container-high">
+                <div class="flex justify-between items-start mb-5">
+                    <div class="p-2.5 bg-secondary/10 rounded-xl">
+                        <span class="material-symbols-outlined text-secondary text-[22px]">calendar_month</span>
                     </div>
-                    <span class="text-xs font-bold text-secondary flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">check_circle</span> Meta en curso
-                    </span>
+                    <button onclick="toggleHistorial()"
+                        class="text-[10px] font-bold text-primary bg-primary-container/40 hover:bg-primary-container/70 px-2 py-1 rounded-full flex items-center gap-1 transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-[12px]">history</span> Ver historial
+                    </button>
                 </div>
-                <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Ingresos Mensuales</h3>
-                <div class="text-3xl font-black text-on-surface">
+                <p class="text-outline text-[10px] font-bold uppercase tracking-widest mb-1">Ingresos del Mes</p>
+                <div class="text-2xl font-black text-on-surface">
                     S/ <span th:text="${#numbers.formatDecimal(vm.ingresosMensuales, 1, 2)}">0.00</span>
                 </div>
                 <div class="mt-3 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
                     <div class="bg-secondary h-full rounded-full" th:style="${'width: ' + vm.metaMensualPorcentaje + '%'}"></div>
                 </div>
-                <div class="mt-1 text-[10px] text-on-surface-variant text-right">
-                    <span th:text="${vm.metaMensualPorcentaje}">85</span>% de la meta mensual
+                <div class="flex justify-between text-[10px] text-on-surface-variant mt-1">
+                    <span>Meta mensual</span>
+                    <span th:text="${vm.metaMensualPorcentaje + '%'}">85%</span>
                 </div>
             </div>
-            <div class="bg-white rounded-xl p-6 editorial-shadow">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-tertiary-container/30 rounded-xl">
-                        <span class="material-symbols-outlined text-tertiary">pending_actions</span>
+
+            <!-- Total Reservas -->
+            <div class="bg-white rounded-2xl p-6 editorial-shadow border border-surface-container-high">
+                <div class="flex justify-between items-start mb-5">
+                    <div class="p-2.5 bg-tertiary/10 rounded-xl">
+                        <span class="material-symbols-outlined text-tertiary text-[22px]">receipt_long</span>
                     </div>
-                    <span class="text-xs font-bold text-error flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">priority_high</span> Acción requerida
+                    <span class="text-[10px] font-bold text-secondary bg-secondary-container/60 px-2 py-1 rounded-full flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[12px]">check_circle</span> Confirmadas
                     </span>
                 </div>
-                <h3 class="text-outline text-xs font-bold uppercase tracking-widest mb-1">Pagos Pendientes</h3>
-                <div class="text-3xl font-black text-on-surface">
-                    S/ <span th:text="${#numbers.formatDecimal(vm.pagosPendientes, 1, 2)}">0.00</span>
+                <p class="text-outline text-[10px] font-bold uppercase tracking-widest mb-1">Total Reservas</p>
+                <div class="text-2xl font-black text-on-surface" th:text="${vm.totalReservas}">0</div>
+                <p class="text-on-surface-variant text-[11px] mt-1">Reservas confirmadas en el sistema</p>
+            </div>
+
+        </div>
+
+        <!-- Historial de Ingresos (colapsable) -->
+        <div id="seccionHistorial" class="bg-white rounded-2xl editorial-shadow border border-surface-container-high mb-8 overflow-hidden" style="display:none;">
+            <div class="px-8 py-6 border-b border-surface-container-high flex justify-between items-center">
+                <div>
+                    <h2 class="text-lg font-headline font-extrabold text-on-surface">Historial de Ingresos</h2>
+                    <p class="text-[11px] text-on-surface-variant mt-0.5">Ingresos de los últimos 6 meses</p>
                 </div>
+                <button onclick="toggleHistorial()" class="p-2 hover:bg-surface-container rounded-xl transition-all">
+                    <span class="material-symbols-outlined text-outline">close</span>
+                </button>
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                <div class="lg:col-span-2" style="position:relative; height:180px;">
+                    <canvas id="chartHistorial"></canvas>
+                </div>
+                <div class="divide-y divide-surface-container-high" id="tablaHistorial"></div>
             </div>
         </div>
 
         <!-- Transactions Table -->
-        <div class="bg-white rounded-2xl editorial-shadow overflow-hidden">
-            <div class="p-8 border-b border-surface-container-high flex justify-between items-center">
-                <h2 class="text-xl font-headline font-extrabold text-on-surface">Transacciones Recientes</h2>
+        <div class="bg-white rounded-2xl editorial-shadow overflow-hidden border border-surface-container-high">
+            <div class="px-8 py-6 border-b border-surface-container-high flex justify-between items-center flex-wrap gap-4">
+                <div>
+                    <h2 class="text-lg font-headline font-extrabold text-on-surface">Detalle de Transacciones</h2>
+                    <p class="text-[11px] text-on-surface-variant mt-0.5">Ordenadas por duración de mayor a menor</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select id="selectMesExportar" class="text-sm border border-surface-container-high rounded-xl px-3 py-2 bg-white text-on-surface font-semibold focus:outline-none focus:ring-2 focus:ring-primary/30"></select>
+                    <button onclick="exportarExcelMes()"
+                       class="inline-flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary-dim transition-all">
+                        <span class="material-symbols-outlined text-[16px]">download</span>
+                        Exportar Excel
+                    </button>
+                </div>
             </div>
+
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead>
-                        <tr class="bg-surface-container-low/50">
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Fecha Inicio</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Fecha Fin</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Duración</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Residente</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Alojamiento</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Monto</th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Estado</th>
+                        <tr class="bg-surface-container-low">
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline w-10">#</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Residente</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Alojamiento</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Inicio</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Fin</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Duración</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Estudiantes</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Monto</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline" style="display:none;">Estado</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-surface-container-high">
                         <tr th:if="${vm.transacciones.empty}">
-                            <td colspan="7" class="px-6 py-6 text-center text-on-surface-variant">No hay transacciones registradas.</td>
+                            <td colspan="9" class="px-6 py-12 text-center text-on-surface-variant text-sm">
+                                No hay transacciones registradas.
+                            </td>
                         </tr>
-                        <tr th:each="t : ${vm.transacciones}" class="hover:bg-surface-container-low/30 transition-colors">
-
-                            <!-- Fecha Inicio -->
-                            <td class="px-6 py-5">
-                                <div class="text-sm font-medium text-on-surface"
-                                    th:text="${t.fechaInicio != null ? #temporals.format(t.fechaInicio, 'dd MMM, yyyy') : '—'}">—</div>
+                        <tr th:each="t, iterStat : ${vm.transacciones}" class="row-hover transition-colors">
+                            <td class="px-6 py-4">
+                                <span class="text-xs font-bold text-outline" th:text="${iterStat.count}">1</span>
                             </td>
-
-                            <!-- Fecha Fin -->
-                            <td class="px-6 py-5">
-                                <div class="text-sm font-medium text-on-surface-variant"
-                                    th:text="${t.fechaFin != null ? #temporals.format(t.fechaFin, 'dd MMM, yyyy') : '—'}">—</div>
-                            </td>
-
-                            <!-- Duración -->
-                            <td class="px-6 py-5">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-primary-container/30 text-on-primary-container text-xs font-semibold"
-                                    th:text="${t.duracion}">—</span>
-                            </td>
-
-                            <!-- Residente -->
-                            <td class="px-6 py-5">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container"
-                                        th:text="${t.nombreUsuario != null ? t.nombreUsuario.substring(0,1) : '?'}">?</div>
-                                    <span class="text-sm font-bold" th:text="${t.nombreUsuario}">Usuario</span>
+                                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary text-xs font-black shrink-0"
+                                        th:text="${t.nombreUsuario != null ? t.nombreUsuario.substring(0,1).toUpperCase() : '?'}">?</div>
+                                    <span class="text-sm font-semibold text-on-surface" th:text="${t.nombreUsuario}">Usuario</span>
                                 </div>
                             </td>
-
-                            <!-- Alojamiento -->
-                            <td class="px-6 py-5">
+                            <td class="px-6 py-4">
                                 <span class="text-sm text-on-surface-variant" th:text="${t.tituloAlojamiento}">Alojamiento</span>
                             </td>
-
-                            <!-- Monto -->
-                            <td class="px-6 py-5">
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-on-surface"
+                                    th:text="${t.fechaInicio != null ? #temporals.format(t.fechaInicio, 'dd MMM yyyy') : '—'}">—</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-on-surface-variant"
+                                    th:text="${t.fechaFin != null ? #temporals.format(t.fechaFin, 'dd MMM yyyy') : '—'}">—</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex px-2.5 py-1 rounded-full bg-primary-container/40 text-on-primary-container text-xs font-bold"
+                                    th:text="${t.duracion}">—</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-sm text-on-surface-variant flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[16px] text-outline">group</span>
+                                    <span th:text="${t.capacidadEstudiantes != null ? t.capacidadEstudiantes : '—'}">—</span>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
                                 <span class="text-sm font-black text-on-surface"
                                     th:text="${'S/ ' + #numbers.formatDecimal(t.monto, 1, 2)}">S/ 0.00</span>
                             </td>
-
-                            <!-- Estado -->
-                            <td class="px-6 py-5">
+                            <td class="px-6 py-4" style="display:none;">
                                 <span th:if="${t.estado == 'CONFIRMADA'}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">
                                     <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Pagado
@@ -221,6 +274,103 @@
                 </table>
             </div>
         </div>
+
     </main>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const mesesLabels = /*[[${vm.mesesLabels}]]*/ [];
+        const ingresosMes = /*[[${vm.ingresosPorMes}]]*/ [];
+        const mesActualLabel = /*[[${vm.mesActualLabel}]]*/ '';
+        let chartInstance = null;
+        let historialVisible = false;
+
+        // ===== Selector de mes para exportar Excel =====
+        const NOMBRES_MES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        function inicializarSelectorMes() {
+            const select = document.getElementById('selectMesExportar');
+            const hoy = new Date();
+            let opciones = '';
+            for (let i = 0; i < 12; i++) {
+                const fecha = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
+                const mes = fecha.getMonth() + 1;
+                const anio = fecha.getFullYear();
+                const texto = NOMBRES_MES[fecha.getMonth()] + ' ' + anio;
+                opciones += `<option value="${mes}|${anio}">${texto}</option>`;
+            }
+            select.innerHTML = opciones;
+        }
+        function exportarExcelMes() {
+            const select = document.getElementById('selectMesExportar');
+            const [mes, anio] = select.value.split('|');
+            window.location.href = `/admin/finanzas/exportar/excel?mes=${mes}&anio=${anio}`;
+        }
+        inicializarSelectorMes();
+
+        function toggleHistorial() {
+            const seccion = document.getElementById('seccionHistorial');
+            historialVisible = !historialVisible;
+
+            if (historialVisible) {
+                seccion.style.display = 'block';
+
+                // Tabla
+                const tabla = document.getElementById('tablaHistorial');
+                tabla.innerHTML = '';
+                let total = 0;
+                mesesLabels.forEach((mes, i) => {
+                    const monto = ingresosMes[i] || 0;
+                    total += monto;
+                    const esActual = mes === mesActualLabel;
+                    tabla.innerHTML += `<div class="flex justify-between items-center py-3 ${esActual ? 'font-bold' : ''}">
+                        <span class="text-sm ${esActual ? 'font-bold text-primary' : 'text-on-surface'}">${mes}</span>
+                        <span class="text-sm ${monto > 0 ? (esActual ? 'font-black text-primary' : 'font-semibold text-secondary') : 'text-outline'}">
+                            S/ ${monto.toLocaleString('es-PE', {minimumFractionDigits: 2})}
+                        </span>
+                    </div>`;
+                });
+                tabla.innerHTML += `<div class="flex justify-between items-center py-3 mt-2 border-t-2 border-primary/20">
+                    <span class="text-sm font-black text-on-surface">Total</span>
+                    <span class="text-sm font-black text-on-surface">S/ ${total.toLocaleString('es-PE', {minimumFractionDigits: 2})}</span>
+                </div>`;
+
+                // Grafico
+                if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+                const canvas = document.getElementById('chartHistorial');
+                chartInstance = new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                        labels: mesesLabels,
+                        datasets: [{
+                            data: ingresosMes,
+                            backgroundColor: mesesLabels.map((mes) =>
+                                mes === mesActualLabel ? 'rgba(61,99,126,0.5)' : 'rgba(61,99,126,0.12)'),
+                            borderColor: '#3d637e',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: c => ' S/ ' + c.parsed.y.toLocaleString('es-PE', {minimumFractionDigits: 2}) } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, ticks: { font: {size:11}, callback: v => 'S/ ' + v.toLocaleString('es-PE') }, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            x: { ticks: { font: {size:11} }, grid: { display: false } }
+                        }
+                    }
+                });
+            } else {
+                seccion.style.display = 'none';
+                if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+            }
+        }
+        /*]]>*/
+    </script>
+
 </body>
 </html>

@@ -65,11 +65,9 @@ public class AdminDashboardService {
                 .mapToDouble(Reserva::getPrecioTotal).sum();
         vm.setIngresosMensuales(ingresos);
 
-        // Residentes activos
+        // Residentes activos - todos los que tienen al menos una reserva confirmada
         long residentes = reservas.stream()
-                .filter(r -> "CONFIRMADA".equals(r.getEstado())
-                        && !r.getFechaInicio().isAfter(LocalDate.now())
-                        && !r.getFechaFin().isBefore(LocalDate.now()))
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
                 .map(r -> r.getUsuario().getId()).distinct().count();
         vm.setResidentesActivos((int) residentes);
 
@@ -97,25 +95,29 @@ public class AdminDashboardService {
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
                 .limit(5).collect(Collectors.toList());
 
-        // Acortar nombres largos para el grafico
         vm.setTopPropiedadesNombres(topPropiedades.stream()
                 .map(e -> e.getKey().length() > 25 ? e.getKey().substring(0, 22) + "..." : e.getKey())
                 .collect(Collectors.toList()));
         vm.setTopPropiedadesReservas(topPropiedades.stream()
                 .map(e -> e.getValue().intValue()).collect(Collectors.toList()));
 
-        // ===== INGRESOS POR MES (ultimos 6 meses) =====
+        // ===== INGRESOS POR MES (ultimos 6 meses desde la reserva mas reciente) =====
         List<String> meses = new ArrayList<>();
         List<Double> ingresosMes = new ArrayList<>();
-        LocalDate hoy = LocalDate.now();
+        LocalDate fechaReferencia = reservas.stream()
+                .map(Reserva::getFechaInicio)
+                .max(LocalDate::compareTo)
+                .orElse(LocalDate.now());
+        if (fechaReferencia.isBefore(LocalDate.now())) {
+            fechaReferencia = LocalDate.now();
+        }
 
         for (int i = 5; i >= 0; i--) {
-            LocalDate mes = hoy.minusMonths(i);
+            LocalDate mes = fechaReferencia.minusMonths(i);
             Month month = mes.getMonth();
             int year = mes.getYear();
 
-            String label = month.getDisplayName(TextStyle.SHORT, new Locale("es", "PE"))
-                    + " " + year;
+            String label = month.getDisplayName(TextStyle.SHORT, new Locale("es", "PE")) + " " + year;
             meses.add(label);
 
             double total = reservas.stream()
@@ -149,11 +151,47 @@ public class AdminDashboardService {
         double metaFija = 5000.0;
         double porcentajeMeta = metaFija > 0 ? Math.min((mensual / metaFija) * 100, 100) : 0;
 
+        int totalReservas = (int) reservas.stream()
+                .filter(r -> "CONFIRMADA".equals(r.getEstado())).count();
+
+        // Ingresos por mes para el grafico de finanzas (ultimos 6 meses desde la reserva mas reciente)
+        List<String> meses = new ArrayList<>();
+        List<Double> ingresosMes = new ArrayList<>();
+        LocalDate fechaReferenciaFin = reservas.stream()
+                .map(Reserva::getFechaInicio)
+                .max(LocalDate::compareTo)
+                .orElse(LocalDate.now());
+        if (fechaReferenciaFin.isBefore(LocalDate.now())) {
+            fechaReferenciaFin = LocalDate.now();
+        }
+        for (int i = 5; i >= 0; i--) {
+            LocalDate mes = fechaReferenciaFin.minusMonths(i);
+            Month month = mes.getMonth();
+            int year = mes.getYear();
+            String label = month.getDisplayName(TextStyle.SHORT, new Locale("es", "PE")) + " " + year;
+            meses.add(label);
+            double totalMes = reservas.stream()
+                    .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                    .filter(r -> r.getFechaInicio().getMonth() == month && r.getFechaInicio().getYear() == year)
+                    .mapToDouble(Reserva::getPrecioTotal).sum();
+            ingresosMes.add(Math.round(totalMes * 100.0) / 100.0);
+        }
+
         vm.setIngresosTotales(total);
         vm.setIngresosMensuales(mensual);
         vm.setPagosPendientes(pendiente);
+        vm.setTotalReservas(totalReservas);
+        vm.setMesesLabels(meses);
+        vm.setIngresosPorMes(ingresosMes);
+        vm.setMesActualLabel(LocalDate.now().getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "PE"))
+                + " " + LocalDate.now().getYear());
         vm.setMetaMensualPorcentaje(Math.round(porcentajeMeta * 10.0) / 10.0);
-        vm.setTransacciones(reservas.stream().sorted((a, b) -> b.getId().compareTo(a.getId()))
+        vm.setTransacciones(reservas.stream()
+                .sorted((a, b) -> {
+                    long durA = java.time.temporal.ChronoUnit.DAYS.between(a.getFechaInicio(), a.getFechaFin());
+                    long durB = java.time.temporal.ChronoUnit.DAYS.between(b.getFechaInicio(), b.getFechaFin());
+                    return Long.compare(durB, durA);
+                })
                 .map(this::mapToReservaDTO).collect(Collectors.toList()));
 
         return vm;
@@ -217,6 +255,7 @@ public class AdminDashboardService {
         dto.setEstado(r.getEstado());
         dto.setMonto(r.getPrecioTotal());
         dto.setNombreUsuario(r.getUsuario().getNombre());
+        dto.setCapacidadEstudiantes(r.getAlojamiento().getCapacidadEstudiantes());
         return dto;
     }
 
