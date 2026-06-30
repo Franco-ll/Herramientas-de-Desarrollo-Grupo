@@ -149,8 +149,8 @@
                 </div>
             </div>
 
-            <!-- Habitaciones y Baños en fila -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Habitaciones, Baños y Capacidad en fila -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label class="field-label">Número de habitaciones</label>
                     <input type="number" name="habitaciones" min="1"
@@ -164,6 +164,13 @@
                            class="field-input"
                            placeholder="1"
                            th:value="${propiedad.banos}"/>
+                </div>
+                <div>
+                    <label class="field-label">Capacidad de estudiantes</label>
+                    <input type="number" name="capacidadEstudiantes" min="1"
+                           class="field-input"
+                           placeholder="3"
+                           th:value="${propiedad.capacidadEstudiantes}"/>
                 </div>
             </div>
 
