@@ -37,3 +37,5 @@ temp/
 # App uploads / local assets
 uploads/
 mysql_data/
+
+# Mensaje de prueba
