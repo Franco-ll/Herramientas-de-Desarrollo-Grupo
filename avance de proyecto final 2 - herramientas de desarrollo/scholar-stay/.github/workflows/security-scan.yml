@@ -1,0 +1,107 @@
+# =============================================================================
+# WORKFLOW: Seguridad - Escaneo de Dependencias
+# PROPÓSITO: Detecta vulnerabilidades conocidas (CVEs) en las dependencias
+#            de Maven. Scholar Stay usa Spring Security, MySQL connector y
+#            otras librerías que pueden tener CVEs reportados.
+# TRIGGER: Push a main, Pull Requests, y semanalmente (lunes 8am UTC-5)
+#          El schedule semanal detecta nuevas CVEs aunque no hayas pusheado.
+# =============================================================================
+
+name: Seguridad - Dependencias
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - 'pom.xml'           # Solo cuando cambian dependencias
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'pom.xml'
+  schedule:
+    # Ejecutar todos los lunes a las 8:00 AM (hora Perú = UTC-5, entonces 13:00 UTC)
+    # Detecta nuevas CVEs publicadas durante la semana aunque no hayas commiteado.
+    - cron: '0 13 * * 1'
+
+jobs:
+  dependency-scan:
+    name: Escaneo de vulnerabilidades (OWASP)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # -----------------------------------------------------------------
+      # Cache específico de la base de datos de CVEs de OWASP.
+      # La BD de CVEs pesa ~200MB y se actualiza diariamente.
+      # Sin cache, la descarga agrega ~5 minutos a cada run.
+      # -----------------------------------------------------------------
+      - name: Cache base de datos OWASP NVD
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/org/owasp/dependency-check-data
+          key: owasp-nvd-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}
+          restore-keys: |
+            owasp-nvd-${{ hashFiles('**/pom.xml') }}-
+            owasp-nvd-
+
+      # -----------------------------------------------------------------
+      # Ejecuta OWASP Dependency-Check.
+      # --failBuildOnCVSS 9: Solo falla el build en CVEs CRÍTICAS (9+/10).
+      # CVEs de severidad media/alta se reportan pero no bloquean.
+      # Ajusta el umbral según la madurez del proyecto:
+      #   - Académico: 9 (solo críticas)
+      #   - Producción: 7 (altas y críticas)
+      # -----------------------------------------------------------------
+      - name: Ejecutar OWASP Dependency-Check
+        run: |
+          mvn org.owasp:dependency-check-maven:check \
+            -B \
+            -DfailBuildOnCVSS=9 \
+            -DsuppressionFile=.github/owasp-suppressions.xml \
+            -Dformat=HTML \
+            -DprettyPrint=true
+        continue-on-error: true   # Reportar sin bloquear en fase académica
+
+      # -----------------------------------------------------------------
+      # El reporte HTML es legible y detalla cada CVE encontrado,
+      # su severidad, la dependencia afectada y las versiones que lo
+      # corrigen. Disponible para descargar 14 días.
+      # -----------------------------------------------------------------
+      - name: Subir reporte de vulnerabilidades
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: owasp-dependency-report
+          path: target/dependency-check-report.html
+          retention-days: 14
+
+      # -----------------------------------------------------------------
+      # También usa GitHub's Dependency Review para PRs.
+      # Compara las dependencias del PR vs la base y reporta si se
+      # introducen nuevas dependencias con vulnerabilidades.
+      # -----------------------------------------------------------------
+      - name: Revisión de dependencias (PR)
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+
+      # mensaje de prueba
