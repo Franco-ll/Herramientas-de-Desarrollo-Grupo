@@ -117,7 +117,7 @@
 </div>
 <div class="flex items-center gap-6">
 <div class="flex items-center gap-4 text-slate-500">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">notifications</a>
+<a th:href="@{/notificaciones}" class="relative material-symbols-outlined cursor-pointer hover:text-primary transition-colors">notifications<th:block th:replace="fragments/header :: bellBadge" /></a>
 <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
 </div>
 <a th:href="@{/perfil}" class="text-sky-800 dark:text-sky-400 font-bold border-b-2 border-sky-800 dark:border-sky-400 pb-1">Mi Perfil</a>
@@ -324,5 +324,6 @@
 
     window.addEventListener('DOMContentLoaded', updateProgress);
 </script>
+<th:block th:replace="fragments/header :: notificationScripts" />
 </body></html>
 

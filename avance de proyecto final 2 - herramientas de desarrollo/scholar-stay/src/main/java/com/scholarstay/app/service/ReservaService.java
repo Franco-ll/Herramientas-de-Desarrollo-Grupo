@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.scholarstay.app.model.Reserva;
 import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.model.enums.NotificationPriority;
+import com.scholarstay.app.model.enums.NotificationType;
 import com.scholarstay.app.repository.ReservaRepository;
 
 import java.time.LocalDate;
@@ -65,7 +67,7 @@ public class ReservaService {
         
         Reserva guardada = reservaRepository.save(reserva);
         
-        notificacionService.crearNotificacion(usuario, "Tu reserva para el alojamiento " + reserva.getAlojamiento().getTitulo() + " ha sido procesada.", "RESERVA");
+        notificacionService.crearNotificacion(usuario, "Tu reserva para el alojamiento " + reserva.getAlojamiento().getTitulo() + " ha sido procesada.", NotificationType.RESERVA, NotificationPriority.SUCCESS, reserva.getId());
         return guardada;
     }
 
@@ -74,7 +76,7 @@ public class ReservaService {
         reserva.setEstado("CONFIRMADA");
         Reserva actualizada = reservaRepository.save(reserva);
         
-        notificacionService.crearNotificacion(reserva.getUsuario(), "Tu reserva para el alojamiento " + reserva.getAlojamiento().getTitulo() + " ha sido confirmada.", "RESERVA");
+        notificacionService.crearNotificacion(reserva.getUsuario(), "Tu reserva para el alojamiento " + reserva.getAlojamiento().getTitulo() + " ha sido confirmada.", NotificationType.RESERVA, NotificationPriority.SUCCESS, reserva.getId());
         return actualizada;
     }
 

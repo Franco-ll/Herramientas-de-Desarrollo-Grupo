@@ -99,7 +99,7 @@
 </div>
 <div class="flex items-center gap-6">
 <div class="flex gap-4">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</a>
+<a th:href="@{/notificaciones}" class="relative material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications<th:block th:replace="fragments/header :: bellBadge" /></a>
 <a href="javascript:void(0)" class="material-symbols-outlined text-on-surface-variant cursor-default text-slate-400">chat_bubble</a>
 </div>
 <div class="flex items-center gap-4">
@@ -356,4 +356,5 @@
 <p class="text-xs text-on-surface-variant opacity-70">2026 Scholar Stay. Todos los derechos reservados.</p>
 </div>
 </footer>
+<th:block th:replace="fragments/header :: notificationScripts" />
 </body></html>

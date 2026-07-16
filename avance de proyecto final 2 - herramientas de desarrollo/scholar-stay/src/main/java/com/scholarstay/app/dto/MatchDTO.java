@@ -7,16 +7,30 @@ public class MatchDTO {
     private String universidad;
     private String biografia;
     private Double porcentaje;
+    private String avatar; // <-- CAMPO AÑADIDO
 
     public MatchDTO() {}
 
-    public MatchDTO(Long usuarioId, String nombre, String carrera, String universidad, String biografia, Double porcentaje) {
+    public MatchDTO(Long usuarioId, String nombre, String carrera, String universidad,
+                    String biografia, Double porcentaje) {
         this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.carrera = carrera;
         this.universidad = universidad;
         this.biografia = biografia;
         this.porcentaje = porcentaje;
+    }
+
+    // Constructor completo con avatar
+    public MatchDTO(Long usuarioId, String nombre, String carrera, String universidad,
+                    String biografia, Double porcentaje, String avatar) {
+        this.usuarioId = usuarioId;
+        this.nombre = nombre;
+        this.carrera = carrera;
+        this.universidad = universidad;
+        this.biografia = biografia;
+        this.porcentaje = porcentaje;
+        this.avatar = avatar;
     }
 
     public Long getUsuarioId() { return usuarioId; }
@@ -36,4 +50,7 @@ public class MatchDTO {
 
     public String getBiografia() { return biografia; }
     public void setBiografia(String biografia) { this.biografia = biografia; }
+
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 }
