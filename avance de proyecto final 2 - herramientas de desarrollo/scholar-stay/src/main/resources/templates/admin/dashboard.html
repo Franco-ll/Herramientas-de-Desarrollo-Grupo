@@ -6,11 +6,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Scholar Stay - Panel de Administración</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -35,22 +32,10 @@
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafa;
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        .editorial-shadow {
-            box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04);
-        }
-
-        .filled {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-shadow { box-shadow: 0 24px 48px -12px rgba(44, 52, 53, 0.04); }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     </style>
 </head>
 
@@ -65,45 +50,36 @@
                 <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
                     th:text="${admin != null ? admin.nombre.substring(0,1) : 'A'}">A</div>
                 <div>
-                    <p class="font-bold text-sm text-sky-900 leading-tight"
-                        th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
+                    <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${admin != null ? admin.nombre : 'Administrador'}">Admin</p>
                     <p class="text-[10px] text-outline">Gestión Académica</p>
                 </div>
             </div>
         </div>
         <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
-            <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm"
-                th:href="@{/admin/dashboard}">
+            <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/dashboard}">
                 <span class="material-symbols-outlined filled">dashboard</span><span>Panel Control</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/residentes}">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
                 <span class="material-symbols-outlined">group</span><span>Residentes</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/propiedades}">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/propiedades}">
                 <span class="material-symbols-outlined">apartment</span><span>Propiedades</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/finanzas}">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
                 <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/configuracion}">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/configuracion}">
                 <span class="material-symbols-outlined">settings</span><span>Configuración</span>
             </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/historial}">
-                <span class="material-symbols-outlined">history</span><span>Historial</span>
-            </a>
-            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
-                th:href="@{/admin/calendario}">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/calendario}">
                 <span class="material-symbols-outlined">calendar_month</span><span>Calendario</span>
+            </a>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/historial}">
+                <span class="material-symbols-outlined">history</span><span>Historial</span>
             </a>
         </nav>
         <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
-            <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all"
-                th:href="@{/logout}">
+            <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
                 <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
             </a>
         </div>
@@ -118,8 +94,7 @@
                 <p class="text-on-surface-variant">Aquí está el pulso de tu comunidad hoy.</p>
             </div>
             <div class="flex gap-4 items-center">
-                <div
-                    class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20">
+                <div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20">
                     <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
                     <span class="text-sm font-semibold text-on-surface">Sistema Activo</span>
                 </div>
@@ -128,11 +103,9 @@
 
         <!-- KPI -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div
-                class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow relative overflow-hidden flex flex-col justify-between h-56">
+            <div class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow relative overflow-hidden flex flex-col justify-between h-56">
                 <div class="z-10">
-                    <p class="text-on-surface-variant font-body text-sm font-semibold uppercase tracking-widest mb-2">
-                        Ocupación Total</p>
+                    <p class="text-on-surface-variant font-body text-sm font-semibold uppercase tracking-widest mb-2">Ocupación Total</p>
                     <h3 class="text-5xl font-headline font-extrabold text-primary">
                         <span th:text="${stats.ocupacionTotal}">94.2</span>%
                     </h3>
@@ -147,8 +120,7 @@
             </div>
             <div class="bg-primary text-on-primary rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
                 <div>
-                    <p class="text-on-primary/70 text-sm font-semibold uppercase tracking-widest mb-2">Ingresos
-                        Mensuales</p>
+                    <p class="text-on-primary/70 text-sm font-semibold uppercase tracking-widest mb-2">Ingresos Mensuales</p>
                     <h3 class="text-5xl font-headline font-extrabold">
                         S/ <span th:text="${#numbers.formatDecimal(stats.ingresosMensuales, 1, 2)}">0.00</span>
                     </h3>
@@ -158,16 +130,57 @@
                     <span>Reservas confirmadas este mes</span>
                 </div>
             </div>
-            <div
-                class="bg-secondary-container text-on-secondary-container rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
+            <div class="bg-secondary-container text-on-secondary-container rounded-xl p-8 editorial-shadow flex flex-col justify-between h-56">
                 <div>
-                    <p class="text-on-secondary-container/70 text-sm font-semibold uppercase tracking-widest mb-2">
-                        Residentes Activos</p>
+                    <p class="text-on-secondary-container/70 text-sm font-semibold uppercase tracking-widest mb-2">Residentes Activos</p>
                     <h3 class="text-5xl font-headline font-extrabold" th:text="${stats.residentesActivos}">0</h3>
                 </div>
                 <div class="flex items-center gap-2 text-sm font-semibold">
                     <span class="material-symbols-outlined">school</span>
                     <span>Con estancia vigente</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALERTAS: Reservas próximas a vencer -->
+        <section th:if="${stats.reservasProximasVencer != null and !stats.reservasProximasVencer.empty}" class="mb-8">
+            <div class="bg-white rounded-2xl border border-surface-container-high editorial-shadow overflow-hidden">
+                <div class="px-8 py-5 border-b border-surface-container-high flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-error/10 rounded-xl">
+                            <span class="material-symbols-outlined text-error text-[20px]">warning</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-headline font-extrabold text-on-surface">Reservas próximas a vencer</h4>
+                            <p class="text-[11px] text-on-surface-variant">Vencen en los próximos 15 días</p>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-bold bg-error/10 text-error px-3 py-1 rounded-full"
+                          th:text="${stats.reservasProximasVencer.size()} + ' reserva(s)'">0 reservas</span>
+                </div>
+                <div class="divide-y divide-surface-container-high">
+                    <div th:each="r : ${stats.reservasProximasVencer}"
+                         class="flex items-center justify-between px-8 py-4 hover:bg-surface-container-low/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-on-primary text-xs font-black shrink-0"
+                                 th:style="${r.diasRestantes <= 5 ? 'background:#a83836' : (r.diasRestantes <= 10 ? 'background:#6a5e46' : 'background:#46674b')}"
+                                 th:text="${r.nombreUsuario != null ? r.nombreUsuario.substring(0,1).toUpperCase() : '?'}">?</div>
+                            <div>
+                                <p class="text-sm font-semibold text-on-surface" th:text="${r.nombreUsuario}">Residente</p>
+                                <p class="text-xs text-on-surface-variant" th:text="${r.tituloAlojamiento}">Propiedad</p>
+                            </div>
+                        </div>
+                        <div class="text-right flex items-center gap-4">
+                            <div>
+                                <p class="text-xs text-on-surface-variant">Vence el</p>
+                                <p class="text-sm font-bold text-on-surface"
+                                   th:text="${#temporals.format(r.fechaFin, 'dd MMM yyyy')}">—</p>
+                            </div>
+                            <span class="text-xs font-black px-3 py-1.5 rounded-full"
+                                  th:classappend="${r.diasRestantes <= 5 ? 'bg-error/10 text-error' : (r.diasRestantes <= 10 ? 'bg-tertiary-container text-on-tertiary-container' : 'bg-secondary-container text-on-secondary-container')}"
+                                  th:text="${r.diasRestantes == 0 ? 'Vence hoy' : (r.diasRestantes == 1 ? '1 día' : r.diasRestantes + ' días')}">— días</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -179,49 +192,39 @@
                     <h4 class="text-xl font-headline font-bold text-on-surface">Transacciones Recientes</h4>
                     <a th:href="@{/admin/finanzas}" class="text-primary text-sm font-bold hover:underline">Ver todas</a>
                 </div>
-                <div th:if="${stats.transaccionesRecientes.empty}" class="p-8 text-center text-on-surface-variant">No
-                    hay transacciones aún.</div>
+                <div th:if="${stats.transaccionesRecientes.empty}" class="p-8 text-center text-on-surface-variant">No hay transacciones aún.</div>
                 <div th:each="reserva : ${stats.transaccionesRecientes}"
                     class="flex items-center justify-between px-8 py-4 border-b border-surface-container-high last:border-0 hover:bg-surface-container-low/50 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm"
-                            th:text="${reserva.nombreUsuario != null ? reserva.nombreUsuario.substring(0,1) : '?'}">?
-                        </div>
+                            th:text="${reserva.nombreUsuario != null ? reserva.nombreUsuario.substring(0,1) : '?'}">?</div>
                         <div>
                             <p class="text-sm font-bold" th:text="${reserva.nombreUsuario}">Usuario</p>
                             <p class="text-[10px] text-outline" th:text="${reserva.tituloAlojamiento}">Alojamiento</p>
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="font-black text-sm" th:text="${'S/ ' + #numbers.formatDecimal(reserva.monto, 1, 2)}">
-                            S/ 0</p>
-                        <span th:if="${reserva.estado == 'CONFIRMADA'}"
-                            class="text-[10px] font-bold text-secondary bg-secondary-container px-2 py-0.5 rounded-full">Pagado</span>
-                        <span th:if="${reserva.estado == 'PENDIENTE'}"
-                            class="text-[10px] font-bold text-tertiary bg-tertiary-container px-2 py-0.5 rounded-full">Pendiente</span>
-                        <span th:if="${reserva.estado == 'CANCELADA'}"
-                            class="text-[10px] font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">Cancelado</span>
+                        <p class="font-black text-sm" th:text="${'S/ ' + #numbers.formatDecimal(reserva.monto, 1, 2)}">S/ 0</p>
+                        <span th:if="${reserva.estado == 'CONFIRMADA'}" class="text-[10px] font-bold text-secondary bg-secondary-container px-2 py-0.5 rounded-full">Pagado</span>
+                        <span th:if="${reserva.estado == 'PENDIENTE'}" class="text-[10px] font-bold text-tertiary bg-tertiary-container px-2 py-0.5 rounded-full">Pendiente</span>
+                        <span th:if="${reserva.estado == 'CANCELADA'}" class="text-[10px] font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">Cancelado</span>
                     </div>
                 </div>
             </div>
             <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-8 editorial-shadow">
                 <div class="flex justify-between items-center mb-6">
                     <h4 class="text-xl font-headline font-bold text-on-surface">Nuevos Residentes</h4>
-                    <a th:href="@{/admin/residentes}" class="text-primary text-sm font-bold hover:underline">Ver
-                        todos</a>
+                    <a th:href="@{/admin/residentes}" class="text-primary text-sm font-bold hover:underline">Ver todos</a>
                 </div>
                 <div class="space-y-5">
-                    <div th:if="${stats.nuevosResidentes.empty}" class="text-center text-on-surface-variant text-sm">No
-                        hay residentes aún.</div>
+                    <div th:if="${stats.nuevosResidentes.empty}" class="text-center text-on-surface-variant text-sm">No hay residentes aún.</div>
                     <div th:each="residente : ${stats.nuevosResidentes}" class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm"
                                 th:text="${residente.nombre.substring(0,1)}">U</div>
                             <div>
                                 <p class="text-sm font-bold text-on-surface" th:text="${residente.nombre}">Nombre</p>
-                                <p class="text-xs text-on-surface-variant"
-                                    th:text="${residente.carrera != null ? residente.carrera : 'Estudiante'}">Carrera
-                                </p>
+                                <p class="text-xs text-on-surface-variant" th:text="${residente.carrera != null ? residente.carrera : 'Estudiante'}">Carrera</p>
                             </div>
                         </div>
                         <div class="bg-secondary-container px-2.5 py-1 rounded-full">
@@ -234,23 +237,17 @@
 
         <!-- Quick Links -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <a th:href="@{/admin/propiedades}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+            <a th:href="@{/admin/propiedades}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <span class="material-symbols-outlined text-primary">apartment</span>
                 </div>
                 <div>
                     <p class="font-bold text-on-surface">Gestionar Propiedades</p>
-                    <p class="text-xs text-on-surface-variant"
-                        th:text="${vm_props != null ? vm_props.totalPropiedades + ' activas' : 'Ver listado'}">Ver
-                        listado</p>
+                    <p class="text-xs text-on-surface-variant" th:text="${vm_props != null ? vm_props.totalPropiedades + ' activas' : 'Ver listado'}">Ver listado</p>
                 </div>
             </a>
-            <a th:href="@{/admin/residentes}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+            <a th:href="@{/admin/residentes}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
                     <span class="material-symbols-outlined text-secondary">group</span>
                 </div>
                 <div>
@@ -258,10 +255,8 @@
                     <p class="text-xs text-on-surface-variant">Ver todos los estudiantes</p>
                 </div>
             </a>
-            <a th:href="@{/admin/finanzas}"
-                class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
-                <div
-                    class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary/20 transition-colors">
+            <a th:href="@{/admin/finanzas}" class="bg-surface-container-lowest p-6 rounded-xl editorial-shadow flex items-center gap-5 hover:bg-surface-container-low transition-colors group">
+                <div class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center group-hover:bg-tertiary/20 transition-colors">
                     <span class="material-symbols-outlined text-tertiary">monitoring</span>
                 </div>
                 <div>
@@ -294,8 +289,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        const mesesLabels = /*[[${stats.mesesLabels != null ? stats.mesesLabels : {}}]]*/[];
-        const ingresosMes = /*[[${stats.ingresosPorMes != null ? stats.ingresosPorMes : {}}]]*/[];
+        const mesesLabels = /*[[${stats.mesesLabels != null ? stats.mesesLabels : {}}]]*/ [];
+        const ingresosMes = /*[[${stats.ingresosPorMes != null ? stats.ingresosPorMes : {}}]]*/ [];
 
         document.addEventListener("DOMContentLoaded", function () {
             new Chart(document.getElementById("chartIngresos"), {
@@ -334,5 +329,4 @@
     </script>
 
 </body>
-
 </html>

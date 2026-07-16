@@ -132,6 +132,22 @@ public class AdminDashboardService {
         vm.setMesesLabels(meses);
         vm.setIngresosPorMes(ingresosMes);
 
+        // ===== RESERVAS PROXIMAS A VENCER (próximos 15 días) =====
+        LocalDate hoy = LocalDate.now();
+        LocalDate limite = hoy.plusDays(15);
+        List<ReservaDTO> proximasVencer = reservas.stream()
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                .filter(r -> !r.getFechaFin().isBefore(hoy) && !r.getFechaFin().isAfter(limite))
+                .sorted((a, b) -> a.getFechaFin().compareTo(b.getFechaFin()))
+                .map(r -> {
+                    ReservaDTO dto = mapToReservaDTO(r);
+                    long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(hoy, r.getFechaFin());
+                    dto.setDiasRestantes((int) diasRestantes);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        vm.setReservasProximasVencer(proximasVencer);
+
         return vm;
     }
 

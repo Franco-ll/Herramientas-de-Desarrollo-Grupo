@@ -39,6 +39,10 @@ public class ReservaDTO {
     public Integer getCapacidadEstudiantes() { return capacidadEstudiantes; }
     public void setCapacidadEstudiantes(Integer capacidadEstudiantes) { this.capacidadEstudiantes = capacidadEstudiantes; }
 
+    private Integer diasRestantes;
+    public Integer getDiasRestantes() { return diasRestantes; }
+    public void setDiasRestantes(Integer diasRestantes) { this.diasRestantes = diasRestantes; }
+
     /**
      * Calcula la duración del alquiler en días y meses.
      * Ejemplo: "45 días (1 mes)"

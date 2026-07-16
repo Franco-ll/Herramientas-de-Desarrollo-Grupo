@@ -52,4 +52,8 @@ public class AdminDashboardVM {
 
     public List<Double> getIngresosPorMes() { return ingresosPorMes; }
     public void setIngresosPorMes(List<Double> ingresosPorMes) { this.ingresosPorMes = ingresosPorMes; }
+
+    private List<ReservaDTO> reservasProximasVencer;
+    public List<ReservaDTO> getReservasProximasVencer() { return reservasProximasVencer; }
+    public void setReservasProximasVencer(List<ReservaDTO> reservasProximasVencer) { this.reservasProximasVencer = reservasProximasVencer; }
 }
