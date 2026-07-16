@@ -1,6 +1,7 @@
 package com.scholarstay.app.dto;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ReservaDTO {
     private Long id;
@@ -10,6 +11,7 @@ public class ReservaDTO {
     private String estado;
     private Double monto;
     private String nombreUsuario;
+    private Integer capacidadEstudiantes;
 
     public ReservaDTO() {}
 
@@ -33,4 +35,21 @@ public class ReservaDTO {
 
     public String getNombreUsuario() { return nombreUsuario; }
     public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+
+    public Integer getCapacidadEstudiantes() { return capacidadEstudiantes; }
+    public void setCapacidadEstudiantes(Integer capacidadEstudiantes) { this.capacidadEstudiantes = capacidadEstudiantes; }
+
+    /**
+     * Calcula la duración del alquiler en días y meses.
+     * Ejemplo: "45 días (1 mes)"
+     */
+    public String getDuracion() {
+        if (fechaInicio == null || fechaFin == null) return "—";
+        long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+        long meses = ChronoUnit.MONTHS.between(fechaInicio, fechaFin);
+        if (meses >= 1) {
+            return dias + " días (" + meses + (meses == 1 ? " mes)" : " meses)");
+        }
+        return dias + " días";
+    }
 }

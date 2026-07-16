@@ -41,6 +41,8 @@ public class Alojamiento {
 
     private Integer banos;
 
+    private Integer capacidadEstudiantes;
+
     private Double calificacionPromedio = 0.0;
 
     @ManyToOne
@@ -151,6 +153,14 @@ public class Alojamiento {
 
     public void setBanos(Integer banos) {
         this.banos = banos;
+    }
+
+    public Integer getCapacidadEstudiantes() {
+        return capacidadEstudiantes;
+    }
+
+    public void setCapacidadEstudiantes(Integer capacidadEstudiantes) {
+        this.capacidadEstudiantes = capacidadEstudiantes;
     }
 
     public Double getCalificacionPromedio() {

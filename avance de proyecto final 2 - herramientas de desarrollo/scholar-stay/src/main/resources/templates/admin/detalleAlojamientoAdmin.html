@@ -181,6 +181,13 @@
                         </span>
                         <span class="font-bold" th:text="${alojamiento.banos != null ? alojamiento.banos : '—'}">—</span>
                     </div>
+                    <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[16px]">group</span>
+                            Capacidad de estudiantes
+                        </span>
+                        <span class="font-bold" th:text="${alojamiento.capacidadEstudiantes != null ? alojamiento.capacidadEstudiantes : '—'}">—</span>
+                    </div>
                     <div class="flex justify-between items-center py-2">
                         <span class="text-sm text-on-surface-variant flex items-center gap-2">
                             <span class="material-symbols-outlined text-[16px]">star</span>
