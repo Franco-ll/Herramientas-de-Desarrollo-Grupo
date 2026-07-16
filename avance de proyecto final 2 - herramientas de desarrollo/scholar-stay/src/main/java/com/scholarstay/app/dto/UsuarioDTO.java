@@ -9,7 +9,7 @@ public class UsuarioDTO {
     private String avatar;
     private String propiedadAsignada;
     private String estadoReserva;
-    private int compatibilidad;
+
 
     public UsuarioDTO() {}
 
@@ -37,6 +37,5 @@ public class UsuarioDTO {
     public String getEstadoReserva() { return estadoReserva; }
     public void setEstadoReserva(String estadoReserva) { this.estadoReserva = estadoReserva; }
 
-    public int getCompatibilidad() { return compatibilidad; }
-    public void setCompatibilidad(int compatibilidad) { this.compatibilidad = compatibilidad; }
+
 }

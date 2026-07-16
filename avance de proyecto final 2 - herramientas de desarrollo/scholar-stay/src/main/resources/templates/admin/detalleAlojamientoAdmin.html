@@ -1,222 +1,266 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" class="light" lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Scholar Stay - Detalle Propiedad (Admin)</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      theme: { extend: { colors: {
-        "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
-        "primary-container": "#b8dffe", "on-primary-container": "#29506a",
-        "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
-        "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
-        "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
-        "surface-container": "#eaefef", "surface-container-high": "#e3e9ea",
-        "surface-container-highest": "#dde4e4", "surface-container-lowest": "#ffffff",
-        "on-surface": "#2c3435", "on-surface-variant": "#596061",
-        "outline": "#757c7d", "outline-variant": "#acb3b4", "error": "#a83836",
-      }, fontFamily: { "headline": ["Manrope"] } } }
-    }
-</script>
-<style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-    .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3 { font-family: 'Manrope', sans-serif; }
-    .editorial-shadow { box-shadow: 0 4px 24px rgba(44,52,53,0.06); }
-</style>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Scholar Stay - Detalle Propiedad (Admin)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3d637e", "on-primary": "#f5f9ff", "primary-dim": "#305771",
+                        "primary-container": "#b8dffe", "on-primary-container": "#29506a",
+                        "secondary": "#46674b", "secondary-container": "#c7ecc9", "on-secondary-container": "#39593f",
+                        "tertiary": "#6a5e46", "tertiary-container": "#feecce", "on-tertiary-container": "#635740",
+                        "surface": "#f8fafa", "surface-container-low": "#f0f4f4",
+                        "surface-container": "#eaefef", "surface-container-high": "#e3e9ea",
+                        "surface-container-highest": "#dde4e4", "surface-container-lowest": "#ffffff",
+                        "on-surface": "#2c3435", "on-surface-variant": "#596061",
+                        "outline": "#757c7d", "outline-variant": "#acb3b4", "error": "#a83836",
+                    }, fontFamily: { "headline": ["Manrope"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .editorial-shadow {
+            box-shadow: 0 4px 24px rgba(44, 52, 53, 0.06);
+        }
+    </style>
 </head>
+
 <body class="bg-surface text-on-surface">
 
-<!-- Sidebar Admin -->
-<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
-    <div class="mb-8">
-        <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
-        <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
-        <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
-            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
-                 th:text="${usuario != null ? usuario.nombre.substring(0,1) : 'A'}">A</div>
-            <div>
-                <p class="font-bold text-sm text-sky-900 leading-tight" th:text="${usuario != null ? usuario.nombre : 'Administrador'}">Admin</p>
-                <p class="text-[10px] text-outline">Gestión Académica</p>
+    <!-- Sidebar Admin -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-slate-100 flex flex-col p-6 gap-2 z-40 border-r border-slate-200">
+        <div class="mb-8">
+            <h1 class="text-xl font-extrabold text-sky-900 tracking-tighter">Scholar Stay</h1>
+            <p class="text-[10px] uppercase tracking-widest text-outline mt-1">Admin Portal</p>
+            <div class="mt-5 flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-sm"
+                    th:text="${usuario != null ? usuario.nombre.substring(0,1) : 'A'}">A</div>
+                <div>
+                    <p class="font-bold text-sm text-sky-900 leading-tight"
+                        th:text="${usuario != null ? usuario.nombre : 'Administrador'}">Admin</p>
+                    <p class="text-[10px] text-outline">Gestión Académica</p>
+                </div>
             </div>
         </div>
-    </div>
-    <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
-        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/dashboard}">
-            <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
-        </a>
-        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/residentes}">
-            <span class="material-symbols-outlined">group</span><span>Residentes</span>
-        </a>
-        <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm" th:href="@{/admin/propiedades}">
-            <span class="material-symbols-outlined filled">apartment</span><span>Propiedades</span>
-        </a>
-        <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/finanzas}">
-            <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
-        </a>
-    </nav>
-    <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
-        <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all" th:href="@{/logout}">
-            <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
-        </a>
-    </div>
-</aside>
-
-<!-- Main -->
-<main class="ml-64 p-8 min-h-screen">
-
-    <!-- Breadcrumb -->
-    <div class="flex items-center gap-2 text-sm text-on-surface-variant mb-6">
-        <a th:href="@{/admin/propiedades}" class="hover:text-primary transition-colors flex items-center gap-1">
-            <span class="material-symbols-outlined text-[16px]">apartment</span>
-            Propiedades
-        </a>
-        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-        <span th:text="${alojamiento.titulo}">Detalle</span>
-    </div>
-
-    <!-- Header con acciones admin -->
-    <div class="flex items-center justify-between mb-8">
-        <div>
-            <h1 class="text-3xl font-extrabold tracking-tight text-on-surface" th:text="${alojamiento.titulo}">Título</h1>
-            <p class="text-on-surface-variant flex items-center gap-1 mt-1">
-                <span class="material-symbols-outlined text-[16px]">location_on</span>
-                <span th:text="${alojamiento.ubicacion}">Ubicación</span>
-            </p>
-        </div>
-        <!-- Botones admin -->
-        <div class="flex items-center gap-3">
-            <a th:href="@{/admin/propiedades/__${alojamiento.id}__/editar}"
-               class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primary-dim transition-all">
-                <span class="material-symbols-outlined text-[16px]">edit</span>
-                Editar propiedad
+        <nav class="flex flex-col gap-1 flex-1 font-headline text-sm font-semibold">
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
+                th:href="@{/admin/dashboard}">
+                <span class="material-symbols-outlined">dashboard</span><span>Panel Control</span>
             </a>
-            <form th:action="@{/admin/propiedades/__${alojamiento.id}__/eliminar}" method="post"
-                  onsubmit="return confirm('¿Seguro que deseas eliminar esta propiedad?')">
-                <button type="submit"
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
+                th:href="@{/admin/residentes}">
+                <span class="material-symbols-outlined">group</span><span>Residentes</span>
+            </a>
+            <a class="flex items-center gap-3 bg-white text-primary rounded-xl px-4 py-3 shadow-sm"
+                th:href="@{/admin/propiedades}">
+                <span class="material-symbols-outlined filled">apartment</span><span>Propiedades</span>
+            </a>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
+                th:href="@{/admin/finanzas}">
+                <span class="material-symbols-outlined">payments</span><span>Finanzas</span>
+            </a>
+
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
+                th:href="@{/admin/calendario}">
+                <span class="material-symbols-outlined">calendar_month</span><span>Calendario</span>
+            </a>
+        </nav>
+        <div class="flex flex-col gap-1 font-headline text-sm font-semibold border-t border-slate-200 pt-4">
+            <a class="flex items-center gap-3 text-error px-4 py-2 hover:bg-red-50 rounded-xl transition-all"
+                th:href="@{/logout}">
+                <span class="material-symbols-outlined">logout</span><span>Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="ml-64 p-8 min-h-screen">
+
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-sm text-on-surface-variant mb-6">
+            <a th:href="@{/admin/propiedades}" class="hover:text-primary transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">apartment</span>
+                Propiedades
+            </a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span th:text="${alojamiento.titulo}">Detalle</span>
+        </div>
+
+        <!-- Header con acciones admin -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-on-surface" th:text="${alojamiento.titulo}">
+                    Título</h1>
+                <p class="text-on-surface-variant flex items-center gap-1 mt-1">
+                    <span class="material-symbols-outlined text-[16px]">location_on</span>
+                    <span th:text="${alojamiento.ubicacion}">Ubicación</span>
+                </p>
+            </div>
+            <!-- Botones admin -->
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin/propiedades/__${alojamiento.id}__/editar}"
+                    class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primary-dim transition-all">
+                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                    Editar propiedad
+                </a>
+                <form th:action="@{/admin/propiedades/__${alojamiento.id}__/eliminar}" method="post"
+                    onsubmit="return confirm('¿Seguro que deseas eliminar esta propiedad?')">
+                    <button type="submit"
                         class="inline-flex items-center gap-2 border border-error text-error px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-error/10 transition-all">
-                    <span class="material-symbols-outlined text-[16px]">delete</span>
-                    Eliminar
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        <!-- Columna principal -->
-        <div class="lg:col-span-2 space-y-6">
-
-            <!-- Imagen principal -->
-            <div class="h-72 rounded-2xl overflow-hidden editorial-shadow">
-                <img class="w-full h-full object-cover"
-                     th:src="${alojamiento.imagen != null ? '/images/' + alojamiento.imagen : '/images/alojamiento1.png'}"
-                     th:alt="${alojamiento.titulo}"
-                     onerror="this.src='/images/alojamiento1.png'"/>
+                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                        Eliminar
+                    </button>
+                </form>
             </div>
-
-            <!-- Descripción -->
-            <div class="bg-white rounded-2xl p-6 editorial-shadow">
-                <h2 class="text-xl font-bold mb-3">Descripción</h2>
-                <p class="text-on-surface-variant leading-relaxed" th:text="${alojamiento.descripcion}">Sin descripción.</p>
-            </div>
-
-            <!-- Servicios -->
-            <div th:if="${alojamiento.servicios != null and !alojamiento.servicios.empty}"
-                 class="bg-white rounded-2xl p-6 editorial-shadow">
-                <h2 class="text-xl font-bold mb-4">Servicios incluidos</h2>
-                <div class="flex flex-wrap gap-2">
-                    <span th:each="servicio : ${alojamiento.servicios}"
-                          class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container/50 text-on-secondary-container rounded-full text-sm font-semibold">
-                        <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                        <span th:text="${servicio}">Servicio</span>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Reglas -->
-            <div th:if="${alojamiento.reglas != null and !alojamiento.reglas.empty}"
-                 class="bg-white rounded-2xl p-6 editorial-shadow">
-                <h2 class="text-xl font-bold mb-4">Reglas del hogar</h2>
-                <div class="grid md:grid-cols-2 gap-3">
-                    <div th:each="regla : ${alojamiento.reglas}" class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-secondary text-[18px]">info</span>
-                        <span class="text-sm font-medium text-on-surface" th:text="${regla}">Regla</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <!-- Sidebar admin: solo info, sin reservas ni contacto -->
-        <div class="space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- KPIs de la propiedad -->
-            <div class="bg-white rounded-2xl p-6 editorial-shadow">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-outline mb-4">Información</h2>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
-                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">payments</span>
-                            Precio mensual
+            <!-- Columna principal -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Imagen principal -->
+                <div class="h-72 rounded-2xl overflow-hidden editorial-shadow">
+                    <img class="w-full h-full object-cover"
+                        th:src="${alojamiento.imagen != null ? '/images/' + alojamiento.imagen : '/images/alojamiento1.png'}"
+                        th:alt="${alojamiento.titulo}" onerror="this.src='/images/alojamiento1.png'" />
+                </div>
+
+                <!-- Descripción -->
+                <div class="bg-white rounded-2xl p-6 editorial-shadow">
+                    <h2 class="text-xl font-bold mb-3">Descripción</h2>
+                    <p class="text-on-surface-variant leading-relaxed" th:text="${alojamiento.descripcion}">Sin
+                        descripción.</p>
+                </div>
+
+                <!-- Servicios -->
+                <div th:if="${alojamiento.servicios != null and !alojamiento.servicios.empty}"
+                    class="bg-white rounded-2xl p-6 editorial-shadow">
+                    <h2 class="text-xl font-bold mb-4">Servicios incluidos</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span th:each="servicio : ${alojamiento.servicios}"
+                            class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container/50 text-on-secondary-container rounded-full text-sm font-semibold">
+                            <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                            <span th:text="${servicio}">Servicio</span>
                         </span>
-                        <span class="font-bold text-primary">S/ <span th:text="${alojamiento.precioMensual}">0</span></span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
-                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">bed</span>
-                            Habitaciones
-                        </span>
-                        <span class="font-bold" th:text="${alojamiento.habitaciones != null ? alojamiento.habitaciones : '—'}">—</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
-                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">bathroom</span>
-                            Baños
-                        </span>
-                        <span class="font-bold" th:text="${alojamiento.banos != null ? alojamiento.banos : '—'}">—</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
-                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">group</span>
-                            Capacidad de estudiantes
-                        </span>
-                        <span class="font-bold" th:text="${alojamiento.capacidadEstudiantes != null ? alojamiento.capacidadEstudiantes : '—'}">—</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="text-sm text-on-surface-variant flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">star</span>
-                            Calificación
-                        </span>
-                        <span class="font-bold text-secondary" th:text="${alojamiento.calificacionPromedio != null ? alojamiento.calificacionPromedio : '—'}">—</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Acciones rápidas -->
-            <div class="bg-primary-container rounded-2xl p-6">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-on-primary-container mb-4">Acciones</h2>
-                <div class="space-y-3">
-                    <a th:href="@{/admin/propiedades/__${alojamiento.id}__/editar}"
-                       class="w-full flex items-center gap-2 bg-primary text-on-primary px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-dim transition-colors justify-center">
-                        <span class="material-symbols-outlined text-[16px]">edit</span>
-                        Editar esta propiedad
-                    </a>
-                    <a th:href="@{/admin/propiedades}"
-                       class="w-full flex items-center gap-2 bg-white text-on-surface px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-surface-container-low transition-colors justify-center">
-                        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-                        Volver a propiedades
-                    </a>
+                <!-- Reglas -->
+                <div th:if="${alojamiento.reglas != null and !alojamiento.reglas.empty}"
+                    class="bg-white rounded-2xl p-6 editorial-shadow">
+                    <h2 class="text-xl font-bold mb-4">Reglas del hogar</h2>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div th:each="regla : ${alojamiento.reglas}" class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-secondary text-[18px]">info</span>
+                            <span class="text-sm font-medium text-on-surface" th:text="${regla}">Regla</span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
+            <!-- Sidebar admin: solo info, sin reservas ni contacto -->
+            <div class="space-y-4">
+
+                <!-- KPIs de la propiedad -->
+                <div class="bg-white rounded-2xl p-6 editorial-shadow">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-outline mb-4">Información</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+                            <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">payments</span>
+                                Precio mensual
+                            </span>
+                            <span class="font-bold text-primary">S/ <span
+                                    th:text="${alojamiento.precioMensual}">0</span></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+                            <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">bed</span>
+                                Habitaciones
+                            </span>
+                            <span class="font-bold"
+                                th:text="${alojamiento.habitaciones != null ? alojamiento.habitaciones : '—'}">—</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+                            <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">bathroom</span>
+                                Baños
+                            </span>
+                            <span class="font-bold"
+                                th:text="${alojamiento.banos != null ? alojamiento.banos : '—'}">—</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+                            <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">group</span>
+                                Capacidad de estudiantes
+                            </span>
+                            <span class="font-bold"
+                                th:text="${alojamiento.capacidadEstudiantes != null ? alojamiento.capacidadEstudiantes : '—'}">—</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">star</span>
+                                Calificación
+                            </span>
+                            <span class="font-bold text-secondary"
+                                th:text="${alojamiento.calificacionPromedio != null ? alojamiento.calificacionPromedio : '—'}">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones rápidas -->
+                <div class="bg-primary-container rounded-2xl p-6">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-on-primary-container mb-4">Acciones</h2>
+                    <div class="space-y-3">
+                        <a th:href="@{/admin/propiedades/__${alojamiento.id}__/editar}"
+                            class="w-full flex items-center gap-2 bg-primary text-on-primary px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-dim transition-colors justify-center">
+                            <span class="material-symbols-outlined text-[16px]">edit</span>
+                            Editar esta propiedad
+                        </a>
+                        <a th:href="@{/admin/propiedades}"
+                            class="w-full flex items-center gap-2 bg-white text-on-surface px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-surface-container-low transition-colors justify-center">
+                            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                            Volver a propiedades
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 </body>
+
 </html>

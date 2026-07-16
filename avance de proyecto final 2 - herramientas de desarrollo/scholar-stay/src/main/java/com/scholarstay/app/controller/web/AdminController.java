@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -124,6 +126,7 @@ public class AdminController {
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
         if (usuario == null) return "redirect:/admin/residentes";
         model.addAttribute("residente", usuario);
+        model.addAttribute("reservasResidente", adminDashboardService.getReservasDeUsuario(id));
         model.addAttribute("admin", getAdminUser());
         return "admin/residente_detalle";
     }
@@ -447,6 +450,18 @@ public class AdminController {
         model.addAttribute("admin", getAdminUser());
         model.addAttribute("logs", logService.obtenerTodos());
         return "admin/historial";
+    }
+
+    @GetMapping("/calendario")
+    public String calendario(Model model) {
+        model.addAttribute("admin", getAdminUser());
+        return "admin/calendario";
+    }
+
+    @GetMapping("/calendario/eventos")
+    @ResponseBody
+    public List<Map<String, Object>> getEventosCalendario() {
+        return adminDashboardService.getEventosCalendario();
     }
 
     // ============================================================
