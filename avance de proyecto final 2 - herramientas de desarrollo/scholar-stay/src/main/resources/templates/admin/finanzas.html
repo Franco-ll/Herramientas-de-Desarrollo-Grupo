@@ -257,8 +257,7 @@
                                 Estudiantes</th>
                             <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Monto
                             </th>
-                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline"
-                                style="display:none;">Estado</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-outline">Estado</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-surface-container-high">
@@ -308,10 +307,14 @@
                                 <span class="text-sm font-black text-on-surface"
                                     th:text="${'S/ ' + #numbers.formatDecimal(t.monto, 1, 2)}">S/ 0.00</span>
                             </td>
-                            <td class="px-6 py-4" style="display:none;">
-                                <span th:if="${t.estado == 'CONFIRMADA'}"
+                            <td class="px-6 py-4">
+                                <span th:if="${t.estado == 'CONFIRMADA' and t.fechaFin != null and !t.fechaFin.isBefore(T(java.time.LocalDate).now())}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Pagado
+                                    <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Vigente
+                                </span>
+                                <span th:if="${t.estado == 'CONFIRMADA' and t.fechaFin != null and t.fechaFin.isBefore(T(java.time.LocalDate).now())}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Vencida
                                 </span>
                                 <span th:if="${t.estado == 'PENDIENTE'}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-bold">
@@ -319,7 +322,7 @@
                                 </span>
                                 <span th:if="${t.estado == 'CANCELADA'}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Cancelado
+                                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Cancelada
                                 </span>
                             </td>
                         </tr>
