@@ -90,7 +90,7 @@ public class WebViewController {
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("alojamientos", alojamientoService.listar());
-        model.addAttribute("notificaciones", notificacionService.obtenerNoLeidas(usuario.getId()));
+        model.addAttribute("notificaciones", notificacionService.obtenerNoLeidasDTO(usuario.getId()));
         return "explorarResidencias";
     }
 
@@ -214,7 +214,7 @@ public class WebViewController {
             return "redirect:/login";
 
         model.addAttribute("usuario", usuario);
-        model.addAttribute("notificaciones", notificacionService.obtenerNotificaciones(usuario.getId()));
+        model.addAttribute("notificaciones", notificacionService.obtenerNotificacionesDTO(usuario.getId()));
         return "notificaciones";
     }
 
@@ -316,17 +316,20 @@ public class WebViewController {
     }
 
     @GetMapping("/reciboDigital")
-    public String digitalReceipt(HttpSession session, Model model) {
+    public String digitalReceipt(HttpSession session, Model model,
+            @RequestParam(required = false) Long reservaId) {
         Usuario usuario = getLoggedUser();
         if (usuario == null)
             return "redirect:/login";
 
-        Long lastReservaId = (Long) session.getAttribute("lastReservaId");
-        if (lastReservaId == null)
+        Long targetId = reservaId != null ? reservaId : (Long) session.getAttribute("lastReservaId");
+        if (targetId == null)
             return "redirect:/dashboard";
 
         com.scholarstay.app.model.Reserva reserva = reservaService.obtenerReservasPorUsuario(usuario.getId())
-                .stream().filter(r -> r.getId().equals(lastReservaId)).findFirst().orElse(null);
+                .stream().filter(r -> r.getId().equals(targetId)).findFirst().orElse(null);
+        if (reserva == null)
+            return "redirect:/dashboard";
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("reserva", reserva);

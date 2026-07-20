@@ -27,14 +27,29 @@ public class Grupo {
 
     private Integer miembros = 0;
 
+    @Column(name = "imagen_url")
+    private String imagenUrl;
+
+
     public Grupo() {}
 
-    public Grupo(String nombre, String descripcion, String carrera, String intereses, Integer miembros) {
+    public Grupo(String nombre, String descripcion,
+             String carrera, String intereses,
+             Integer miembros) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.carrera = carrera;
         this.intereses = intereses;
         this.miembros = miembros == null ? 0 : miembros;
+    }
+
+    public Grupo(String nombre, String descripcion, String carrera, String intereses, Integer miembros, String imagenUrl) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.carrera = carrera;
+        this.intereses = intereses;
+        this.miembros = miembros == null ? 0 : miembros;
+        this.imagenUrl = imagenUrl;
     }
 
     public Long getId() { return id; }
@@ -54,4 +69,7 @@ public class Grupo {
 
     public Integer getMiembros() { return miembros; }
     public void setMiembros(Integer miembros) { this.miembros = miembros; }
+
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl;}
 }

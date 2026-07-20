@@ -1,7 +1,15 @@
 package com.scholarstay.app.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pagos")
@@ -21,6 +29,10 @@ public class Pago {
     @Column(nullable = false)
     private String estado; // PENDIENTE, COMPLETADO, FALLIDO
 
+    // Método de pago registrado al momento de procesar
+    // Valores esperados: "TARJETA", "YAPE", "PLIN", "TRANSFERENCIA"
+    private String metodoPago;
+
     private LocalDateTime fechaPago;
 
     public Pago() {}
@@ -36,6 +48,9 @@ public class Pago {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public String getMetodoPago() { return metodoPago; }
+    public void setMetodoPago(String metodoPago) { this.metodoPago = metodoPago; }
 
     public LocalDateTime getFechaPago() { return fechaPago; }
     public void setFechaPago(LocalDateTime fechaPago) { this.fechaPago = fechaPago; }

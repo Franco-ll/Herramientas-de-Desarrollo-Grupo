@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Círculos de Estudio | Scholar Stay</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#50452f", "on-error": "#fff7f6",
+                        "surface-dim": "#d4dbdc", "secondary-container": "#c7ecc9",
+                        "surface": "#f8fafa", "on-primary-container": "#29506a",
+                        "surface-tint": "#3d637e", "on-background": "#2c3435",
+                        "on-tertiary-container": "#635740", "error": "#a83836",
+                        "surface-container-low": "#f0f4f4", "on-primary": "#f5f9ff",
+                        "outline-variant": "#acb3b4", "primary-fixed-dim": "#aad1ef",
+                        "on-primary-fixed-variant": "#335a74", "tertiary-fixed": "#feecce",
+                        "on-surface-variant": "#596061", "on-error-container": "#6e0a12",
+                        "tertiary-container": "#feecce", "inverse-primary": "#b8dffe",
+                        "primary-fixed": "#b8dffe", "primary": "#3d637e",
+                        "error-container": "#fa746f", "inverse-surface": "#0b0f0f",
+                        "primary-dim": "#305771", "inverse-on-surface": "#9b9d9e",
+                        "surface-container-high": "#e3e9ea", "surface-container-lowest": "#ffffff",
+                        "outline": "#757c7d", "surface-container": "#eaefef",
+                        "surface-container-highest": "#dde4e4", "tertiary-dim": "#5d523b",
+                        "secondary": "#46674b", "surface-variant": "#dde4e4",
+                        "secondary-dim": "#3a5a40", "on-secondary-container": "#39593f",
+                        "surface-bright": "#f8fafa", "background": "#f8fafa",
+                        "error-dim": "#67040d", "tertiary": "#6a5e46",
+                        "on-secondary-fixed-variant": "#426348", "on-tertiary-fixed-variant": "#6d614a",
+                        "secondary-fixed-dim": "#b9debc", "on-tertiary": "#fff8f1",
+                        "tertiary-fixed-dim": "#efdec0", "on-surface": "#2c3435",
+                        "on-secondary-fixed": "#26462d", "primary-container": "#b8dffe",
+                        "on-secondary": "#e8ffe7", "on-primary-fixed": "#123e56",
+                        "secondary-fixed": "#c7ecc9"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    "fontFamily": { "headline": ["Manrope"], "display": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; color: #2c3435; }
+        .font-display { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-header { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        @keyframes pulse-soft {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite ease-in-out; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(148, 163, 184, 0.7); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP NAV
+════════════════════════════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-header bg-surface/80 border-b border-outline-variant/10">
+    <div class="flex items-center w-full px-8 py-3 max-w-7xl mx-auto gap-6">
+        <a class="font-display text-xl font-bold text-primary" th:href="@{/}">Scholar Stay</a>
+        <div class="ml-6 hidden md:flex gap-4">
+            <a class="text-on-surface-variant hover:text-primary transition-colors" th:href="@{/explorar-residencias}">Alojamiento</a>
+            <a class="text-primary font-semibold border-b border-primary" th:href="@{/comunidad/inicio}">Comunidad</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Eventos</a>
+        </div>
+        <div class="ml-auto flex items-center gap-4">
+            <a class="text-on-surface-variant hover:text-primary" th:href="@{/notificaciones}">
+                <span class="material-symbols-outlined">notifications</span>
+            </a>
+            <a class="bg-primary text-on-primary px-5 py-2 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all" th:href="@{/perfil}">Mi Perfil</a>
+            <a class="flex items-center gap-1 text-error text-sm font-bold hover:text-error-dim transition-colors" th:href="@{/logout}">
+                <span class="material-symbols-outlined text-lg">logout</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MENSAJE DE FEEDBACK
+════════════════════════════════════════════════════════════════ -->
+<div th:if="${mensaje}" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-secondary text-on-secondary rounded-full shadow-lg font-semibold text-sm flex items-center gap-2 animate-pulse-soft">
+    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span th:text="${mensaje}"></span>
+</div>
+<div th:if="${error}" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-error text-on-error rounded-full shadow-lg font-semibold text-sm flex items-center gap-2">
+    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">error</span>
+    <span th:text="${error}"></span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════════ -->
+<main class="min-h-screen flex flex-col md:flex-row pt-24">
+
+    <!-- ── SIDEBAR: FILTROS ────────────────────────────────────── -->
+    <aside class="w-full md:w-72 shrink-0 bg-surface-container-low p-6 md:p-8 overflow-y-auto scrollbar-hide border-r border-outline-variant/10 md:sticky md:top-24 md:h-[calc(100vh-6rem)]">
+        <div class="space-y-8">
+
+            <!-- Header -->
+            <div>
+                <h2 class="font-display text-2xl font-bold tracking-tight text-on-surface mb-2">Círculos</h2>
+                <p class="text-xs text-on-surface-variant uppercase tracking-widest font-bold">Grupos de Estudio</p>
+            </div>
+
+            <!-- Filtro por Carrera -->
+            <div>
+                <h3 class="font-display text-sm font-bold mb-4 flex items-center gap-2 text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-lg">school</span>
+                    Carreras
+                </h3>
+                <div class="relative mb-4">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+                    <input class="w-full bg-surface border-outline-variant/30 rounded-lg py-2 pl-10 pr-4 text-xs focus:ring-primary focus:border-primary"
+                           id="searchCarrera" placeholder="Buscar carrera..." type="text">
+                </div>
+                <div class="flex flex-wrap gap-2" id="carreras-container">
+                    <th:block th:if="${carreras != null}">
+                        <button th:each="carrera : ${carreras}"
+                                th:text="${carrera}"
+                                class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-outline-variant/20 transition-colors"
+                                onclick="toggleCarrera(this)">
+                        </button>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Filtro por Intereses -->
+            <div>
+                <h3 class="font-display text-sm font-bold mb-4 flex items-center gap-2 text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-lg">auto_awesome</span>
+                    Intereses
+                </h3>
+                <div id="intereses-container" class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    <th:block th:if="${intereses != null}">
+                        <label th:each="interes : ${intereses}" class="flex items-center justify-between group cursor-pointer">
+                            <span class="text-xs text-on-surface-variant group-hover:text-primary transition-colors" th:text="${interes}"></span>
+                            <input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 bg-surface interes-checkbox" type="checkbox" th:value="${interes}">
+                        </label>
+                    </th:block>
+                </div>
+            </div>
+
+            <!-- Botón de búsqueda -->
+            <button class="w-full bg-primary text-on-primary py-3 rounded-lg font-bold text-sm hover:bg-primary-dim transition-all active:scale-95" onclick="ejecutarBusqueda()">
+                <span class="material-symbols-outlined text-sm" style="vertical-align: middle; margin-right: 8px;">search</span>
+                Filtrar
+            </button>
+        </div>
+    </aside>
+
+    <!-- ── LISTADO DE GRUPOS ───────────────────────────────────── -->
+    <section class="flex-1 p-6 md:p-10 max-w-5xl mx-auto w-full">
+
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-8">
+            <a th:href="@{/comunidad/inicio}" class="hover:text-primary transition-colors">Comunidad</a>
+            <span class="material-symbols-outlined text-sm">chevron_right</span>
+            <span class="text-on-surface font-semibold">Círculos de Estudio</span>
+        </nav>
+
+        <!-- Header -->
+        <div class="mb-10">
+            <h1 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface">
+                Círculos de Estudio
+            </h1>
+            <p class="text-on-surface-variant mt-2">
+                Explora grupos académicos, únete a debates y colabora con otros estudiantes.
+            </p>
+        </div>
+
+        <!-- Grid de grupos -->
+        <div th:if="${grupos != null and !grupos.isEmpty()}" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div th:each="g : ${grupos}"
+                 class="group bg-surface-container-low rounded-2xl border border-outline-variant/5 hover:border-primary/20 hover:bg-surface-container-high transition-all duration-300 overflow-hidden cursor-pointer"
+                 th:onclick="'window.location.href=\'' + @{/comunidad/grupos/{id}(id=${g.id})} + '\''">
+
+                <!-- Imagen del grupo -->
+                <div class="h-36 bg-gradient-to-br from-primary-container to-tertiary-container overflow-hidden">
+                    <img th:if="${g.imagenUrl != null and !#strings.isEmpty(g.imagenUrl)}"
+                         th:src="@{'/images/' + ${g.imagenUrl}}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                         alt="Imagen del grupo">
+                    <div th:unless="${g.imagenUrl != null and !#strings.isEmpty(g.imagenUrl)}"
+                         class="w-full h-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-5xl text-primary/40" style="font-variation-settings: 'FILL' 1;">groups</span>
+                    </div>
+                </div>
+
+                <div class="p-5">
+                    <!-- Badges -->
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container text-[9px] font-black uppercase tracking-widest" th:text="${g.carrera}">Carrera</span>
+                        <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter" th:text="'• ' + ${g.miembros} + ' miembros'">0 miembros</span>
+                    </div>
+
+                    <!-- Nombre -->
+                    <h3 class="font-display text-lg font-bold text-on-surface group-hover:text-primary transition-colors mb-2" th:text="${g.nombre}">Nombre</h3>
+
+                    <!-- Descripción -->
+                    <p class="text-sm text-on-surface-variant line-clamp-2 leading-relaxed" th:text="${g.descripcion}">Descripción</p>
+
+                    <!-- Intereses -->
+                    <div th:if="${g.intereses != null and !#strings.isEmpty(g.intereses)}" class="flex flex-wrap gap-1.5 mt-4">
+                        <span th:each="interes : ${#strings.listSplit(g.intereses, ',')}"
+                              class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant rounded-full text-[10px] font-medium"
+                              th:text="${interes.trim()}">interes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay grupos -->
+        <div th:if="${grupos == null or grupos.isEmpty()}"
+             class="text-center py-20">
+            <span class="material-symbols-outlined text-6xl text-outline-variant mb-6" style="font-variation-settings: 'FILL' 1;">forum</span>
+            <h3 class="font-display text-2xl font-bold text-on-surface mb-2">No hay círculos aún</h3>
+            <p class="text-on-surface-variant text-sm">No se encontraron grupos con los filtros seleccionados. Intenta con otros criterios.</p>
+        </div>
+
+    </section>
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     BOTTOM NAV (MÓVIL)
+════════════════════════════════════════════════════════════════ -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 rounded-t-xl glass-header bg-surface/95 border-t border-outline-variant/10 pb-6 pt-3 px-6 flex justify-around items-center">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/inicio}">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/matches}">
+        <span class="material-symbols-outlined">group</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Matches</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 gap-0.5" th:href="@{/comunidad/grupos}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Grupos</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/recursos}">
+        <span class="material-symbols-outlined">book</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Recursos</span>
+    </a>
+</nav>
+
+<script>
+    let selectedCarrera = null;
+
+    // Auto-ocultar mensajes de feedback
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.animate-pulse-soft').forEach(el => {
+            setTimeout(() => el.style.display = 'none', 3000);
+        });
+    });
+
+    // Scroll reveal
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (nav && window.scrollY > 20) {
+            nav.classList.add('shadow-lg');
+        } else if (nav) {
+            nav.classList.remove('shadow-lg');
+        }
+    });
+
+    function toggleCarrera(button) {
+        document.querySelectorAll('#carreras-container button').forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-on-primary');
+            btn.classList.add('bg-surface-container-highest', 'text-on-surface');
+        });
+        button.classList.remove('bg-surface-container-highest', 'text-on-surface');
+        button.classList.add('bg-primary', 'text-on-primary');
+        selectedCarrera = button.textContent.trim();
+    }
+
+    async function ejecutarBusqueda() {
+        const params = new URLSearchParams();
+        if (selectedCarrera) params.append('carrera', selectedCarrera);
+        const interesesSeleccionados = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
+        interesesSeleccionados.forEach(interes => params.append('interes', interes));
+        const query = params.toString();
+        window.location.href = '/comunidad/grupos' + (query ? ('?' + query) : '');
+    }
+
+    function normalizeText(s) {
+        return s ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchCarrera');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const raw = e.target.value || '';
+                const search = normalizeText(raw);
+                document.querySelectorAll('#carreras-container button').forEach(btn => {
+                    const carreraRaw = btn.textContent || '';
+                    const carrera = normalizeText(carreraRaw);
+                    btn.style.display = carrera.includes(search) ? '' : 'none';
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

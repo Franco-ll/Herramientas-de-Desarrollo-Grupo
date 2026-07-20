@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.scholarstay.app.model.Resena;
 import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.model.enums.NotificationPriority;
+import com.scholarstay.app.model.enums.NotificationType;
 import com.scholarstay.app.repository.ResenaRepository;
 
 import com.scholarstay.app.repository.ReservaRepository;
@@ -65,7 +67,7 @@ public class ResenaService {
         // Notificar al anfitrión del alojamiento
         Usuario anfitrion = resena.getAlojamiento().getAnfitrion();
         if (anfitrion != null) {
-            notificacionService.crearNotificacion(anfitrion, "Has recibido una nueva reseña en tu alojamiento: " + resena.getAlojamiento().getTitulo(), "RESENA");
+            notificacionService.crearNotificacion(anfitrion, "Has recibido una nueva reseña en tu alojamiento: " + resena.getAlojamiento().getTitulo(), NotificationType.RESENA, NotificationPriority.INFO, resena.getAlojamiento().getId());
         }
 
         return guardada;

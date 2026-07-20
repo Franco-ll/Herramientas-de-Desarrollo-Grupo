@@ -101,7 +101,7 @@
 <!-- Match Badge Floating -->
 <div class="absolute top-6 right-6 bg-secondary text-on-secondary px-6 py-3 rounded-full flex items-center gap-2 shadow-lg backdrop-blur-md">
 <span class="material-symbols-outlined text-sm" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="font-headline font-bold text-lg tracking-tight" th:text="${perfil.porcentajeCompatibilidad != null ? perfil.porcentajeCompatibilidad + '% Match' : 'Ver Perfil'}"></span>
+<span class="font-headline font-bold text-lg tracking-tight" th:text="${perfil.porcentajeCompatibilidad != null ? T(java.lang.Math).round(perfil.porcentajeCompatibilidad) + '% Match' : 'Ver Perfil'}"></span>
 </div>
 </div>
 <!-- Profile Details Content -->
@@ -169,13 +169,9 @@ Correo institucional confirmado
     </div>
 </div>
 <div class="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
-<button class="bg-primary hover:bg-primary-dim text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md" th:onclick="|window.location.href='@{/comunidad/chat}'|">
+<button class="bg-primary hover:bg-primary-dim text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md" th:onclick="|window.location.href='@{/comunidad/chat?con={id}(id=${perfil.usuarioId})}'|">
 <span class="material-symbols-outlined" data-icon="send" style="transform: none; transition: transform 0.2s;">send</span>
                         Enviar Mensaje
-                    </button>
-<button class="bg-secondary/10 hover:bg-secondary/20 text-secondary px-6 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
-<span class="material-symbols-outlined" data-icon="group_add">group_add</span>
-                        Invitar a Círculo
                     </button>
 
 <button class="p-4 rounded-full bg-surface-container-high hover:bg-surface-variant text-on-surface transition-all active:scale-95">
@@ -206,7 +202,7 @@ Correo institucional confirmado
             </h4>
             <th:block th:if="${perfil.intereses != null and !perfil.intereses.trim().isEmpty()}">
                 <ul class="space-y-3 text-on-surface text-sm">
-                    <li th:each="interes : ${#strings.split(perfil.intereses, ',')}"
+                    <li th:each="interes : ${perfil.intereses.split(',')}"
                         th:if="${interes != null and interes.trim() != ''}"
                         class="flex items-center gap-3">
                         <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">✓</span>
@@ -284,7 +280,7 @@ Correo institucional confirmado
 </p>
 <!-- Tags de intereses -->
 <div class="flex gap-2 flex-wrap" th:if="${perfil.intereses != null and !perfil.intereses.trim().isEmpty()}">
-    <span th:each="interes : ${#strings.split(perfil.intereses, ',')}"
+    <span th:each="interes : ${perfil.intereses.split(',')}"
           th:if="${interes != null and interes.trim() != ''}"
           th:text="${interes.trim()}"
           class="bg-secondary text-white px-3 py-1 rounded-md text-xs font-bold"></span>

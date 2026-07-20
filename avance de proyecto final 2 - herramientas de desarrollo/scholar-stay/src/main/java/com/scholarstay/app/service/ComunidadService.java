@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -38,17 +37,17 @@ public class ComunidadService {
                     "Análisis de optimización de m² y su impacto en la salud mental.",
                     "Arquitectura",
                     "sustentabilidad, diseño, eficiencia",
-                    12);
+                    12, "/images/grupos/grupo1.jpg");
             Grupo g2 = new Grupo("Bioética y el Genoma Humano",
                     "Resúmenes de papers sobre edición genética.",
                     "Medicina",
                     "bioética, genética, investigación",
-                    8);
+                    8, "/images/grupos/grupo2.jpg");
             Grupo g3 = new Grupo("Círculo de Programación",
                     "Algoritmos y estructuras de datos para concursos y tesis.",
                     "Ciencias de la Computación",
                     "algoritmos,programación,ia",
-                    20);
+                    20, "/images/grupos/grupo3.jpg");
             grupoRepository.saveAll(Arrays.asList(g1, g2, g3));
         }
     }
@@ -79,7 +78,7 @@ public class ComunidadService {
         return list;
     }
 
-    public List<MatchDTO> findMatches(Long currentUserId, String carreraFilter, String interesFilter) {
+    public List<MatchDTO> findMatches(Long currentUserId, String carreraFilter, List<String> interesFilters) {
         List<PerfilAcademico> perfiles = perfilAcademicoRepository.findAll();
 
         PerfilAcademico current = null;
@@ -92,13 +91,25 @@ public class ComunidadService {
         for (PerfilAcademico p : perfiles) {
             if (p.getUsuario() == null) continue;
 
+            // Excluir al usuario actual de los resultados
+            if (current != null &&
+                current.getUsuario() != null &&
+                p.getUsuario().getId()
+                 .equals(current.getUsuario().getId())) {
+                continue;
+            }
+
             // Filtros de búsqueda
             if (carreraFilter != null && !carreraFilter.isBlank()) {
                 if (p.getCarrera() == null || !p.getCarrera().toLowerCase().contains(carreraFilter.toLowerCase())) continue;
             }
-            if (interesFilter != null && !interesFilter.isBlank()) {
-                String intereses = p.getIntereses() == null ? "" : p.getIntereses();
-                if (!intereses.toLowerCase().contains(interesFilter.toLowerCase())) continue;
+            if (interesFilters != null && !interesFilters.isEmpty()) {
+                Set<String> interesesPerfil = splitToSet(p.getIntereses());
+                boolean matchAlguno = interesFilters.stream()
+                        .map(String::trim)
+                        .map(String::toLowerCase)
+                        .anyMatch(interesesPerfil::contains);
+                if (!matchAlguno) continue;
             }
 
             double score = current != null ? computeMatchScore(current, p) : computeDefaultScore(p);
@@ -108,7 +119,8 @@ public class ComunidadService {
             Usuario u = p.getUsuario();
             String uni = p.getUniversidad() == null ? "" : p.getUniversidad();
 
-            MatchDTO dto = new MatchDTO(u.getId(), u.getNombre(), p.getCarrera(), uni, p.getBiografia(), Math.round(score * 100.0) / 100.0);
+            MatchDTO dto = new MatchDTO(u.getId(), u.getNombre(), p.getCarrera(), uni, p.getBiografia(),
+                    Math.round(score * 100.0) / 100.0, u.getAvatar());
             results.add(dto);
         }
 
@@ -264,19 +276,33 @@ public class ComunidadService {
         return assembled;
     }
 
-    public List<Grupo> findGrupos(String carreraFilter, String interesFilter) {
-        if ((carreraFilter == null || carreraFilter.isBlank()) && (interesFilter == null || interesFilter.isBlank())) {
+    public List<Grupo> findGrupos(String carreraFilter, List<String> interesFilters) {
+        boolean sinFiltros = (carreraFilter == null || carreraFilter.isBlank())
+                && (interesFilters == null || interesFilters.isEmpty());
+        if (sinFiltros) {
             return grupoRepository.findAll();
         }
-        // combinar resultados por carrera e interés
-        Set<Grupo> res = new LinkedHashSet<>();
-        if (carreraFilter != null && !carreraFilter.isBlank()) {
-            res.addAll(grupoRepository.findByCarreraContainingIgnoreCase(carreraFilter));
-        }
-        if (interesFilter != null && !interesFilter.isBlank()) {
-            res.addAll(grupoRepository.findByInteresesContainingIgnoreCase(interesFilter));
-        }
-        return new ArrayList<>(res);
+
+        // Filtramos en memoria para garantizar comparación exacta por token
+        return grupoRepository.findAll().stream()
+                .filter(g -> {
+                    // Filtro por carrera: coincidencia parcial intencional (nombre de carrera completa)
+                    if (carreraFilter != null && !carreraFilter.isBlank()) {
+                        String carreraGrupo = g.getCarrera() == null ? "" : g.getCarrera().toLowerCase();
+                        if (!carreraGrupo.contains(carreraFilter.toLowerCase())) return false;
+                    }
+                    // Filtro por intereses: coincidencia exacta por token
+                    if (interesFilters != null && !interesFilters.isEmpty()) {
+                        Set<String> interesesGrupo = splitToSet(g.getIntereses());
+                        boolean matchAlguno = interesFilters.stream()
+                                .map(String::trim)
+                                .map(String::toLowerCase)
+                                .anyMatch(interesesGrupo::contains);
+                        if (!matchAlguno) return false;
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
     }
 
     /**
@@ -312,12 +338,23 @@ public class ComunidadService {
      * Retorna un porcentaje de 0 a 100.
      */
     public Double calcularCompatibilidad(Long usuarioId1, Long usuarioId2) {
-        PerfilAcademico p1 = perfilAcademicoRepository.findByUsuarioId(usuarioId1);
-        PerfilAcademico p2 = perfilAcademicoRepository.findByUsuarioId(usuarioId2);
-        
-        if (p1 == null || p2 == null) return 0.0;
-        
-        return Math.round(computeMatchScore(p1, p2) * 100.0) / 100.0;
-    }
-}
+    PerfilAcademico p1 = perfilAcademicoRepository.findByUsuarioId(usuarioId1);
+    PerfilAcademico p2 = perfilAcademicoRepository.findByUsuarioId(usuarioId2);
 
+    if (p1 == null || p2 == null) {
+        return 0.0;
+    }
+
+    double score = computeMatchScore(p1, p2);
+
+    if (score > 100) {
+        score = 100;
+    }
+
+    if (score < 0) {
+        score = 0;
+    }
+
+    return score;
+}
+}

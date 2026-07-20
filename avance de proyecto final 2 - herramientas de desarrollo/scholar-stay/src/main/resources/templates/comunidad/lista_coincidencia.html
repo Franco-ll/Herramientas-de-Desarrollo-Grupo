@@ -101,7 +101,7 @@
 </div>
 <div class="flex items-center gap-6">
 <div class="flex items-center gap-4 text-slate-600">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications</a>
+<a th:href="@{/notificaciones}" class="relative material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications<th:block th:replace="fragments/header :: bellBadge" /></a>
 <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
 </div>
 <div class="flex items-center gap-4">
@@ -129,10 +129,10 @@
     </div>
     <div class="flex gap-2 items-center">
         <span class="text-xs font-bold text-on-surface-variant uppercase">Interés:</span>
-        <select id="filterInteres" class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-8" onchange="reApplyFilters()">
+        <select id="filterInteres" multiple size="1" class="bg-surface-container-low border-none rounded-lg text-sm font-semibold focus:ring-primary text-on-surface" onchange="reApplyFilters()">
             <option value="">Todos</option>
             <th:block th:if="${intereses != null}">
-                <option th:each="i : ${intereses}" th:value="${i}" th:text="${i}" th:selected="${i == selectedInteres}"></option>
+                <option th:each="i : ${intereses}" th:value="${i}" th:text="${i}" th:selected="${selectedIntereses != null and selectedIntereses.contains(i)}"></option>
             </th:block>
         </select>
     </div>
@@ -147,13 +147,14 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <th:block th:if="${matches != null}">
-        <div th:each="m : ${matches}" class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10 flex flex-col h-full">
-            <div class="relative h-48 overflow-hidden">
-                <img alt="Student Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="">
+        <div th:each="m : ${matches}" class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_24px_24px_0_rgba(44,52,53,0.04)] hover:shadow-lg transition-all duration-300 group border border-outline-variant/10 flex flex-col h-full">   
+            <div class="relative h-56 overflow-hidden bg-surface-container-low">
+                <img alt="Student Profile"
+                     class="w-full h-full object-cover object-center transition-transform duration-700"
+                     th:src="${m.avatar != null and !#strings.isEmpty(m.avatar)} ? @{'/images/' + ${m.avatar}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(m.nombre,' ','+')} + '&background=3d637e&color=f5f9ff&size=400'">
                 <div class="absolute top-4 right-4 bg-secondary-container px-3 py-1 rounded-full flex items-center gap-1">
                     <span class="material-symbols-outlined text-secondary text-sm fill">bolt</span>
-                    <span class="text-on-secondary-container font-bold text-xs" th:text="${m.porcentaje} + ' % Match'"></span>
-                </div>
+                    <span class="text-on-secondary-container font-bold text-xs" th:text="${#numbers.formatInteger(m.porcentaje,0)} + '% Match'"></span>                </div>
             </div>
             <div class="p-6 flex flex-col flex-1">
                 <div class="flex justify-between items-start mb-2">
@@ -223,14 +224,18 @@
 <script>
         function reApplyFilters() {
             const carrera = document.getElementById('filterCarrera').value;
-            const interes = document.getElementById('filterInteres').value;
-            
+            // Recoger TODOS los intereses seleccionados (select multiple)
+            const interesesSeleccionados = Array.from(
+                document.getElementById('filterInteres').selectedOptions
+            ).map(opt => opt.value).filter(v => v !== '');
+
             let url = '/comunidad/matches';
             const params = new URLSearchParams();
-            
+
             if (carrera) params.append('carrera', carrera);
-            if (interes) params.append('interes', interes);
-            
+            // Enviar cada interés como parámetro multivalor: interes=IA&interes=Programacion
+            interesesSeleccionados.forEach(i => params.append('interes', i));
+
             const query = params.toString();
             window.location.href = url + (query ? '?' + query : '');
         }
@@ -245,4 +250,5 @@
             }
         });
     </script>
+<th:block th:replace="fragments/header :: notificationScripts" />
 </body></html>

@@ -20,6 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.scholarstay.app.model.Alojamiento;
 import com.scholarstay.app.model.Reserva;
 import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.model.enums.NotificationPriority;
+import com.scholarstay.app.model.enums.NotificationType;
 import com.scholarstay.app.repository.ReservaRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,7 +76,7 @@ class ReservaServiceTest {
         // 10 dias * (600.0 / 30.0) = 200.0
         assertEquals(200.0, resultado.getPrecioTotal());
         verify(reservaRepository, times(1)).save(reserva);
-        verify(notificacionService, times(1)).crearNotificacion(eq(usuario), anyString(), eq("RESERVA"));
+        verify(notificacionService, times(1)).crearNotificacion(eq(usuario), anyString(), eq(NotificationType.RESERVA), eq(NotificationPriority.SUCCESS), any());
     }
 
     @Test
@@ -157,7 +159,7 @@ class ReservaServiceTest {
         assertNotNull(resultado);
         assertEquals("CONFIRMADA", resultado.getEstado());
         verify(reservaRepository, times(1)).save(reserva);
-        verify(notificacionService, times(1)).crearNotificacion(eq(usuario), anyString(), eq("RESERVA"));
+        verify(notificacionService, times(1)).crearNotificacion(eq(usuario), anyString(), eq(NotificationType.RESERVA), eq(NotificationPriority.SUCCESS), anyLong());
     }
 
     @Test

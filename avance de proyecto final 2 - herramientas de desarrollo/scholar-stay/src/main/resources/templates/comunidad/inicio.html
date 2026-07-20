@@ -116,7 +116,7 @@
 </div>
 <div class="flex items-center gap-6">
 <div class="flex items-center gap-4 text-slate-600">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications</a>
+<a th:href="@{/notificaciones}" class="relative material-symbols-outlined cursor-pointer hover:text-sky-700 transition-colors">notifications<th:block th:replace="fragments/header :: bellBadge" /></a>
 <a href="javascript:void(0)" class="material-symbols-outlined cursor-default text-slate-400">chat_bubble</a>
 </div>
 <div class="flex items-center gap-4">
@@ -214,12 +214,13 @@
     <th:block th:if="${featuredMatches != null}">
         <div th:each="m : ${featuredMatches}" class="group relative bg-surface-container-low p-6 rounded-2xl border border-outline-variant/5 hover:border-primary/20 transition-all duration-300 cursor-pointer flex flex-col h-full" th:onclick="|window.location.href='@{/comunidad/perfil/' + ${m.usuarioId} }'|">
             <div class="flex items-start gap-4">
-                <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
+                <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover transition-all duration-500 shadow-sm"
+                     th:src="${m.avatar != null and !#strings.isEmpty(m.avatar)} ? @{'/images/' + ${m.avatar}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(m.nombre,' ','+')} + '&background=3d637e&color=f5f9ff&size=200'"
+                     src="https://ui-avatars.com/api/?name=Usuario&background=3d637e&color=f5f9ff&size=200">
                 <div>
                     <h3 class="font-display font-bold text-lg" th:text="${m.nombre}"></h3>
                     <p class="text-xs text-on-surface-variant font-medium" th:text="${m.carrera}"></p>
-                    <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black" th:text="${m.porcentaje} + '% MATCH'"></div>
-                </div>
+                    <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black" th:text="${T(java.lang.Math).round(m.porcentaje)} + '% MATCH'"></div>                </div>
             </div>
             <p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic flex-1" th:text="${m.biografia != null and m.biografia.length() > 100 ? m.biografia.substring(0,100) + '...' : m.biografia}"></p>
             <div class="mt-6 flex gap-2">
@@ -235,15 +236,20 @@
 <div class="space-y-10 scroll-mt-10" id="circulos">
 <div class="flex items-end justify-between border-b border-outline-variant/10 pb-6">
 <div>
-<span class="text-tertiary font-bold text-xs uppercase tracking-[0.2em] block mb-2">DEBATES ACTIVOS</span>
+<span class="text-tertiary font-bold text-xs uppercase tracking-[0.2em] block mb-2">Círculos sugeridos para ti</span>
 <h2 class="font-display text-3xl font-extrabold text-on-surface">Círculos de Estudio</h2>
 </div>
+        <a th:href="@{/comunidad/grupos}" class="text-primary font-bold text-sm hover:underline flex items-center gap-1">
+            Ver todos <span class="material-symbols-outlined text-sm">chevron_right</span>
+        </a>
 </div>
     <div class="space-y-4">
         <th:block th:if="${gruposDestacados != null}">
-            <div th:each="g : ${gruposDestacados}" class="bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20" th:onclick="|window.location.href='@{/comunidad/grupos}'|">
+            <div th:each="g : ${gruposDestacados}" class="bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20" th:onclick="|window.location.href='@{/comunidad/grupos/{id}(id=${g.id})}'|">
                 <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-                    <img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="">
+                    <img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                         th:src="${g.imagenUrl != null and !#strings.isEmpty(g.imagenUrl)} ? @{'/images/' + ${g.imagenUrl}} : 'https://ui-avatars.com/api/?name=' + ${#strings.replace(g.nombre,' ','+')} + '&background=6a5e46&color=feecce&size=200&bold=true'"
+                         src="https://ui-avatars.com/api/?name=Grupo&background=6a5e46&color=feecce&size=200&bold=true">
                 </div>
                 <div class="flex-1">
                     <div class="flex items-center gap-2 mb-2">
@@ -285,23 +291,68 @@
     const selectedIntereses = new Set();
 
     function toggleCarrera(button) {
-        // Remover clase activa de todos los botones
+        const yaActivo = button.classList.contains('bg-primary');
         document.querySelectorAll('#carreras-container button').forEach(btn => {
             btn.classList.remove('bg-primary', 'text-on-primary');
             btn.classList.add('bg-surface-container-highest', 'text-on-surface');
         });
-        
-        // Agregar clase activa al botón seleccionado
-        button.classList.remove('bg-surface-container-highest', 'text-on-surface');
-        button.classList.add('bg-primary', 'text-on-primary');
-        selectedCarrera = button.textContent.trim();
+        if (!yaActivo) {
+            button.classList.remove('bg-surface-container-highest', 'text-on-surface');
+            button.classList.add('bg-primary', 'text-on-primary');
+            selectedCarrera = button.textContent.trim();
+        } else {
+            selectedCarrera = null;
+        }
+    }
+
+    function guardarEstado() {
+        const intereses = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
+        sessionStorage.setItem('comunidadFiltros', JSON.stringify({
+            selectedCarrera: selectedCarrera,
+            selectedIntereses: intereses
+        }));
+    }
+
+    function restaurarEstado() {
+        const navEntries = performance.getEntriesByType('navigation');
+        const esBackForward = navEntries.length > 0 && navEntries[0].type === 'back_forward';
+        if (!esBackForward) {
+            sessionStorage.removeItem('comunidadFiltros');
+            return;
+        }
+        const raw = sessionStorage.getItem('comunidadFiltros');
+        if (!raw) return;
+        const estado = JSON.parse(raw);
+        if (!estado.selectedCarrera && (!estado.selectedIntereses || estado.selectedIntereses.length === 0)) return;
+
+        if (estado.selectedCarrera) {
+            document.querySelectorAll('#carreras-container button').forEach(btn => {
+                if (btn.textContent.trim() === estado.selectedCarrera) {
+                    btn.classList.remove('bg-surface-container-highest', 'text-on-surface');
+                    btn.classList.add('bg-primary', 'text-on-primary');
+                    selectedCarrera = estado.selectedCarrera;
+                }
+            });
+        }
+
+        estado.selectedIntereses.forEach(valor => {
+            const cb = document.querySelector(`.interes-checkbox[value="${CSS.escape(valor)}"]`);
+            if (cb) {
+                cb.checked = true;
+                const span = cb.closest('label')?.querySelector('span');
+                if (span) span.classList.add('text-primary', 'font-bold');
+            }
+        });
+
+        ejecutarBusqueda();
     }
 
     async function ejecutarBusqueda() {
         const params = new URLSearchParams();
         if (selectedCarrera) params.append('carrera', selectedCarrera);
         const interesesSeleccionados = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
-        if (interesesSeleccionados.length > 0) params.append('interes', interesesSeleccionados[0]);
+        // Enviar TODOS los intereses seleccionados como parámetros multivalor: interes=IA&interes=Programacion
+        interesesSeleccionados.forEach(interes => params.append('interes', interes));
 
         // Fetch matches and grupos via API endpoints
         try {
@@ -324,12 +375,13 @@
                     div.onclick = () => { window.location.href = '/comunidad/perfil/' + m.usuarioId };
                     div.innerHTML = `
                         <div class="flex items-start gap-4">
-                            <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-sm" src="">
+                            <img alt="Perfil" class="w-20 h-20 rounded-2xl object-cover transition-all duration-500 shadow-sm"
+                                 src="${m.avatar ? '/images/' + m.avatar : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(m.nombre || 'U') + '&background=3d637e&color=f5f9ff&size=200'}"
+                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(m.nombre || 'U')}&background=3d637e&color=f5f9ff&size=200'">
                             <div>
                                 <h3 class="font-display font-bold text-lg">${m.nombre}</h3>
                                 <p class="text-xs text-on-surface-variant font-medium">${m.carrera || ''}</p>
-                                <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black">${m.porcentaje}% MATCH</div>
-                            </div>
+                                <div class="mt-3 inline-flex items-center px-2.5 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black">${Math.round(m.porcentaje)}% MATCH</div>                            </div>
                         </div>
                         <p class="mt-4 text-sm text-on-surface-variant leading-relaxed italic">${(m.biografia || '').length > 100 ? (m.biografia.substring(0,100) + '...') : (m.biografia || '')}</p>
                         <div class="mt-6 flex gap-2">
@@ -350,9 +402,11 @@
                 sliceG.forEach(g => {
                     const el = document.createElement('div');
                     el.className = 'bg-surface-container-low p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center group cursor-pointer transition-all hover:bg-surface-container-high border border-transparent hover:border-outline-variant/20';
-                    el.onclick = () => { window.location.href = '/comunidad/grupos' };
+                    el.onclick = () => { window.location.href = '/comunidad/grupos/' + g.id };
                     el.innerHTML = `
-                        <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0"><img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src=""></div>
+                        <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0"><img alt="Grupo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                 src="${g.imagenUrl ? '/images/' + g.imagenUrl : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(g.nombre || 'G') + '&background=6a5e46&color=feecce&size=200&bold=true'}"
+                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(g.nombre || 'G')}&background=6a5e46&color=feecce&size=200'"></div>
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="px-2 py-0.5 rounded bg-on-tertiary-fixed text-tertiary-fixed text-[9px] font-black uppercase tracking-widest">${g.carrera || ''}</span>
@@ -365,6 +419,7 @@
                     gContainerParent.appendChild(el);
                 });
             }
+            guardarEstado();
         } catch (e) {
             console.error(e);
             alert('Error al aplicar filtros. Intenta nuevamente.');
@@ -384,6 +439,9 @@
             }
         });
     });
+
+    // Restaurar estado de filtros desde sessionStorage (para volver de detalle con "Atrás")
+    restaurarEstado();
 
     // Búsqueda por carrera (normaliza acentos y mayúsculas) - compatible
     function normalizeText(s) {
@@ -409,9 +467,11 @@
         const params = new URLSearchParams();
         if (selectedCarrera) params.append('carrera', selectedCarrera);
         const interesesSeleccionados = Array.from(document.querySelectorAll('.interes-checkbox:checked')).map(cb => cb.value);
-        if (interesesSeleccionados.length > 0) params.append('interes', interesesSeleccionados[0]);
+        // Enviar TODOS los intereses seleccionados como parámetros multivalor: interes=IA&interes=Programacion
+        interesesSeleccionados.forEach(interes => params.append('interes', interes));
         const query = params.toString();
         window.location.href = '/comunidad/matches' + (query ? ('?' + query) : '');
     }
 </script>
+<th:block th:replace="fragments/header :: notificationScripts" />
 </body></html>
