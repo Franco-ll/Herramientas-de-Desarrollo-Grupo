@@ -127,9 +127,14 @@
         </div>
     </div>
     
-    <button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200">
-        Marcar todo como leído
-    </button>
+    <button
+    th:if="${noLeidas > 0}"
+    th:onclick="'marcarTodas(' + ${usuario.id} + ')'"
+    class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200">
+
+    Marcar todo como leído
+
+</button>
 </div>
 <!-- Notification List --><div class="divide-y divide-outline-variant/10">
 <!-- Dynamic Notification Group -->
@@ -139,6 +144,7 @@
 <!-- Notification Item -->
 <div th:each="notificacion : ${notificaciones}" 
      th:classappend="${!notificacion.leido} ? 'opacity-100' : 'opacity-70'"
+     th:onclick="'abrirNotificacion(' + ${notificacion.id} + ')'"
      class="group relative flex gap-4 p-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer mb-2">
     
 <div class="flex-shrink-0">
@@ -174,9 +180,15 @@
 </div>
 <!-- Footer Action -->
 <div class="p-6 bg-surface-container-low text-center">
-<button class="text-primary font-label font-bold text-sm hover:underline">
-                    Ver historial completo de actividades
-                </button>
+
+    <button
+        onclick="verHistorial()"
+        class="text-primary font-label font-bold text-sm hover:underline">
+
+        Ver historial completo de actividades
+
+    </button>
+
 </div>
 </section>
 <!-- Contextual Help (Bento Grid Style) -->
@@ -184,7 +196,7 @@
 <div class="col-span-2 bg-secondary/5 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group">
 <div class="relative z-10">
 <h4 class="text-secondary font-headline font-extrabold text-2xl mb-2">Personaliza tus alertas</h4>
-<p class="text-on-surface-variant text-sm max-w-md">Elige qué notificaciones recibir en tu móvil y cuáles prefieres ver solo en la plataforma.</p>
+<p class="text-on-surface-variant text-sm max-w-md">Elige qué notificaciones deseas recibir y cómo quieres visualizar la actividad importante dentro de Scholar Stay.</p>
 </div>
 <div class="mt-6 relative z-10">
 <button class="bg-secondary text-on-secondary px-6 py-2 rounded-full text-sm font-bold">Configurar ajustes</button>
@@ -223,4 +235,32 @@
 <span class="text-[10px] font-semibold font-label">Profile</span>
 </a>
 </nav>
+<script>
+
+function abrirNotificacion(id) {
+
+    window.location.href =
+            `/notificaciones/${id}`;
+}
+
+async function marcarTodas(usuarioId) {
+
+    await fetch(
+        `/api/notificaciones/usuario/${usuarioId}/leer-todas`,
+        {
+            method: 'PUT'
+        }
+    );
+
+    location.reload();
+}
+
+function verHistorial() {
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+</script>
 </body></html>

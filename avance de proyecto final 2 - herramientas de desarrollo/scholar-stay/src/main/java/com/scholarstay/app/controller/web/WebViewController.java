@@ -12,14 +12,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.scholarstay.app.model.Alojamiento;
+import com.scholarstay.app.model.Evento;
+import com.scholarstay.app.model.Notificacion;
 import com.scholarstay.app.model.PerfilAcademico;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.service.AlojamientoService;
+import com.scholarstay.app.service.EventoService;
+import com.scholarstay.app.service.InscripcionEventoService;
 import com.scholarstay.app.service.NotificacionService;
 import com.scholarstay.app.service.PerfilAcademicoService;
 import com.scholarstay.app.service.ResenaService;
 import com.scholarstay.app.service.ReservaService;
 import com.scholarstay.app.service.UsuarioService;
+import com.scholarstay.app.service.EventoService;
+import com.scholarstay.app.service.InscripcionEventoService;
 import com.scholarstay.app.security.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,21 +44,32 @@ import java.util.UUID;
 public class WebViewController {
 
     private final AlojamientoService alojamientoService;
+    private final EventoService eventoService;
+    private final InscripcionEventoService inscripcionEventoService;
     private final NotificacionService notificacionService;
     private final PerfilAcademicoService perfilAcademicoService;
     private final UsuarioService usuarioService;
     private final ReservaService reservaService;
     private final ResenaService resenaService;
 
-    public WebViewController(AlojamientoService alojamientoService, NotificacionService notificacionService,
-            PerfilAcademicoService perfilAcademicoService, UsuarioService usuarioService,
-            ReservaService reservaService, ResenaService resenaService) {
+    public WebViewController(
+            AlojamientoService alojamientoService,
+            NotificacionService notificacionService,
+            PerfilAcademicoService perfilAcademicoService,
+            UsuarioService usuarioService,
+            ReservaService reservaService,
+            ResenaService resenaService,
+            EventoService eventoService,
+            InscripcionEventoService inscripcionEventoService) {
+
         this.alojamientoService = alojamientoService;
         this.notificacionService = notificacionService;
         this.perfilAcademicoService = perfilAcademicoService;
         this.usuarioService = usuarioService;
         this.reservaService = reservaService;
         this.resenaService = resenaService;
+        this.eventoService = eventoService;
+        this.inscripcionEventoService = inscripcionEventoService;
     }
 
     private Usuario getLoggedUser() {
@@ -91,6 +108,7 @@ public class WebViewController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("alojamientos", alojamientoService.listar());
         model.addAttribute("notificaciones", notificacionService.obtenerNoLeidas(usuario.getId()));
+        model.addAttribute("noLeidas", notificacionService.obtenerNoLeidas(usuario.getId()).size());
         return "explorarResidencias";
     }
 
@@ -186,7 +204,8 @@ public class WebViewController {
             String extension = file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")
                     ? file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."))
                     : ".jpg";
-            String filename = "avatar_" + usuario.getId() + "_" + UUID.randomUUID().toString().substring(0, 8) + extension;
+            String filename = "avatar_" + usuario.getId() + "_" + UUID.randomUUID().toString().substring(0, 8)
+                    + extension;
             Path destination = uploadDir.resolve(filename);
             Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
             usuario.setAvatar(filename);
@@ -209,13 +228,55 @@ public class WebViewController {
 
     @GetMapping("/notificaciones")
     public String notifications(HttpSession session, Model model) {
+
         Usuario usuario = getLoggedUser();
-        if (usuario == null)
+
+        if (usuario == null) {
             return "redirect:/login";
+        }
 
         model.addAttribute("usuario", usuario);
-        model.addAttribute("notificaciones", notificacionService.obtenerNotificaciones(usuario.getId()));
+        model.addAttribute(
+                "notificaciones",
+                notificacionService.obtenerNotificaciones(usuario.getId()));
+        model.addAttribute(
+                "noLeidas",
+                notificacionService.obtenerNoLeidas(usuario.getId()).size());
+
         return "notificaciones";
+    }
+
+    @GetMapping("/notificaciones/{id}")
+    public String verNotificacion(
+            @PathVariable Long id,
+            HttpSession session,
+            Model model) {
+
+        Usuario usuario = getLoggedUser();
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        Notificacion notificacion = notificacionService.obtenerPorId(id);
+
+        if (notificacion == null) {
+            return "redirect:/notificaciones";
+        }
+
+        if (!notificacion.getUsuario().getId().equals(usuario.getId())) {
+            return "redirect:/notificaciones";
+        }
+
+        if (!notificacion.getLeido()) {
+            notificacionService.marcarComoLeida(id);
+            notificacion.setLeido(true);
+        }
+
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("notificacion", notificacion);
+
+        return "detalle-notificacion";
     }
 
     // --- Booking Flow ---
@@ -265,12 +326,14 @@ public class WebViewController {
             // Ignoramos el total que envía el cliente para prevenir Parameter Tampering
             // @org.springframework.web.bind.annotation.RequestParam Double total,
             HttpSession session, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
-        
+
         Usuario usuario = getLoggedUser();
-        if (usuario == null) return "redirect:/login";
+        if (usuario == null)
+            return "redirect:/login";
 
         Alojamiento alojamiento = alojamientoService.obtenerPorId(alojamientoId);
-        if (alojamiento == null) return "redirect:/dashboard";
+        if (alojamiento == null)
+            return "redirect:/dashboard";
 
         try {
             // Validamos que el formato de fechas no rompa el sistema con un error 500
@@ -281,19 +344,22 @@ public class WebViewController {
             reserva.setAlojamiento(alojamiento);
             reserva.setFechaInicio(inicio);
             reserva.setFechaFin(fin);
-            
-            // Pasamos la reserva al servicio, él se encargará de validar reglas de negocio y calcular el total REAL
+
+            // Pasamos la reserva al servicio, él se encargará de validar reglas de negocio
+            // y calcular el total REAL
             com.scholarstay.app.model.Reserva guardada = reservaService.crearReserva(reserva, usuario);
             session.setAttribute("lastReservaId", guardada.getId());
 
             return "redirect:/reservaConfirmada";
         } catch (java.time.format.DateTimeParseException e) {
             redirectAttributes.addFlashAttribute("error", "El formato de fecha ingresado no es válido.");
-            return "redirect:/pasarelaPagos?alojamientoId=" + alojamientoId + "&fechaInicio=" + fechaInicio + "&fechaFin=" + fechaFin + "&total=0.0";
+            return "redirect:/pasarelaPagos?alojamientoId=" + alojamientoId + "&fechaInicio=" + fechaInicio
+                    + "&fechaFin=" + fechaFin + "&total=0.0";
         } catch (IllegalArgumentException | IllegalStateException e) {
             // Capturamos las excepciones de validación que vienen del servicio
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/pasarelaPagos?alojamientoId=" + alojamientoId + "&fechaInicio=" + fechaInicio + "&fechaFin=" + fechaFin + "&total=0.0";
+            return "redirect:/pasarelaPagos?alojamientoId=" + alojamientoId + "&fechaInicio=" + fechaInicio
+                    + "&fechaFin=" + fechaFin + "&total=0.0";
         }
     }
 
@@ -350,7 +416,8 @@ public class WebViewController {
 
         // Usamos PageRequest para manejar la paginación de las reseñas
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size);
-        org.springframework.data.domain.Page<com.scholarstay.app.model.Resena> paginaResenas = resenaService.obtenerResenasPaginadasPorAlojamiento(alojamientoId, pageable);
+        org.springframework.data.domain.Page<com.scholarstay.app.model.Resena> paginaResenas = resenaService
+                .obtenerResenasPaginadasPorAlojamiento(alojamientoId, pageable);
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("alojamiento", alojamiento);
@@ -359,8 +426,52 @@ public class WebViewController {
         model.addAttribute("totalPaginas", paginaResenas.getTotalPages());
         model.addAttribute("haySiguiente", paginaResenas.hasNext());
         model.addAttribute("hayAnterior", paginaResenas.hasPrevious());
-        
+
         return "ver_todas_las_resenas";
+    }
+
+    @GetMapping("/eventos")
+    public String eventos(HttpSession session, Model model) {
+
+        Usuario usuario = getLoggedUser();
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("eventos", eventoService.listar());
+        model.addAttribute(
+                "misEventos",
+                inscripcionEventoService.obtenerIdsEventosInscritos(usuario));
+
+        return "eventos";
+    }
+
+    @GetMapping("/evento/accion/{id}")
+    public String accionEvento(
+            @PathVariable Long id,
+            HttpSession session) {
+
+        Usuario usuario = getLoggedUser();
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        Evento evento = eventoService.obtenerPorId(id);
+
+        if (evento == null) {
+            return "redirect:/eventos";
+        }
+
+        if (inscripcionEventoService.estaInscrito(usuario, evento)) {
+            inscripcionEventoService.desinscribir(usuario, evento);
+        } else {
+            inscripcionEventoService.inscribir(usuario, evento);
+        }
+
+        return "redirect:/eventos";
     }
 
     @GetMapping("/resenas_academicas")
@@ -395,13 +506,13 @@ public class WebViewController {
             resena.setAlojamiento(alojamiento);
             resena.setCalificacion(calificacion);
             resena.setComentario(comentario);
-            
+
             // ResenaService se encargará de las validaciones de negocio e integridad
             resenaService.crearResena(resena, usuario);
 
             redirectAttributes.addFlashAttribute("success", "Tu reseña se publicó exitosamente.");
             return "redirect:/alojamiento/" + alojamientoId;
-            
+
         } catch (IllegalArgumentException | IllegalStateException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/resenas_academicas?alojamientoId=" + alojamientoId;
