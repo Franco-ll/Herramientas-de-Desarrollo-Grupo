@@ -100,7 +100,7 @@
 </nav>
 <div class="flex items-center gap-6">
 <div class="flex gap-4 text-slate-600">
-<a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700">notifications</a>
+<a th:href="@{/notificaciones}" class="relative material-symbols-outlined cursor-pointer hover:text-sky-700">notifications<th:block th:replace="fragments/header :: bellBadge" /></a>
 <a th:href="@{/notificaciones}" class="material-symbols-outlined cursor-pointer hover:text-sky-700">chat_bubble</a>
 </div>
 <a th:href="@{/editar-perfil-escolar}" class="bg-primary text-on-primary px-5 py-2 rounded-full font-semibold transition-transform active:scale-95">Mi Perfil</a>
@@ -319,4 +319,5 @@
 <span class="material-symbols-outlined text-slate-400">favorite</span>
 <span class="material-symbols-outlined text-slate-400">person</span>
 </nav>
+<th:block th:replace="fragments/header :: notificationScripts" />
 </body></html>

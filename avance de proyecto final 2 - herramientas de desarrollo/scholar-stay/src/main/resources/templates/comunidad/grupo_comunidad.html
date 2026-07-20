@@ -1,89 +1,55 @@
-<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" class="light" lang="es"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Study Circle Detail | Scholar Stay</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title th:text="${detalle.grupo.nombre} + ' | Scholar Stay'">Círculo | Scholar Stay</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "on-tertiary-fixed": "#50452f",
-                        "on-error": "#fff7f6",
-                        "surface-dim": "#d4dbdc",
-                        "secondary-container": "#c7ecc9",
-                        "surface": "#f8fafa",
-                        "on-primary-container": "#29506a",
-                        "surface-tint": "#3d637e",
-                        "on-background": "#2c3435",
-                        "on-tertiary-container": "#635740",
-                        "error": "#a83836",
-                        "surface-container-low": "#f0f4f4",
-                        "on-primary": "#f5f9ff",
-                        "outline-variant": "#acb3b4",
-                        "primary-fixed-dim": "#aad1ef",
-                        "on-primary-fixed-variant": "#335a74",
-                        "tertiary-fixed": "#feecce",
-                        "on-surface-variant": "#596061",
-                        "on-error-container": "#6e0a12",
-                        "tertiary-container": "#feecce",
-                        "inverse-primary": "#b8dffe",
-                        "primary-fixed": "#b8dffe",
-                        "primary": "#3d637e",
-                        "error-container": "#fa746f",
-                        "inverse-surface": "#0b0f0f",
-                        "primary-dim": "#305771",
-                        "inverse-on-surface": "#9b9d9e",
-                        "surface-container-high": "#e3e9ea",
-                        "surface-container-lowest": "#ffffff",
-                        "outline": "#757c7d",
-                        "surface-container": "#eaefef",
-                        "surface-container-highest": "#dde4e4",
-                        "tertiary-dim": "#5d523b",
-                        "secondary": "#46674b",
-                        "surface-variant": "#dde4e4",
-                        "secondary-dim": "#3a5a40",
-                        "on-secondary-container": "#39593f",
-                        "surface-bright": "#f8fafa",
-                        "background": "#f8fafa",
-                        "error-dim": "#67040d",
-                        "tertiary": "#6a5e46",
-                        "on-secondary-fixed-variant": "#426348",
-                        "on-tertiary-fixed-variant": "#6d614a",
-                        "secondary-fixed-dim": "#b9debc",
-                        "on-tertiary": "#fff8f1",
-                        "tertiary-fixed-dim": "#efdec0",
-                        "on-surface": "#2c3435",
-                        "on-secondary-fixed": "#26462d",
-                        "primary-container": "#b8dffe",
-                        "on-secondary": "#e8ffe7",
-                        "on-primary-fixed": "#123e56",
+                        "on-tertiary-fixed": "#50452f", "on-error": "#fff7f6",
+                        "surface-dim": "#d4dbdc", "secondary-container": "#c7ecc9",
+                        "surface": "#f8fafa", "on-primary-container": "#29506a",
+                        "surface-tint": "#3d637e", "on-background": "#2c3435",
+                        "on-tertiary-container": "#635740", "error": "#a83836",
+                        "surface-container-low": "#f0f4f4", "on-primary": "#f5f9ff",
+                        "outline-variant": "#acb3b4", "primary-fixed-dim": "#aad1ef",
+                        "on-primary-fixed-variant": "#335a74", "tertiary-fixed": "#feecce",
+                        "on-surface-variant": "#596061", "on-error-container": "#6e0a12",
+                        "tertiary-container": "#feecce", "inverse-primary": "#b8dffe",
+                        "primary-fixed": "#b8dffe", "primary": "#3d637e",
+                        "error-container": "#fa746f", "inverse-surface": "#0b0f0f",
+                        "primary-dim": "#305771", "inverse-on-surface": "#9b9d9e",
+                        "surface-container-high": "#e3e9ea", "surface-container-lowest": "#ffffff",
+                        "outline": "#757c7d", "surface-container": "#eaefef",
+                        "surface-container-highest": "#dde4e4", "tertiary-dim": "#5d523b",
+                        "secondary": "#46674b", "surface-variant": "#dde4e4",
+                        "secondary-dim": "#3a5a40", "on-secondary-container": "#39593f",
+                        "surface-bright": "#f8fafa", "background": "#f8fafa",
+                        "error-dim": "#67040d", "tertiary": "#6a5e46",
+                        "on-secondary-fixed-variant": "#426348", "on-tertiary-fixed-variant": "#6d614a",
+                        "secondary-fixed-dim": "#b9debc", "on-tertiary": "#fff8f1",
+                        "tertiary-fixed-dim": "#efdec0", "on-surface": "#2c3435",
+                        "on-secondary-fixed": "#26462d", "primary-container": "#b8dffe",
+                        "on-secondary": "#e8ffe7", "on-primary-fixed": "#123e56",
                         "secondary-fixed": "#c7ecc9"
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                    "fontFamily": {
-                        "headline": ["Manrope"],
-                        "display": ["Manrope"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    }
-                },
-            },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    "fontFamily": { "headline": ["Manrope"], "display": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+                }
+            }
         }
     </script>
-<style>
+    <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafa; color: #2c3435; }
         .font-display { font-family: 'Manrope', sans-serif; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
         .glass-header { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
         @keyframes pulse-soft {
             0% { transform: scale(1); opacity: 1; }
@@ -94,332 +60,745 @@
     </style>
 </head>
 <body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
-<!-- Global Top Navigation -->
-<!--<nav class="fixed top-0 left-0 right-0 z-50 glass-header bg-surface/80 border-b border-outline-variant/10">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP NAV
+════════════════════════════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-header bg-surface/80 border-b border-outline-variant/10">
     <div class="flex items-center w-full px-8 py-3 max-w-7xl mx-auto gap-6">
         <a class="font-display text-xl font-bold text-primary" th:href="@{/}">Scholar Stay</a>
-        <div class="ml-6 flex gap-4">
-            <a class="text-on-surface-variant hover:text-primary" th:href="@{/explorarResidencias}">Alojamiento</a>
-            <a class="text-on-surface-variant hover:text-primary" th:href="@{/comunidad/inicio}">Comunidad</a>
-            <a class="text-on-surface-variant hover:text-primary" th:href="@{/eventos}">Eventos</a>
+        <div class="ml-6 hidden md:flex gap-4">
+            <a class="text-on-surface-variant hover:text-primary transition-colors" th:href="@{/explorar-residencias}">Alojamiento</a>
+            <a class="text-primary font-semibold border-b border-primary" th:href="@{/comunidad/inicio}">Comunidad</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Eventos</a>
         </div>
         <div class="ml-auto flex items-center gap-4">
-            <a class="text-on-surface-variant hover:text-primary" th:href="@{/perfil}">Mi Perfil</a>
-            <a class="text-on-surface-variant hover:text-primary" th:href="@{/logout}">Cerrar Sesión</a>
+<a class="relative text-on-surface-variant hover:text-primary" th:href="@{/notificaciones}">
+    <span class="material-symbols-outlined">notifications</span>
+    <th:block th:replace="fragments/header :: bellBadge" />
+</a>
+            <a class="bg-primary text-on-primary px-5 py-2 rounded-full font-semibold text-sm hover:bg-primary-dim transition-all" th:href="@{/perfil}">Mi Perfil</a>
+            <a class="flex items-center gap-1 text-error text-sm font-bold hover:text-error-dim transition-colors" th:href="@{/logout}">
+                <span class="material-symbols-outlined text-lg">logout</span>
+            </a>
         </div>
     </div>
-</nav>-->
-
-<!-- Filtros Dinámicos -->
-<!--<div class="flex items-center gap-4 ml-auto flex-wrap">
-    <div class="flex gap-2 items-center">
-        <span class="text-xs font-bold text-on-surface-variant uppercase">Carrera:</span>
-        <select id="filterCarrera" class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-8" onchange="reApplyGrupoFilters()">
-            <option value="">Todas</option>
-            <th:block th:if="${carreras != null}">
-                <option th:each="c : ${carreras}" th:value="${c}" th:text="${c}" th:selected="${c == selectedCarrera}"></option>
-            </th:block>
-        </select>
-    </div>
-    <div class="flex gap-2 items-center">
-        <span class="text-xs font-bold text-on-surface-variant uppercase">Interés:</span>
-        <select id="filterInteres" class="bg-surface-container-low border-none rounded-full text-sm font-semibold focus:ring-primary text-on-surface pr-8" onchange="reApplyGrupoFilters()">
-            <option value="">Todos</option>
-            <th:block th:if="${intereses != null}">
-                <option th:each="i : ${intereses}" th:value="${i}" th:text="${i}" th:selected="${i == selectedInteres}"></option>
-            </th:block>
-        </select>
-    </div>
-</div>-->
-</div>
 </nav>
-<!-- Main Content Canvas -->
-<main class="pb-32 max-w-7xl mx-auto px-6 lg:px-8 pt-20">
-<!-- Breadcrumb & Circle Header -->
-<header class="mb-4">
-<div class="flex flex-col justify-between gap-6 md:flex-col">
-<div class="max-w-3xl">
-<div class="flex flex-wrap items-center gap-3 mb-4">
-<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container text-on-primary-container rounded-full text-xs font-bold tracking-widest uppercase">
-                            ARQUITECTURA
-                        </div>
-<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold tracking-widest uppercase animate-pulse-soft">
-<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
-                            En Tendencia
-                        </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MENSAJE DE FEEDBACK (éxito o error de acciones)
+════════════════════════════════════════════════════════════════ -->
+<div th:if="${mensaje}" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-secondary text-on-secondary rounded-full shadow-lg font-semibold text-sm flex items-center gap-2 animate-pulse-soft">
+    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span th:text="${mensaje}"></span>
 </div>
-<h1 class="font-display text-4xl lg:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-                        Sustentabilidad en Espacios Reducidos
-                    </h1>
-<!-- Activity Indicators Bar -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8 p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
-<div class="flex flex-col">
-<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Miembros activos</span>
-<div class="flex items-center gap-2 mt-1">
-<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
-<span class="text-lg font-bold text-on-surface">27 ahora</span>
+<div th:if="${error}" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-error text-on-error rounded-full shadow-lg font-semibold text-sm flex items-center gap-2">
+    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">error</span>
+    <span th:text="${error}"></span>
 </div>
-</div>
-<div class="flex flex-col border-l border-outline-variant/20 pl-6">
-<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Última actividad</span>
-<span class="text-lg font-bold text-on-surface mt-1">Hace 5 min</span>
-</div>
-<div class="flex flex-col border-l border-outline-variant/20 pl-6">
-<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Posts hoy</span>
-<span class="text-lg font-bold text-on-surface mt-1">14 nuevos</span>
-</div>
-<div class="flex flex-col border-l border-outline-variant/20 pl-6">
-<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Nivel Vitalidad</span>
-<span class="text-lg font-bold text-secondary mt-1">Alto</span>
-</div>
-</div>
-</div>
-<div class="flex flex-col gap-3 min-w-[240px] md:flex-row md:items-center md:max-w-xl">
-<button class="bg-primary text-on-primary w-full py-4 rounded-xl font-bold shadow-lg hover:bg-primary-dim transition-all flex items-center justify-center gap-2 md:w-64">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span> Unirme al Círculo
-                    </button>
-<div class="grid grid-cols-2 gap-2 md:w-64">
-<button class="bg-surface-container-high text-on-surface py-3 rounded-xl font-semibold hover:bg-surface-container-highest transition-all flex items-center justify-center gap-2 text-sm" th:onclick="|window.location.href='@{/comunidad/invitacion}'|">
-<span class="material-symbols-outlined text-sm">share</span> Invitar
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════════ -->
+<main class="pb-32 max-w-7xl mx-auto px-6 lg:px-8 pt-24">
+
+    <!-- ── BREADCRUMB ─────────────────────────────────────────── -->
+    <nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-6">
+        <a th:href="@{/comunidad/inicio}" class="hover:text-primary transition-colors">Comunidad</a>
+        <span class="material-symbols-outlined text-sm">chevron_right</span>
+        <a th:href="@{/comunidad/grupos}" class="hover:text-primary transition-colors">Círculos</a>
+        <span class="material-symbols-outlined text-sm">chevron_right</span>
+        <span class="text-on-surface font-semibold" th:text="${detalle.grupo.nombre}">Nombre del grupo</span>
+    </nav>
+
+    <!-- ── HEADER DEL GRUPO ───────────────────────────────────── -->
+    <header class="mb-8">
+        <div class="flex flex-col gap-6">
+
+            <!-- Badges de carrera y tendencia -->
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container text-on-primary-container rounded-full text-xs font-bold tracking-widest uppercase"
+                     th:text="${detalle.grupo.carrera}">CARRERA</div>
+                <!-- Solo mostrar "En Tendencia" si tiene vitalidad Alta -->
+                <div th:if="${detalle.nivelVitalidad == 'Alto'}"
+                     class="inline-flex items-center gap-1.5 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold tracking-widest uppercase animate-pulse-soft">
+                    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+                    En Tendencia
+                </div>
+            </div>
+
+            <!-- Nombre del grupo -->
+            <h1 class="font-display text-4xl lg:text-5xl font-extrabold tracking-tight text-on-surface leading-tight"
+                th:text="${detalle.grupo.nombre}">Nombre del Círculo</h1>
+
+            <!-- Descripción -->
+            <p class="text-on-surface-variant text-lg max-w-2xl" th:text="${detalle.grupo.descripcion}"></p>
+
+            <!-- ── MÉTRICAS REALES ──────────────────────────────── -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+                <!-- Miembros reales -->
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Miembros</span>
+                    <div class="flex items-center gap-2 mt-1">
+                        <div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+                        <span class="text-lg font-bold text-on-surface" th:text="${detalle.totalMiembros}">0</span>
+                    </div>
+                </div>
+                <!-- Última actividad real -->
+                <div class="flex flex-col border-l border-outline-variant/20 pl-6">
+                    <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Última actividad</span>
+                    <span class="text-lg font-bold text-on-surface mt-1" th:text="${detalle.ultimaActividad}">Sin actividad</span>
+                </div>
+                <!-- Posts hoy reales -->
+                <div class="flex flex-col border-l border-outline-variant/20 pl-6">
+                    <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Posts hoy</span>
+                    <span class="text-lg font-bold text-on-surface mt-1" th:text="${detalle.postsHoy} + ' nuevos'">0 nuevos</span>
+                </div>
+                <!-- Nivel vitalidad calculado -->
+                <div class="flex flex-col border-l border-outline-variant/20 pl-6">
+                    <span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Nivel Vitalidad</span>
+                    <span class="text-lg font-bold mt-1"
+                          th:classappend="${detalle.nivelVitalidad == 'Alto'} ? 'text-secondary' : (${detalle.nivelVitalidad == 'Medio'} ? 'text-tertiary' : 'text-on-surface-variant')"
+                          th:text="${detalle.nivelVitalidad}">Bajo</span>
+                </div>
+            </div>
+
+            <!-- ── BOTONES DE ACCIÓN ────────────────────────────── -->
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+
+                <!-- CASO: usuario es ADMIN -->
+                <div th:if="${detalle.esAdmin}" class="flex items-center gap-2 px-5 py-3 bg-tertiary-container text-on-tertiary-container rounded-xl font-bold text-sm">
+                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+                    Eres administrador
+                </div>
+
+                <!-- CASO: usuario es MIEMBRO (no admin) → mostrar "Ya eres miembro" + opción de salir -->
+                <div th:if="${detalle.esMiembro and !detalle.esAdmin}" class="flex gap-2">
+                    <div class="flex items-center gap-2 px-5 py-3 bg-secondary-container text-on-secondary-container rounded-xl font-bold text-sm">
+                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Ya eres miembro
+                    </div>
+                    <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/salir'}"
+                          method="post"
+                          onsubmit="return confirm('¿Estás seguro de que deseas salir de este círculo? Perderás acceso al muro y no podrás publicar.')">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit"
+                                class="px-5 py-3 bg-surface-container-high text-on-surface-variant rounded-xl font-semibold text-sm hover:bg-error/10 hover:text-error transition-all">
+                            Salir del círculo
                         </button>
-<button class="bg-surface-container-high text-on-surface py-3 rounded-xl font-semibold hover:bg-surface-container-highest transition-all flex items-center justify-center gap-2 text-sm">
-<span class="material-symbols-outlined text-sm">favorite</span> Seguir
+                    </form>
+                </div>
+
+                <!-- CASO: usuario es SEGUIDOR → mostrar "Siguiendo" + opción de unirse como miembro -->
+                <div th:if="${detalle.esSeguidor}" class="flex gap-2">
+                    <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/unirse'}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit"
+                                class="bg-primary text-on-primary px-6 py-3 rounded-xl font-bold shadow hover:bg-primary-dim transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                            Unirme como miembro
                         </button>
-</div>
-</div>
-</div>
-</header>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-<!-- Left Column: Discussion (Muro de Debate) -->
-<section class="lg:col-span-8 space-y-6">
-<!-- Prominent Quick Access Actions -->
-<div class="flex items-center justify-between">
-<h2 class="font-display text-2xl font-bold text-on-surface flex items-center gap-2">
-                        Muro de Debate
-                        <span class="w-2 h-2 bg-secondary rounded-full"></span>
-</h2>
-<div class="flex gap-2">
-<button class="text-sm font-medium text-primary px-3 py-1 rounded-lg bg-primary-container/30">Recientes</button>
-<button class="text-sm font-medium text-on-surface-variant px-3 py-1 hover:bg-surface-container-low rounded-lg transition-colors">Populares</button>
-</div>
-</div>
-<!-- Discussion Post Input -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/10">
-<div class="flex gap-4">
-<div class="w-10 h-10 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
-<img alt="Me" class="w-full h-full object-cover" src="">
-</div>
-<div class="flex-grow">
-<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary text-on-surface resize-none min-h-[100px] transition-all" placeholder="¿Qué tienes en mente sobre el diseño bioclimático?"></textarea>
-<div class="flex justify-between items-center mt-4">
-<div class="flex gap-2">
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">image</span></button>
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">link</span></button>
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">attachment</span></button>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:bg-primary-dim transition-all">Publicar</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Discussion Threads -->
-<div class="space-y-4">
-<!-- Thread 1 -->
-<article class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-outline-variant/5">
-<div class="flex gap-4">
-<img class="w-10 h-10 rounded-full object-cover" data-alt="Close-up profile of a young female architecture student in a high-key bright setting." src="">
-<div class="flex-grow">
-<div class="flex justify-between items-start">
-<div>
-<h4 class="font-bold text-on-surface">Lucía Méndez</h4>
-<span class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Activa hace 2 min • Estudiante</span>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_horiz</span></button>
-</div>
-<p class="mt-3 text-on-surface leading-relaxed">
-                                    ¿Alguien tiene referencias sobre el uso de **muros Trombe** en departamentos de menos de 40m2? Estoy analizando el choque térmico en fachadas norte para mi tesis. ¡Cualquier paper ayuda!
-                                </p>
-<div class="mt-6 flex gap-6">
-<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-secondary transition-colors font-medium text-sm">
-<span class="material-symbols-outlined text-lg">thumb_up</span> 14
+                    </form>
+                    <div class="flex items-center gap-2 px-5 py-3 bg-surface-container-high text-on-surface-variant rounded-xl font-semibold text-sm">
+                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                        Siguiendo
+                    </div>
+                </div>
+
+                <!-- CASO: usuario no pertenece al grupo → mostrar botones de Unirse y Seguir -->
+                <div th:if="${!detalle.esMiembro and !detalle.esSeguidor and !detalle.esAdmin}" class="flex gap-3 flex-wrap">
+                    <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/unirse'}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit"
+                                class="bg-primary text-on-primary px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-primary-dim transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                            Unirme al Círculo
+                        </button>
+                    </form>
+                    <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/seguir'}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit"
+                                class="bg-surface-container-high text-on-surface px-5 py-3 rounded-xl font-semibold hover:bg-surface-container-highest transition-all flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-sm">favorite</span>
+                            Seguir
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Botón Invitar (visible solo para miembros y admins) -->
+                <button th:if="${detalle.esMiembro or detalle.esAdmin}"
+                        onclick="document.getElementById('modal-invitar').classList.remove('hidden')"
+                        class="bg-surface-container-high text-on-surface px-5 py-3 rounded-xl font-semibold hover:bg-surface-container-highest transition-all flex items-center gap-2 text-sm">
+                    <span class="material-symbols-outlined text-sm">person_add</span>
+                    Invitar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── BENTO GRID ─────────────────────────────────────────── -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- ════════════════════════════════════════════════════
+             COLUMNA IZQUIERDA — MURO DE DEBATE
+        ════════════════════════════════════════════════════ -->
+        <section class="lg:col-span-8 space-y-6">
+
+            <!-- Tabs Recientes / Populares -->
+            <div class="flex items-center justify-between">
+                <h2 class="font-display text-2xl font-bold text-on-surface flex items-center gap-2">
+                    Muro de Debate
+                    <span class="w-2 h-2 bg-secondary rounded-full"></span>
+                </h2>
+                <div class="flex gap-2">
+                    <a th:href="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '?orden=recientes'}"
+                       class="text-sm font-medium px-3 py-1 rounded-lg transition-colors"
+                       th:classappend="${orden == 'recientes' or orden == null} ? 'text-primary bg-primary-container/30' : 'text-on-surface-variant hover:bg-surface-container-low'">
+                        Recientes
+                    </a>
+                    <a th:href="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '?orden=populares'}"
+                       class="text-sm font-medium px-3 py-1 rounded-lg transition-colors"
+                       th:classappend="${orden == 'populares'} ? 'text-primary bg-primary-container/30' : 'text-on-surface-variant hover:bg-surface-container-low'">
+                        Populares
+                    </a>
+                </div>
+            </div>
+
+            <!-- Caja de publicación — solo visible para MIEMBROS y ADMINS -->
+            <div th:if="${detalle.esMiembro or detalle.esAdmin}"
+                 class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/10">
+                <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/publicar'}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div class="flex gap-4">
+                        <!-- Avatar del usuario autenticado -->
+                        <div class="w-10 h-10 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                            <img th:if="${usuarioAvatar != null}"
+                                 th:src="@{'/images/' + ${usuarioAvatar}}"
+                                 alt="Mi avatar" class="w-full h-full object-cover">
+                            <div th:if="${usuarioAvatar == null}"
+                                 class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-sm"
+                                 th:text="${usuarioNombre != null ? usuarioNombre.substring(0,1).toUpperCase() : 'U'}"></div>
+                        </div>
+                        <div class="flex-grow">
+                            <textarea name="contenido" rows="3"
+                                      class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary text-on-surface resize-none min-h-[100px] transition-all"
+                                      th:placeholder="'¿Qué tienes en mente sobre ' + ${detalle.grupo.nombre} + '?'"
+                                      placeholder="¿Qué tienes en mente?"></textarea>
+                            <div class="flex justify-end mt-3">
+                                <button type="submit"
+                                        class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:bg-primary-dim transition-all">
+                                    Publicar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Mensaje para seguidores que no pueden publicar -->
+            <div th:if="${detalle.esSeguidor}"
+                 class="bg-surface-container-low border border-outline-variant/20 rounded-xl p-4 text-sm text-on-surface-variant flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary">info</span>
+                Los seguidores pueden leer el muro pero no publicar.
+                <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/unirse'}" method="post" class="inline">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="text-primary font-bold hover:underline">Únete como miembro</button>
+                </form>
+                para participar.
+            </div>
+
+            <!-- ── LISTA DE POSTS ───────────────────────────────── -->
+            <!-- Estado vacío -->
+            <div th:if="${detalle.posts == null or detalle.posts.isEmpty()}"
+                 class="bg-surface-container-lowest rounded-xl p-12 text-center border border-outline-variant/10">
+                <span class="material-symbols-outlined text-5xl text-on-surface-variant/40 block mb-4">forum</span>
+                <p class="text-on-surface-variant font-medium">Aún no hay publicaciones en este círculo.</p>
+                <p th:if="${detalle.esMiembro or detalle.esAdmin}" class="text-sm text-on-surface-variant mt-1">¡Sé el primero en publicar algo!</p>
+            </div>
+
+            <!-- Posts reales desde la BD -->
+            <div class="space-y-4">
+                <article th:each="post : ${detalle.posts}"
+                         class="bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-outline-variant/5">
+                    <div class="flex gap-4">
+                        <!-- Avatar del autor del post -->
+                        <div class="w-10 h-10 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                            <img th:if="${post.autor.avatar != null}"
+                                 th:src="@{'/images/' + ${post.autor.avatar}}"
+                                 th:alt="${post.autor.nombre}"
+                                 class="w-full h-full object-cover">
+                            <div th:if="${post.autor.avatar == null}"
+                                 class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-sm bg-primary-container text-on-primary-container"
+                                 th:text="${post.autor.nombre.substring(0,1).toUpperCase()}"></div>
+                        </div>
+
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-on-surface" th:text="${post.autor.nombre}">Autor</h4>
+                                    <span class="text-xs text-on-surface-variant uppercase font-bold tracking-wider"
+                                          th:text="${#temporals.format(post.fechaPublicacion, 'dd MMM yyyy • HH:mm')}">Fecha</span>
+                                </div>
+                                <!-- Botones de editar/eliminar (solo autor o admin del grupo) -->
+                                <div th:if="${post.autor.id == usuarioId or detalle.esAdmin}" class="flex items-center gap-1">
+                                    <button type="button"
+                                            th:onclick="'toggleEditarPost(\'editar-post-' + ${post.id} + '\')'"
+                                            class="p-1.5 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container-high transition-all">
+                                        <span class="material-symbols-outlined text-lg">edit</span>
                                     </button>
-<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors font-medium text-sm">
-<span class="material-symbols-outlined text-lg">chat_bubble</span> 8
+                                    <form th:action="@{'/comunidad/grupos/post/' + ${post.id} + '/eliminar?grupoId=' + ${detalle.grupo.id}}"
+                                          method="post"
+                                          onsubmit="return confirm('¿Eliminar esta publicación? Se eliminarán también todos sus comentarios.')">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                        <button type="submit"
+                                                class="p-1.5 text-on-surface-variant hover:text-error rounded-lg hover:bg-error/10 transition-all">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Contenido del post -->
+                            <p class="mt-3 text-on-surface leading-relaxed" th:text="${post.contenido}"></p>
+
+                            <!-- Formulario inline de edición (oculto por defecto) -->
+                            <div th:id="'editar-post-' + ${post.id}" class="hidden mt-3">
+                                <form th:action="@{'/comunidad/grupos/post/' + ${post.id} + '/editar?grupoId=' + ${detalle.grupo.id}}"
+                                      method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <textarea name="contenido" rows="3"
+                                              class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary text-on-surface resize-none min-h-[80px] transition-all"
+                                              maxlength="2000" th:text="${post.contenido}"></textarea>
+                                    <div class="flex justify-end gap-2 mt-2">
+                                        <button type="button"
+                                                th:onclick="'toggleEditarPost(\'editar-post-' + ${post.id} + '\')'"
+                                                class="px-4 py-2 bg-surface-container-high text-on-surface rounded-xl font-semibold text-sm hover:bg-surface-container-highest transition-all">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit"
+                                                class="px-4 py-2 bg-primary text-on-primary rounded-xl font-bold text-sm hover:bg-primary-dim transition-all">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Acciones del post -->
+                            <div class="mt-5 flex gap-6 items-center">
+                                <!-- Like / Unlike (toggle) -->
+                                <form th:action="@{'/comunidad/grupos/post/' + ${post.id} + '/like?grupoId=' + ${detalle.grupo.id}}" method="post" class="inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit"
+                                            th:classappend="${detalle.postIdsLiked.contains(post.id)} ? 'text-secondary' : 'text-on-surface-variant'"
+                                            class="flex items-center gap-1.5 hover:text-secondary transition-colors font-medium text-sm">
+                                        <th:block th:if="${detalle.postIdsLiked.contains(post.id)}">
+                                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+                                        </th:block>
+                                        <th:block th:unless="${detalle.postIdsLiked.contains(post.id)}">
+                                            <span class="material-symbols-outlined text-lg">thumb_up</span>
+                                        </th:block>
+                                        <span th:text="${post.likes}">0</span>
                                     </button>
-<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-tertiary transition-colors font-medium text-sm">
-<span class="material-symbols-outlined text-lg">bookmark</span> Guardar
+                                </form>
+
+                                <!-- Comentarios (toggle inline) -->
+                                <button type="button"
+                                        onclick="toggleComentarios('comentarios-${post.id}')"
+                                        class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors font-medium text-sm">
+                                    <span class="material-symbols-outlined text-lg">chat_bubble</span>
+                                    <span th:text="${post.respuestas}">0</span>
+                                </button>
+
+                                <!-- Guardar / Quitar guardado (toggle) -->
+                                <form th:action="@{'/comunidad/grupos/post/' + ${post.id} + '/guardar?grupoId=' + ${detalle.grupo.id}}" method="post" class="inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit"
+                                            th:classappend="${detalle.postIdsGuardados.contains(post.id)} ? 'text-tertiary' : 'text-on-surface-variant'"
+                                            class="flex items-center gap-1.5 hover:text-tertiary transition-colors font-medium text-sm">
+                                        <th:block th:if="${detalle.postIdsGuardados.contains(post.id)}">
+                                            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+                                        </th:block>
+                                        <th:block th:unless="${detalle.postIdsGuardados.contains(post.id)}">
+                                            <span class="material-symbols-outlined text-lg">bookmark</span>
+                                        </th:block>
+                                        <th:block th:if="${detalle.postIdsGuardados.contains(post.id)}">
+                                            <span>Guardado</span>
+                                        </th:block>
+                                        <th:block th:unless="${detalle.postIdsGuardados.contains(post.id)}">
+                                            <span>Guardar</span>
+                                        </th:block>
                                     </button>
-</div>
-</div>
-</div>
-</article>
-<!-- Thread 2 -->
-<article class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/5">
-<div class="flex gap-4">
-<img class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a male graduate student in architecture, wearing glasses and a minimalist shirt." src="">
-<div class="flex-grow">
-<div class="flex justify-between items-start">
-<div>
-<h4 class="font-bold text-on-surface">Carlos Ruiz</h4>
-<span class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Activo hace 1 hora • Arquitecto</span>
-</div>
-</div>
-<p class="mt-3 text-on-surface leading-relaxed">
-                                    Hoy visitamos el Hub de la 5ta avenida y vimos cómo implementaron jardines verticales hidropónicos en el living. La eficiencia hídrica es del 90%. Les dejo una foto del esquema.
-                                </p>
-<div class="mt-4 rounded-lg overflow-hidden border border-surface-container-high">
-<img alt="Study Space" class="w-full h-64 object-cover" src="">
-</div>
-<div class="mt-6 flex gap-6">
-<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-secondary transition-colors font-medium text-sm">
-<span class="material-symbols-outlined text-lg">thumb_up</span> 42
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECCIÓN DE COMENTARIOS ──────────────────────── -->
+                    <div th:id="'comentarios-' + ${post.id}" class="hidden border-t border-outline-variant/10 mt-4 pt-4">
+                        <!-- Lista de comentarios -->
+                        <div class="space-y-3 mb-4">
+                            <div th:if="${detalle.comentariosPorPost[post.id] == null or detalle.comentariosPorPost[post.id].isEmpty()}"
+                                 class="text-sm text-on-surface-variant text-center py-4">
+                                No hay comentarios aún. Sé el primero en comentar.
+                            </div>
+                            <div th:each="comentario : ${detalle.comentariosPorPost[post.id] ?: {}}"
+                                 class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                                    <img th:if="${comentario.autorAvatar != null}"
+                                         th:src="@{'/images/' + ${comentario.autorAvatar}}"
+                                         th:alt="${comentario.autorNombre}"
+                                         class="w-full h-full object-cover">
+                                    <div th:if="${comentario.autorAvatar == null}"
+                                         class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-xs bg-primary-container text-on-primary-container"
+                                         th:text="${comentario.autorNombre.substring(0,1).toUpperCase()}"></div>
+                                </div>
+                                <div class="flex-grow bg-surface-container-low rounded-xl px-4 py-2.5">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-bold text-on-surface" th:text="${comentario.autorNombre}">Autor</span>
+                                            <span class="text-[10px] text-on-surface-variant uppercase font-bold" th:text="${comentario.fechaRelativa}">ahora</span>
+                                        </div>
+                                        <!-- Botón eliminar comentario (solo autor o admin del grupo) -->
+                                        <form th:if="${comentario.autorId == usuarioId or detalle.esAdmin}"
+                                              th:action="@{'/comunidad/grupos/comentario/' + ${comentario.id} + '/eliminar?grupoId=' + ${detalle.grupo.id}}"
+                                              method="post"
+                                              onsubmit="return confirm('¿Eliminar este comentario?')">
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                            <button type="submit" class="text-on-surface-variant hover:text-error transition-colors">
+                                                <span class="material-symbols-outlined text-sm">close</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <p class="text-sm text-on-surface mt-1" th:text="${comentario.contenido}"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario para agregar comentario (solo miembros y admins) -->
+                        <div th:if="${detalle.esMiembro or detalle.esAdmin}">
+                            <form th:action="@{'/comunidad/grupos/post/' + ${post.id} + '/comentar?grupoId=' + ${detalle.grupo.id}}"
+                                  method="post" class="flex gap-3">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <div class="w-8 h-8 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                                    <img th:if="${usuarioAvatar != null}"
+                                         th:src="@{'/images/' + ${usuarioAvatar}}"
+                                         alt="Mi avatar" class="w-full h-full object-cover">
+                                    <div th:if="${usuarioAvatar == null}"
+                                         class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-xs"
+                                         th:text="${usuarioNombre != null ? usuarioNombre.substring(0,1).toUpperCase() : 'U'}"></div>
+                                </div>
+                                <div class="flex-grow flex gap-2">
+                                    <input type="text" name="contenido" required
+                                           class="flex-grow bg-surface-container-low border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary text-on-surface"
+                                           placeholder="Escribe un comentario..." maxlength="1000">
+                                    <button type="submit"
+                                            class="bg-primary text-on-primary px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary-dim transition-all">
+                                        Enviar
                                     </button>
-<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors font-medium text-sm">
-<span class="material-symbols-outlined text-lg">chat_bubble</span> 12
-                                    </button>
-</div>
-</div>
-</div>
-</article>
-</div>
-</section>
-<!-- Right Column: Sidebar (Recursos & Sesiones) -->
-<aside class="lg:col-span-4 space-y-8">
-<!-- Recursos Compartidos -->
-<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
-<h3 class="font-display text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder_open</span>
-                        Recursos Compartidos
-                    </h3>
-<ul class="space-y-4">
-<li class="group bg-surface-container-lowest p-3 rounded-lg flex items-center justify-between hover:bg-primary-container/20 transition-all cursor-pointer">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-error">picture_as_pdf</span>
-<div>
-<p class="text-sm font-bold text-on-surface truncate max-w-[180px]">Manual_Bioclimatica_v2.pdf</p>
-<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Actualizado ayer</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">download</span>
-</li>
-<li class="group bg-surface-container-lowest p-3 rounded-lg flex items-center justify-between hover:bg-primary-container/20 transition-all cursor-pointer">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary">link</span>
-<div>
-<p class="text-sm font-bold text-on-surface truncate max-w-[180px]">Calculadora de Huella de Carbono</p>
-<p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Herramienta Web</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
-</li>
-</ul>
-<button class="w-full mt-4 py-3 bg-surface border border-outline-variant/20 rounded-lg text-primary font-bold text-sm hover:bg-surface-container-low transition-colors" th:onclick="|window.location.href='@{/comunidad/recursos}'|">
-                        Ver todos los archivos
-                    </button>
-</div>
-<!-- Próximas Sesiones -->
-<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 shadow-sm relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-<h3 class="font-display text-xl font-bold text-on-surface mb-6 flex items-center gap-2 relative z-10">
-<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
-                        Próximas Sesiones
-                    </h3>
-<div class="space-y-4 relative z-10">
-<div class="flex gap-4 p-3 bg-secondary-container/30 rounded-xl border-l-4 border-secondary">
-<div class="flex flex-col items-center justify-center bg-white px-3 py-1 rounded-lg shadow-sm min-w-[50px]">
-<span class="text-[10px] font-bold text-secondary uppercase tracking-tighter">OCT</span>
-<span class="text-lg font-extrabold text-on-surface">12</span>
-</div>
-<div class="flex-grow">
-<h4 class="text-sm font-bold text-on-surface">Workshop de Maquetado 3D</h4>
-<div class="flex items-center gap-2 mt-1">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">schedule</span>
-<span class="text-[11px] font-medium text-on-surface-variant">18:00 - Hub Central</span>
-</div>
-</div>
-</div>
-<div class="flex gap-4 p-3 bg-surface-container-low rounded-xl border-l-4 border-outline-variant/30">
-<div class="flex flex-col items-center justify-center bg-white px-3 py-1 rounded-lg shadow-sm min-w-[50px]">
-<span class="text-[10px] font-bold text-outline uppercase tracking-tighter">OCT</span>
-<span class="text-lg font-extrabold text-on-surface">15</span>
-</div>
-<div class="flex-grow">
-<h4 class="text-sm font-bold text-on-surface">Charla: Certificación LEED</h4>
-<div class="flex items-center gap-2 mt-1">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">videocam</span>
-<span class="text-[11px] font-medium text-on-surface-variant">20:30 - Online (Zoom)</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Inspiration Image Block -->
-<div class="relative group rounded-xl overflow-hidden aspect-square shadow-xl">
-<img alt="Atmospheric Study" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="">
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-<p class="text-white font-display font-bold leading-tight">"El espacio influye en cómo pensamos."</p>
-<span class="text-white/60 text-xs mt-2 uppercase tracking-widest">— Momentos académicos seleccionados</span>
-</div>
-</div>
-</aside>
-</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+        <!-- ════════════════════════════════════════════════════
+             COLUMNA DERECHA — SIDEBAR
+        ════════════════════════════════════════════════════ -->
+        <aside class="lg:col-span-4 space-y-6">
+
+            <!-- Info del grupo -->
+            <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+                <h3 class="font-display text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+                    Sobre este Círculo
+                </h3>
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-base">school</span>
+                        <span th:text="${detalle.grupo.carrera}">Carrera</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-base">group</span>
+                        <span><b th:text="${detalle.totalMiembros}">0</b> miembros · <span th:text="${detalle.totalSeguidores}">0</span> seguidores</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-base">interests</span>
+                        <span th:text="${detalle.grupo.intereses}">Intereses</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recursos Compartidos -->
+            <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+                <h3 class="font-display text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+                    Recursos Compartidos
+                </h3>
+                <ul class="space-y-3">
+                    <li class="group bg-surface-container-lowest p-3 rounded-lg flex items-center justify-between hover:bg-primary-container/20 transition-all cursor-pointer">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-error">picture_as_pdf</span>
+                            <div>
+                                <p class="text-sm font-bold text-on-surface truncate max-w-[160px]">Manual_Bioclimatica_v2.pdf</p>
+                                <p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Actualizado ayer</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">download</span>
+                    </li>
+                    <li class="group bg-surface-container-lowest p-3 rounded-lg flex items-center justify-between hover:bg-primary-container/20 transition-all cursor-pointer">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-secondary">link</span>
+                            <div>
+                                <p class="text-sm font-bold text-on-surface truncate max-w-[160px]">Calculadora de Huella de Carbono</p>
+                                <p class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Herramienta Web</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                    </li>
+                </ul>
+                <a th:href="@{/comunidad/recursos}"
+                   class="block w-full mt-4 py-2.5 text-center bg-surface border border-outline-variant/20 rounded-lg text-primary font-bold text-sm hover:bg-surface-container-low transition-colors">
+                    Ver todos los archivos
+                </a>
+            </div>
+
+            <!-- Próximas Sesiones -->
+            <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                <h3 class="font-display text-lg font-bold text-on-surface mb-4 flex items-center gap-2 relative z-10">
+                    <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+                    Próximas Sesiones
+                </h3>
+                <div class="space-y-3 relative z-10">
+                    <div class="flex gap-4 p-3 bg-secondary-container/30 rounded-xl border-l-4 border-secondary">
+                        <div class="flex flex-col items-center justify-center bg-white px-3 py-1 rounded-lg shadow-sm min-w-[46px]">
+                            <span class="text-[10px] font-bold text-secondary uppercase tracking-tighter">OCT</span>
+                            <span class="text-lg font-extrabold text-on-surface">12</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-bold text-on-surface">Workshop de Maquetado 3D</h4>
+                            <div class="flex items-center gap-1 mt-1">
+                                <span class="material-symbols-outlined text-[13px] text-on-surface-variant">schedule</span>
+                                <span class="text-[11px] font-medium text-on-surface-variant">18:00 - Hub Central</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-3 bg-surface-container-low rounded-xl border-l-4 border-outline-variant/30">
+                        <div class="flex flex-col items-center justify-center bg-white px-3 py-1 rounded-lg shadow-sm min-w-[46px]">
+                            <span class="text-[10px] font-bold text-outline uppercase tracking-tighter">OCT</span>
+                            <span class="text-lg font-extrabold text-on-surface">15</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-bold text-on-surface">Charla: Certificación LEED</h4>
+                            <div class="flex items-center gap-1 mt-1">
+                                <span class="material-symbols-outlined text-[13px] text-on-surface-variant">videocam</span>
+                                <span class="text-[11px] font-medium text-on-surface-variant">20:30 - Online (Zoom)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
 </main>
-<!-- Bottom Navigation Bar (Mobile only visibility simulated via layout) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 rounded-t-xl glass-header bg-surface/95 border-t border-outline-variant/10 pb-6 pt-3 px-6 flex justify-around items-center">
-<a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/inicio}">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label text-[10px] uppercase tracking-widest font-bold">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/matches}">
-<span class="material-symbols-outlined">bed</span>
-<span class="font-label text-[10px] uppercase tracking-widest font-bold">Stays</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 gap-0.5" th:href="@{/comunidad/grupos}">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
-<span class="font-label text-[10px] uppercase tracking-widest font-bold">Groups</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/recursos}">
-<span class="material-symbols-outlined">book</span>
-<span class="font-label text-[10px] uppercase tracking-widest font-bold">Library</span>
-</a>
-</nav>
-<script>
-        function reApplyGrupoFilters() {
-            const carrera = document.getElementById('filterCarrera').value;
-            const interes = document.getElementById('filterInteres').value;
-            
-            let url = '/comunidad/grupos';
-            const params = new URLSearchParams();
-            
-            if (carrera) params.append('carrera', carrera);
-            if (interes) params.append('interes', interes);
-            
-            const query = params.toString();
-            window.location.href = url + (query ? '?' + query : '');
-        }
 
-        // Micro-interaction for the discussion input
-        const textarea = document.querySelector('textarea');
-        if (textarea) {
-            textarea.addEventListener('focus', () => {
-                textarea.parentElement.parentElement.classList.add('ring-2', 'ring-primary/20');
-            });
-            textarea.addEventListener('blur', () => {
-                textarea.parentElement.parentElement.classList.remove('ring-2', 'ring-primary/20');
-            });
-        }
+<!-- ═══════════════════════════════════════════════════════════════
+     MODAL INVITAR USUARIO
+════════════════════════════════════════════════════════════════ -->
+<div id="modal-invitar"
+     class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+     onclick="if(event.target===this) this.classList.add('hidden')">
+    <div class="bg-surface rounded-2xl p-8 shadow-2xl w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-display text-xl font-bold text-on-surface">Invitar al Círculo</h3>
+            <button onclick="document.getElementById('modal-invitar').classList.add('hidden')"
+                    class="text-on-surface-variant hover:text-on-surface transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form th:action="@{'/comunidad/grupos/' + ${detalle.grupo.id} + '/invitar'}" method="post" id="form-invitar">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="invitadoId" id="invitadoId"/>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-on-surface mb-2">Buscar usuario por nombre o correo</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <input type="text" id="buscar-invitar"
+                               class="w-full bg-surface-container-low border border-outline-variant/30 rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-primary text-on-surface"
+                               placeholder="Escribe nombre o correo..."
+                               autocomplete="off"
+                               th:data-grupo-id="${detalle.grupo.id}">
+                    </div>
+                    <!-- Dropdown de resultados -->
+                    <div id="resultados-busqueda" class="hidden mt-2 bg-surface-container-lowest border border-outline-variant/20 rounded-xl shadow-lg max-h-48 overflow-y-auto divide-y divide-outline-variant/10"></div>
+                    <!-- Usuario seleccionado -->
+                    <div id="usuario-seleccionado" class="hidden mt-2"></div>
+                    <p class="text-xs text-on-surface-variant mt-1">Selecciona un usuario para enviarle la invitación.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button"
+                            onclick="document.getElementById('modal-invitar').classList.add('hidden')"
+                            class="flex-1 py-3 bg-surface-container-high text-on-surface rounded-xl font-semibold text-sm hover:bg-surface-container-highest transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="btn-enviar-invitacion" disabled
+                            class="flex-1 py-3 bg-primary/50 text-on-primary rounded-xl font-bold text-sm transition-all cursor-not-allowed">
+                        Enviar Invitación
+                    </button>
+                </div>
+            </div>
+        </form>
+        <script>
+            const searchInput = document.getElementById('buscar-invitar');
+            const resultadosDiv = document.getElementById('resultados-busqueda');
+            const selectedDiv = document.getElementById('usuario-seleccionado');
+            const invitadoIdInput = document.getElementById('invitadoId');
+            const btnEnviar = document.getElementById('btn-enviar-invitacion');
+            let searchTimeout;
 
-        // Simple scroll reveal effect for headers
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('nav');
-            if (window.scrollY > 20) {
-                header.classList.add('bg-surface/95', 'shadow-lg');
-                header.classList.remove('bg-surface/80');
-            } else {
-                header.classList.add('bg-surface/80');
-                header.classList.remove('bg-surface/95', 'shadow-lg');
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const q = this.value.trim();
+                if (q.length < 2) {
+                    resultadosDiv.classList.add('hidden');
+                    resultadosDiv.innerHTML = '';
+                    return;
+                }
+                searchTimeout = setTimeout(() => {
+                    const grupoId = this.dataset.grupoId;
+                    fetch('/comunidad/grupos/' + grupoId + '/buscar-usuarios?q=' + encodeURIComponent(q))
+                        .then(r => r.json())
+                        .then(data => {
+                            resultadosDiv.innerHTML = '';
+                            if (data.length === 0) {
+                                resultadosDiv.innerHTML = '<div class="p-4 text-sm text-on-surface-variant text-center">No se encontraron usuarios.</div>';
+                            } else {
+                                data.forEach(u => {
+                                    const div = document.createElement('div');
+                                    div.className = 'flex items-center gap-3 p-3 hover:bg-primary-container/20 cursor-pointer transition-colors';
+                                    div.innerHTML = `
+                                        <div class="w-9 h-9 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                                            ${u.avatar ? '<img src="/images/' + u.avatar + '" class="w-full h-full object-cover">'
+                                                      : '<div class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-sm bg-primary-container text-on-primary-container">' + u.nombre.charAt(0).toUpperCase() + '</div>'}
+                                        </div>
+                                        <div class="flex-grow">
+                                            <div class="text-sm font-bold text-on-surface">${u.nombre}</div>
+                                            <div class="text-xs text-on-surface-variant">${u.email}</div>
+                                        </div>
+                                    `;
+                                    div.addEventListener('click', () => seleccionarUsuario(u));
+                                    resultadosDiv.appendChild(div);
+                                });
+                            }
+                            resultadosDiv.classList.remove('hidden');
+                        });
+                }, 300);
+            });
+
+            function seleccionarUsuario(u) {
+                invitadoIdInput.value = u.id;
+                searchInput.value = u.nombre + ' (' + u.email + ')';
+                resultadosDiv.classList.add('hidden');
+                resultadosDiv.innerHTML = '';
+                selectedDiv.innerHTML = `
+                    <div class="flex items-center gap-3 p-3 bg-secondary-container/30 rounded-xl border border-secondary/20">
+                        <div class="w-9 h-9 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                            ${u.avatar ? '<img src="/images/' + u.avatar + '" class="w-full h-full object-cover">'
+                                      : '<div class="w-full h-full flex items-center justify-center text-on-surface-variant font-bold text-sm bg-primary-container text-on-primary-container">' + u.nombre.charAt(0).toUpperCase() + '</div>'}
+                        </div>
+                        <div class="flex-grow">
+                            <div class="text-sm font-bold text-on-surface">${u.nombre}</div>
+                            <div class="text-xs text-on-surface-variant">${u.email}</div>
+                        </div>
+                        <button type="button" onclick="limpiarSeleccion()" class="text-on-surface-variant hover:text-error transition-colors">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                `;
+                selectedDiv.classList.remove('hidden');
+                btnEnviar.disabled = false;
+                btnEnviar.className = 'flex-1 py-3 bg-primary text-on-primary rounded-xl font-bold text-sm hover:bg-primary-dim transition-all';
             }
+
+            function limpiarSeleccion() {
+                invitadoIdInput.value = '';
+                searchInput.value = '';
+                selectedDiv.classList.add('hidden');
+                selectedDiv.innerHTML = '';
+                btnEnviar.disabled = true;
+                btnEnviar.className = 'flex-1 py-3 bg-primary/50 text-on-primary rounded-xl font-bold text-sm transition-all cursor-not-allowed';
+            }
+
+            // Limpiar al cerrar modal
+            document.getElementById('modal-invitar').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    limpiarSeleccion();
+                    resultadosDiv.classList.add('hidden');
+                }
+            });
+        </script>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     BOTTOM NAV (MÓVIL)
+════════════════════════════════════════════════════════════════ -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 rounded-t-xl glass-header bg-surface/95 border-t border-outline-variant/10 pb-6 pt-3 px-6 flex justify-around items-center">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/inicio}">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/matches}">
+        <span class="material-symbols-outlined">group</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Matches</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 gap-0.5" th:href="@{/comunidad/grupos}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Grupos</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant gap-1" th:href="@{/comunidad/recursos}">
+        <span class="material-symbols-outlined">book</span>
+        <span class="font-label text-[10px] uppercase tracking-widest font-bold">Recursos</span>
+    </a>
+</nav>
+
+<script>
+    // Auto-ocultar mensajes de feedback después de 3 segundos
+    document.addEventListener('DOMContentLoaded', () => {
+        const feedback = document.querySelectorAll('[th\\:if="${mensaje}"], [th\\:if="${error}"]');
+        document.querySelectorAll('.animate-pulse-soft').forEach(el => {
+            if (el.textContent.includes('En Tendencia')) return; // no ocultar el badge
+            setTimeout(() => el.style.display = 'none', 3000);
         });
-    </script>
-</body></html>
+    });
+
+    // Toggle de comentarios inline
+    function toggleComentarios(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden');
+    }
+
+    // Toggle de edición inline de posts
+    function toggleEditarPost(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden');
+    }
+
+    // Scroll reveal para el nav
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (nav && window.scrollY > 20) {
+            nav.classList.add('shadow-lg');
+        } else if (nav) {
+            nav.classList.remove('shadow-lg');
+        }
+    });
+</script>
+<th:block th:replace="fragments/header :: notificationScripts" />
+</body>
+</html>

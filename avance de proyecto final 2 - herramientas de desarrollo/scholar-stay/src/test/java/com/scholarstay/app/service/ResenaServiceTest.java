@@ -1,18 +1,24 @@
 package com.scholarstay.app.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +28,8 @@ import org.springframework.data.domain.Pageable;
 import com.scholarstay.app.model.Alojamiento;
 import com.scholarstay.app.model.Resena;
 import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.model.enums.NotificationPriority;
+import com.scholarstay.app.model.enums.NotificationType;
 import com.scholarstay.app.repository.ResenaRepository;
 import com.scholarstay.app.repository.ReservaRepository;
 
@@ -64,6 +72,7 @@ class ResenaServiceTest {
         resena.setAlojamiento(alojamiento);
     }
 
+    //Este test verifica el caso exitoso de crear una reseña
     @Test
     void crearResena_Exito() {
         resena.setCalificacion(5);
@@ -79,9 +88,10 @@ class ResenaServiceTest {
         assertEquals(autor, resultado.getUsuario());
         assertEquals("El alojamiento es excelente y muy comodo.", resultado.getComentario());
         verify(resenaRepository, times(1)).save(resena);
-        verify(notificacionService, times(1)).crearNotificacion(eq(anfitrion), anyString(), eq("RESENA"));
+        verify(notificacionService, times(1)).crearNotificacion(eq(anfitrion), anyString(), eq(NotificationType.RESENA), eq(NotificationPriority.INFO), anyLong());
     }
 
+    //Este test verifica que no se pueda crear una reseña si la calificación es nula
     @Test
     void crearResena_CalificacionNula_ThrowsIllegalArgumentException() {
         resena.setCalificacion(null);
@@ -93,7 +103,8 @@ class ResenaServiceTest {
         assertEquals("La calificación es obligatoria.", ex.getMessage());
         verify(resenaRepository, never()).save(any(Resena.class));
     }
-
+    
+    //Este test verifica que no se pueda crear una reseña si la calificación está fuera del rango válido
     @Test
     void crearResena_CalificacionFueraDeRango_ThrowsIllegalArgumentException() {
         resena.setComentario("El alojamiento es excelente.");
@@ -115,6 +126,7 @@ class ResenaServiceTest {
         verify(resenaRepository, never()).save(any(Resena.class));
     }
 
+    //Este test verifica que no se pueda crear una reseña si el comentario es nulo, vacío o solo espacios
     @Test
     void crearResena_ComentarioVacio_ThrowsIllegalArgumentException() {
         resena.setCalificacion(4);
@@ -143,6 +155,7 @@ class ResenaServiceTest {
         verify(resenaRepository, never()).save(any(Resena.class));
     }
 
+    //Este test verifica que no se pueda crear una reseña si el comentario es demasiado corto
     @Test
     void crearResena_ComentarioMuyCorto_ThrowsIllegalArgumentException() {
         resena.setCalificacion(4);
@@ -155,6 +168,7 @@ class ResenaServiceTest {
         verify(resenaRepository, never()).save(any(Resena.class));
     }
 
+    //Este test verifica que no se pueda crear una reseña si el comentario es demasiado largo
     @Test
     void crearResena_ComentarioMuyLargo_ThrowsIllegalArgumentException() {
         resena.setCalificacion(4);
@@ -169,6 +183,7 @@ class ResenaServiceTest {
         verify(resenaRepository, never()).save(any(Resena.class));
     }
 
+    //Este test verifica que no se pueda crear una reseña si el usuario no tiene una reserva confirmada en el alojamiento
     @Test
     void crearResena_SinReservaConfirmada_ThrowsIllegalStateException() {
         resena.setCalificacion(4);
@@ -184,6 +199,7 @@ class ResenaServiceTest {
         verify(resenaRepository, never()).save(any(Resena.class));
     }
 
+    //Este test verifica que el comentario de la reseña se sanitiza correctamente para prevenir ataques XSS
     @Test
     void crearResena_SanitizacionSimpleXSS() {
         resena.setCalificacion(4);
@@ -199,6 +215,8 @@ class ResenaServiceTest {
         assertEquals("&lt;script&gt;alert('hack')&lt;/script&gt;", resultado.getComentario());
     }
 
+
+    //Este test verifica que se puedan obtener las reseñas de un alojamiento correctamente
     @Test
     void obtenerResenasPorAlojamiento_Exito() {
         List<Resena> lista = new ArrayList<>();
@@ -211,6 +229,7 @@ class ResenaServiceTest {
         assertEquals(resena, resultado.get(0));
     }
 
+    //Este test verifica que se puedan obtener las reseñas de un alojamiento de manera paginada correctamente
     @Test
     void obtenerResenasPaginadasPorAlojamiento_Exito() {
         List<Resena> lista = new ArrayList<>();

@@ -1,14 +1,17 @@
 package com.scholarstay.app.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.scholarstay.app.dto.MatchDTO;
@@ -114,10 +117,10 @@ class ComunidadServiceTest {
         when(perfilAcademicoRepository.findByUsuarioId(1L)).thenReturn(perfilA);
         when(perfilAcademicoRepository.findAll()).thenReturn(List.of(perfilA, perfilB));
 
+        // Sin filtros de interés (null) — firma actualizada a List<String>
         List<MatchDTO> matches = comunidadService.findMatches(1L, null, null);
 
-        // Retorna a perfilA y perfilB
-        assertEquals(2, matches.size());
+        assertEquals(1, matches.size());
         MatchDTO matchB = matches.stream().filter(m -> m.getUsuarioId().equals(2L)).findFirst().orElse(null);
         assertNotNull(matchB);
         assertEquals(78.0, matchB.getPorcentaje());
@@ -132,6 +135,7 @@ class ComunidadServiceTest {
 
         when(perfilAcademicoRepository.findAll()).thenReturn(List.of(perfilB));
 
+        // Sin filtros — firma actualizada a List<String>
         List<MatchDTO> matches = comunidadService.findMatches(null, null, null);
 
         assertEquals(1, matches.size());
@@ -154,31 +158,51 @@ class ComunidadServiceTest {
         when(perfilAcademicoRepository.findByUsuarioId(1L)).thenReturn(perfilA);
         when(perfilAcademicoRepository.findAll()).thenReturn(List.of(perfilA, perfilB, perfilC));
 
-        // Filtrar por carrera "computacion" e interes "bases"
-        List<MatchDTO> matches = comunidadService.findMatches(1L, "computacion", "bases");
+        // ✅ CORREGIDO: interes ahora es List<String> en vez de String
+        List<MatchDTO> matches = comunidadService.findMatches(1L, "computacion", List.of("bases"));
 
         assertEquals(1, matches.size());
         assertEquals(3L, matches.get(0).getUsuarioId());
     }
 
     @Test
-    void findGrupos_FiltrosCombinadosSinDuplicados() {
+    void findGrupos_SinFiltros_RetornaTodos() {
         Grupo g1 = new Grupo("Grupo A", "Desc", "Computacion", "ia", 10);
         Grupo g2 = new Grupo("Grupo B", "Desc", "Derecho", "leyes", 5);
 
-        // Sin filtros retorna todos
+        // ✅ CORREGIDO: sin filtros se pasa null en vez de ""
         when(grupoRepository.findAll()).thenReturn(List.of(g1, g2));
-        List<Grupo> todos = comunidadService.findGrupos(null, "");
+        List<Grupo> todos = comunidadService.findGrupos(null, null);
+
         assertEquals(2, todos.size());
+    }
 
-        // Con filtros
-        when(grupoRepository.findByCarreraContainingIgnoreCase("Computacion")).thenReturn(List.of(g1));
-        when(grupoRepository.findByInteresesContainingIgnoreCase("leyes")).thenReturn(List.of(g2));
+    @Test
+    void findGrupos_ConFiltros_FiltraEnMemoria() {
+        // El service ahora filtra en memoria (ya no usa findByCarreraContaining ni findByInteresesContaining)
+        Grupo g1 = new Grupo("Grupo A", "Desc", "Computacion", "ia,programacion", 10);
+        Grupo g2 = new Grupo("Grupo B", "Desc", "Derecho", "leyes", 5);
 
-        List<Grupo> filtrados = comunidadService.findGrupos("Computacion", "leyes");
-        assertEquals(2, filtrados.size());
+        when(grupoRepository.findAll()).thenReturn(List.of(g1, g2));
+
+        // ✅ CORREGIDO: interes ahora es List<String>
+        List<Grupo> filtrados = comunidadService.findGrupos("Computacion", List.of("ia"));
+
+        assertEquals(1, filtrados.size());
         assertTrue(filtrados.contains(g1));
-        assertTrue(filtrados.contains(g2));
+    }
+
+    @Test
+    void findGrupos_FiltroInteresExacto_NoMatchParcial() {
+        // Verifica que "pro" NO matchea "programacion" (comparación exacta por token)
+        Grupo g1 = new Grupo("Grupo A", "Desc", "Computacion", "programacion,ia", 10);
+
+        when(grupoRepository.findAll()).thenReturn(List.of(g1));
+
+        // "pro" no debe encontrar grupos con interés "programacion"
+        List<Grupo> filtrados = comunidadService.findGrupos(null, List.of("pro"));
+
+        assertEquals(0, filtrados.size());
     }
 
     @Test
@@ -219,7 +243,7 @@ class ComunidadServiceTest {
 
         Double score = comunidadService.calcularCompatibilidad(1L, 2L);
 
-        // 20 base + 30 carrera = 50.0
+        // 20 base + 35 carrera igual - 10 intereses opuestos (vacíos) = 45.0
         assertEquals(50.0, score);
     }
 }

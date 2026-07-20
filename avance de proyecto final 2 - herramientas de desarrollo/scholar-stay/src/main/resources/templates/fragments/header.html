@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="bellBadge">
+    <span id="badge-count" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-error text-on-error text-[10px] font-bold rounded-full flex items-center justify-center px-1 ring-2 ring-background" style="display:none">0</span>
+</div>
+
+<th:block th:fragment="notificationScripts">
+<script>
+function actualizarContador() {
+    fetch('/api/notificaciones/count-no-leidas')
+        .then(function(r) { return r.json(); })
+        .then(function(count) {
+            var badge = document.getElementById('badge-count');
+            if (badge) {
+                if (count > 0) {
+                    badge.textContent = count > 99 ? '99+' : count;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        })
+        .catch(function() {});
+}
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarContador();
+    setInterval(actualizarContador, 30000);
+});
+</script>
+</th:block>
+
+</body>
+</html>

@@ -2,13 +2,16 @@ package com.scholarstay.app.controller.api;
 
 import com.scholarstay.app.dto.NotificacionDTO;
 import com.scholarstay.app.model.Notificacion;
+import com.scholarstay.app.model.Usuario;
+import com.scholarstay.app.security.CustomUserDetails;
 import com.scholarstay.app.service.NotificacionService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notificaciones")
@@ -22,48 +25,93 @@ public class NotificacionRestController {
         this.notificacionService = notificacionService;
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<NotificacionDTO>>
-    obtenerNotificaciones(@PathVariable Long usuarioId) {
+    private Usuario getLoggedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails customUser) {
+            return customUser.getUsuario();
+        }
+        return null;
+    }
 
-        List<Notificacion> notificaciones =
-                notificacionService.obtenerNotificaciones(usuarioId);
+    @GetMapping
+    public ResponseEntity<List<NotificacionDTO>> obtenerNotificaciones() {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
+        return ResponseEntity.ok(notificacionService.obtenerNotificacionesDTO(usuario.getId()));
+    }
 
-        List<NotificacionDTO> dtos =
-                notificaciones.stream().map(n -> {
+    @GetMapping("/no-leidas")
+    public ResponseEntity<List<NotificacionDTO>> obtenerNoLeidas() {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
+        return ResponseEntity.ok(notificacionService.obtenerNoLeidasDTO(usuario.getId()));
+    }
 
-                    NotificacionDTO dto =
-                            new NotificacionDTO();
+    @GetMapping("/count-no-leidas")
+    public ResponseEntity<Long> contarNoLeidas() {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
+        return ResponseEntity.ok(notificacionService.contarNoLeidas(usuario.getId()));
+    }
 
-                    dto.setId(n.getId());
-                    dto.setMensaje(n.getMensaje());
-                    dto.setTipo(n.getTipo());
-                    dto.setLeido(n.getLeido());
-                    dto.setFecha(n.getFecha());
+    @GetMapping("/{id}")
+    public ResponseEntity<NotificacionDTO> obtenerNotificacion(@PathVariable Long id) {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
 
-                    return dto;
-
-                }).collect(Collectors.toList());
-
-        return ResponseEntity.ok(dtos);
+        try {
+            NotificacionDTO dto = notificacionService.obtenerNotificacionDTO(id);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}/leer")
-    public ResponseEntity<Void> marcarComoLeida(
-            @PathVariable Long id) {
+    public ResponseEntity<Void> marcarComoLeida(@PathVariable Long id) {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
 
-        notificacionService.marcarComoLeida(id);
+        try {
+            Notificacion n = notificacionService.obtenerPorId(id);
+            if (!n.getUsuario().getId().equals(usuario.getId())) return ResponseEntity.status(403).build();
+            notificacionService.marcarComoLeida(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    @PutMapping("/leer-todas")
+    public ResponseEntity<Void> marcarTodasComoLeidas() {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
+
+        notificacionService.marcarTodasComoLeidas(usuario.getId());
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/usuario/{usuarioId}/leer-todas")
-    public ResponseEntity<Void> marcarTodasComoLeidas(
-            @PathVariable Long usuarioId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
 
-        notificacionService
-                .marcarTodasComoLeidas(usuarioId);
+        try {
+            Notificacion n = notificacionService.obtenerPorId(id);
+            if (!n.getUsuario().getId().equals(usuario.getId())) return ResponseEntity.status(403).build();
+            notificacionService.eliminar(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    @DeleteMapping("/leidas")
+    public ResponseEntity<Void> eliminarLeidas() {
+        Usuario usuario = getLoggedUser();
+        if (usuario == null) return ResponseEntity.status(401).build();
+
+        notificacionService.eliminarLeidas(usuario.getId());
         return ResponseEntity.ok().build();
     }
 }

@@ -100,7 +100,7 @@
 <div class="flex items-center gap-4">
 <a th:href="@{/notificaciones}" class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
 <span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-background"></span>
+<span id="badge-count" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-error text-on-error text-[10px] font-bold rounded-full flex items-center justify-center px-1 ring-2 ring-background" style="display:none">0</span>
 </a>
 <a th:href="@{/notificaciones}" class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
 <span class="material-symbols-outlined">chat_bubble</span>
@@ -127,14 +127,14 @@
         </div>
     </div>
     
-    <button
-    th:if="${noLeidas > 0}"
-    th:onclick="'marcarTodas(' + ${usuario.id} + ')'"
-    class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200">
-
-    Marcar todo como leído
-
-</button>
+    <div class="flex items-center gap-2">
+        <button id="btnEliminarLeidas" class="px-4 py-2.5 rounded-full font-label font-semibold text-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 border border-outline-variant/30">
+            Eliminar leídas
+        </button>
+        <button id="btnMarkAllRead" class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label font-semibold text-sm hover:bg-primary-dim transition-all duration-200">
+            Marcar todo como leído
+        </button>
+    </div>
 </div>
 <!-- Notification List --><div class="divide-y divide-outline-variant/10">
 <!-- Dynamic Notification Group -->
@@ -143,35 +143,42 @@
 
 <!-- Notification Item -->
 <div th:each="notificacion : ${notificaciones}" 
-     th:classappend="${!notificacion.leido} ? 'opacity-100' : 'opacity-70'"
-     th:onclick="'abrirNotificacion(' + ${notificacion.id} + ')'"
-     class="group relative flex gap-4 p-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer mb-2">
-    
-<div class="flex-shrink-0">
+     class="notification-item group relative flex gap-4 p-4 pl-5 -mx-4 rounded-xl transition-all duration-300 hover:bg-surface-container-low cursor-pointer mb-2"
+     th:classappend="${notificacion.cssClass}"
+     th:attr="data-url=${notificacion.redirectUrl}, data-id=${notificacion.id}, data-leido=${notificacion.leido}">
+     
+<button class="btn-delete absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-error-container text-on-surface-variant hover:text-error transition-all duration-200 z-10"
+        th:attr="data-id=${notificacion.id}" onclick="event.stopPropagation(); eliminarNotificacion(this)">
+    <span class="material-symbols-outlined text-lg">close</span>
+</button>
+
+<div class="flex-shrink-0 self-center">
 <div class="w-12 h-12 rounded-xl flex items-center justify-center"
-     th:classappend="${notificacion.tipo == 'RESERVA'} ? 'bg-secondary-container text-secondary' : (${notificacion.tipo == 'RESENA'} ? 'bg-primary-container text-primary' : 'bg-tertiary-container text-tertiary')">
+     th:classappend="${notificacion.type.name() == 'RESERVA'} ? 'bg-secondary-container text-secondary' : (${notificacion.type.name() == 'RESENA'} ? 'bg-primary-container text-primary' : (${notificacion.type.name() == 'INVITACION_GRUPO'} ? 'bg-tertiary-container text-tertiary' : 'bg-surface-container-high text-on-surface-variant'))">
 <span class="material-symbols-outlined" 
-      th:text="${notificacion.tipo == 'RESERVA'} ? 'calendar_month' : (${notificacion.tipo == 'RESENA'} ? 'chat_bubble' : 'notifications')" 
+      th:text="${notificacion.type.name() == 'RESERVA'} ? 'calendar_month' : (${notificacion.type.name() == 'RESENA'} ? 'chat_bubble' : (${notificacion.type.name() == 'INVITACION_GRUPO'} ? 'group_add' : 'notifications'))" 
       style="font-variation-settings: 'FILL' 1;"></span>
 </div>
 </div>
 
-<div class="flex-grow">
-<div class="flex justify-between items-start mb-1">
-<h3 class="font-headline font-bold text-on-surface" th:text="${notificacion.tipo}">Tipo</h3>
-<span class="text-xs font-medium text-on-surface-variant" th:text="${#temporals.format(notificacion.fecha, 'dd MMM, HH:mm')}">Fecha</span>
+<div class="flex-grow min-w-0">
+<div class="flex justify-between items-start mb-1 pr-8">
+<h3 class="font-headline font-bold text-on-surface truncate" th:text="${notificacion.type.name()}">Tipo</h3>
+<span class="text-xs font-medium text-on-surface-variant whitespace-nowrap" th:text="${#temporals.format(notificacion.fecha, 'dd MMM, HH:mm')}">Fecha</span>
 </div>
 <p class="text-sm text-on-surface-variant leading-relaxed" th:text="${notificacion.mensaje}">Mensaje de la notificación.</p>
 </div>
 
 <div class="flex-shrink-0 self-center" th:if="${!notificacion.leido}">
-<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>
+<div class="dot-unread w-2.5 h-2.5 bg-primary rounded-full"></div>
 </div>
 
 </div>
 
-<div th:if="${#lists.isEmpty(notificaciones)}" class="text-center py-8 text-on-surface-variant">
-    No tienes notificaciones recientes.
+<div th:if="${#lists.isEmpty(notificaciones)}" class="text-center py-16">
+    <span class="material-symbols-outlined text-5xl text-outline-variant mb-4" style="font-variation-settings: 'FILL' 0;">notifications_off</span>
+    <p class="text-lg font-headline font-bold text-on-surface-variant">No tienes notificaciones</p>
+    <p class="text-sm text-outline-variant mt-1">Las notificaciones aparecerán aquí cuando tengas actividad.</p>
 </div>
 
 </div>
@@ -235,32 +242,64 @@
 <span class="text-[10px] font-semibold font-label">Profile</span>
 </a>
 </nav>
+<th:block th:replace="fragments/header :: notificationScripts" />
 <script>
-
-function abrirNotificacion(id) {
-
-    window.location.href =
-            `/notificaciones/${id}`;
-}
-
-async function marcarTodas(usuarioId) {
-
-    await fetch(
-        `/api/notificaciones/usuario/${usuarioId}/leer-todas`,
-        {
-            method: 'PUT'
-        }
-    );
-
-    location.reload();
-}
-
-function verHistorial() {
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.notification-item').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            if (e.target.closest('.btn-delete')) return;
+            var url = el.getAttribute('data-url');
+            var id = el.getAttribute('data-id');
+            if (url) {
+                fetch('/api/notificaciones/' + id + '/leer', { method: 'PUT' }).catch(function() {});
+                window.location.href = url;
+            }
+        });
     });
+
+    document.getElementById('btnMarkAllRead').addEventListener('click', function() {
+        fetch('/api/notificaciones/leer-todas', { method: 'PUT' })
+            .then(function(r) { if (r.ok) marcarTodasLeidas(); });
+    });
+
+    document.getElementById('btnEliminarLeidas').addEventListener('click', function() {
+        fetch('/api/notificaciones/leidas', { method: 'DELETE' })
+            .then(function(r) { if (r.ok) eliminarLeidas(); });
+    });
+});
+
+function marcarTodasLeidas() {
+    document.querySelectorAll('.notification-item').forEach(function(el) {
+        el.style.opacity = '0.7';
+        var dot = el.querySelector('.dot-unread');
+        if (dot) dot.remove();
+        el.setAttribute('data-leido', 'true');
+    });
+    actualizarContador();
+}
+
+function eliminarNotificacion(btn) {
+    var id = btn.getAttribute('data-id');
+    var item = btn.closest('.notification-item');
+    fetch('/api/notificaciones/' + id, { method: 'DELETE' })
+        .then(function(r) {
+            if (r.ok) {
+                item.style.transition = 'all 0.3s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(20px)';
+                setTimeout(function() { item.remove(); actualizarContador(); }, 300);
+            }
+        });
+}
+
+function eliminarLeidas() {
+    document.querySelectorAll('.notification-item[data-leido="true"]').forEach(function(el) {
+        el.style.transition = 'all 0.3s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateX(20px)';
+        setTimeout(function() { el.remove(); }, 300);
+    });
+    actualizarContador();
 }
 </script>
 </body></html>

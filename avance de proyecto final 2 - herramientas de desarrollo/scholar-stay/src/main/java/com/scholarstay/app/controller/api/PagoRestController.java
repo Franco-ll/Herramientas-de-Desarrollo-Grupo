@@ -23,7 +23,9 @@ public class PagoRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Pago> crear(@RequestBody Pago pago) {
-        return ResponseEntity.ok(pagoService.guardar(pago));
+    public ResponseEntity<Pago> crear(@RequestParam Long reservaId,
+            @RequestParam String metodoPago) {
+        return ResponseEntity.ok(pagoService.procesarPago(reservaId, metodoPago));
+
     }
 }
