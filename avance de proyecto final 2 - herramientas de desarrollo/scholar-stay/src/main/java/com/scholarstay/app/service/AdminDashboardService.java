@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -131,6 +132,22 @@ public class AdminDashboardService {
         vm.setMesesLabels(meses);
         vm.setIngresosPorMes(ingresosMes);
 
+        // ===== RESERVAS PROXIMAS A VENCER (próximos 15 días) =====
+        LocalDate hoy = LocalDate.now();
+        LocalDate limite = hoy.plusDays(15);
+        List<ReservaDTO> proximasVencer = reservas.stream()
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                .filter(r -> !r.getFechaFin().isBefore(hoy) && !r.getFechaFin().isAfter(limite))
+                .sorted((a, b) -> a.getFechaFin().compareTo(b.getFechaFin()))
+                .map(r -> {
+                    ReservaDTO dto = mapToReservaDTO(r);
+                    long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(hoy, r.getFechaFin());
+                    dto.setDiasRestantes((int) diasRestantes);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        vm.setReservasProximasVencer(proximasVencer);
+
         return vm;
     }
 
@@ -229,6 +246,14 @@ public class AdminDashboardService {
         return vm;
     }
 
+    public List<ReservaDTO> getReservasDeUsuario(Long usuarioId) {
+        return reservaRepository.findAll().stream()
+                .filter(r -> r.getUsuario().getId().equals(usuarioId))
+                .sorted((a, b) -> b.getId().compareTo(a.getId()))
+                .map(this::mapToReservaDTO)
+                .collect(Collectors.toList());
+    }
+
     public AdminPropiedadesVM getPropiedadesStats() {
         AdminPropiedadesVM vm = new AdminPropiedadesVM();
         List<Alojamiento> alojamientos = alojamientoRepository.findAll();
@@ -286,14 +311,56 @@ public class AdminDashboardService {
         if (reservaActiva != null) {
             dto.setPropiedadAsignada(reservaActiva.getAlojamiento().getTitulo());
             dto.setEstadoReserva(reservaActiva.getEstado());
-            double calificacion = reservaActiva.getAlojamiento().getCalificacionPromedio() != null
-                    ? reservaActiva.getAlojamiento().getCalificacionPromedio() : 0;
-            dto.setCompatibilidad((int) Math.round(calificacion * 20));
         } else {
             dto.setPropiedadAsignada("—");
             dto.setEstadoReserva("SIN_RESERVA");
-            dto.setCompatibilidad(0);
         }
         return dto;
+    }
+
+    public List<Map<String, Object>> getEventosCalendario() {
+        // Colores por propiedad (rotando entre una paleta)
+        String[] colores = {
+            "#3d637e", "#46674b", "#6a5e46", "#7b4f71", "#4a6e8a",
+            "#2e7d5a", "#8a5c3e", "#5a4a7a", "#3d7e6e", "#7e5a3d"
+        };
+
+        List<Reserva> reservas = reservaRepository.findAll().stream()
+                .filter(r -> "CONFIRMADA".equals(r.getEstado()))
+                .collect(Collectors.toList());
+
+        // Asignar un color único por propiedad
+        Map<Long, String> colorPorPropiedad = new HashMap<>();
+        int[] colorIdx = {0};
+        reservas.forEach(r -> {
+            Long propId = r.getAlojamiento().getId();
+            if (!colorPorPropiedad.containsKey(propId)) {
+                colorPorPropiedad.put(propId, colores[colorIdx[0] % colores.length]);
+                colorIdx[0]++;
+            }
+        });
+
+        return reservas.stream().map(r -> {
+            Map<String, Object> evento = new HashMap<>();
+            String titulo = r.getAlojamiento().getTitulo();
+            String residente = r.getUsuario().getNombre();
+            long dias = java.time.temporal.ChronoUnit.DAYS.between(r.getFechaInicio(), r.getFechaFin());
+            long meses = java.time.temporal.ChronoUnit.MONTHS.between(r.getFechaInicio(), r.getFechaFin());
+            String duracion = meses >= 1 ? meses + (meses == 1 ? " mes" : " meses") : dias + " días";
+            String tituloCorto = titulo.length() > 18 ? titulo.substring(0, 18) + "..." : titulo;
+            evento.put("title", residente + " · " + tituloCorto + " (" + duracion + ")");
+            evento.put("start", r.getFechaInicio().toString());
+            evento.put("color", colorPorPropiedad.get(r.getAlojamiento().getId()));
+            evento.put("extendedProps", Map.of(
+                "residente", residente,
+                "propiedad", r.getAlojamiento().getTitulo(),
+                "monto", r.getPrecioTotal(),
+                "estado", r.getEstado(),
+                "fechaInicio", r.getFechaInicio().toString(),
+                "fechaFin", r.getFechaFin().toString(),
+                "duracion", duracion
+            ));
+            return evento;
+        }).collect(Collectors.toList());
     }
 }

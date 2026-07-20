@@ -48,10 +48,6 @@
             box-shadow: 0 4px 24px rgba(44, 52, 53, 0.06);
         }
 
-        .compat-bar {
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         tr.hidden-row {
             display: none;
         }
@@ -101,6 +97,10 @@
                 th:href="@{/admin/historial}">
                 <span class="material-symbols-outlined">history</span>
                 <span>Historial</span>
+            </a>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all"
+                th:href="@{/admin/calendario}">
+                <span class="material-symbols-outlined">calendar_month</span><span>Calendario</span>
             </a>
         </nav>
         </a>
@@ -212,8 +212,6 @@
                             </th>
                             <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Carrera
                             </th>
-                            <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline w-48">
-                                Compatibilidad</th>
                             <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Estado
                             </th>
                             <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-outline">Acciones
@@ -222,7 +220,7 @@
                     </thead>
                     <tbody class="divide-y divide-surface-container-high" id="tbodyResidentes">
                         <tr th:if="${vm.residentes.empty}">
-                            <td colspan="5" class="px-8 py-12 text-center text-on-surface-variant">
+                            <td colspan="4" class="px-8 py-12 text-center text-on-surface-variant">
                                 No hay residentes registrados aún.
                             </td>
                         </tr>
@@ -248,20 +246,6 @@
                             <td class="px-6 py-4">
                                 <span class="text-sm text-on-surface"
                                     th:text="${r.carrera != null ? r.carrera : '—'}">—</span>
-                            </td>
-
-                            <!-- Compatibilidad -->
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="flex-1 bg-surface-container-high rounded-full h-2 overflow-hidden">
-                                        <div class="compat-bar h-full rounded-full" th:style="${'width: ' + r.compatibilidad + '%; background-color: ' +
-                                                    (r.compatibilidad >= 80 ? '#46674b' :
-                                                     r.compatibilidad >= 60 ? '#3d637e' : '#6a5e46')}">
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-bold text-on-surface-variant w-8 text-right"
-                                        th:text="${r.compatibilidad + '%'}">0%</span>
-                                </div>
                             </td>
 
                             <!-- Estado -->

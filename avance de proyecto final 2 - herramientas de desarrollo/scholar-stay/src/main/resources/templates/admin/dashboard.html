@@ -71,6 +71,9 @@
             <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/configuracion}">
                 <span class="material-symbols-outlined">settings</span><span>Configuración</span>
             </a>
+            <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/calendario}">
+                <span class="material-symbols-outlined">calendar_month</span><span>Calendario</span>
+            </a>
             <a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-slate-200/50 rounded-xl transition-all" th:href="@{/admin/historial}">
                 <span class="material-symbols-outlined">history</span><span>Historial</span>
             </a>
@@ -135,6 +138,49 @@
                 <div class="flex items-center gap-2 text-sm font-semibold">
                     <span class="material-symbols-outlined">school</span>
                     <span>Con estancia vigente</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALERTAS: Reservas próximas a vencer -->
+        <section th:if="${stats.reservasProximasVencer != null and !stats.reservasProximasVencer.empty}" class="mb-8">
+            <div class="bg-white rounded-2xl border border-surface-container-high editorial-shadow overflow-hidden">
+                <div class="px-8 py-5 border-b border-surface-container-high flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-error/10 rounded-xl">
+                            <span class="material-symbols-outlined text-error text-[20px]">warning</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-headline font-extrabold text-on-surface">Reservas próximas a vencer</h4>
+                            <p class="text-[11px] text-on-surface-variant">Vencen en los próximos 15 días</p>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-bold bg-error/10 text-error px-3 py-1 rounded-full"
+                          th:text="${stats.reservasProximasVencer.size()} + ' reserva(s)'">0 reservas</span>
+                </div>
+                <div class="divide-y divide-surface-container-high">
+                    <div th:each="r : ${stats.reservasProximasVencer}"
+                         class="flex items-center justify-between px-8 py-4 hover:bg-surface-container-low/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-on-primary text-xs font-black shrink-0"
+                                 th:style="${r.diasRestantes <= 5 ? 'background:#a83836' : (r.diasRestantes <= 10 ? 'background:#6a5e46' : 'background:#46674b')}"
+                                 th:text="${r.nombreUsuario != null ? r.nombreUsuario.substring(0,1).toUpperCase() : '?'}">?</div>
+                            <div>
+                                <p class="text-sm font-semibold text-on-surface" th:text="${r.nombreUsuario}">Residente</p>
+                                <p class="text-xs text-on-surface-variant" th:text="${r.tituloAlojamiento}">Propiedad</p>
+                            </div>
+                        </div>
+                        <div class="text-right flex items-center gap-4">
+                            <div>
+                                <p class="text-xs text-on-surface-variant">Vence el</p>
+                                <p class="text-sm font-bold text-on-surface"
+                                   th:text="${#temporals.format(r.fechaFin, 'dd MMM yyyy')}">—</p>
+                            </div>
+                            <span class="text-xs font-black px-3 py-1.5 rounded-full"
+                                  th:classappend="${r.diasRestantes <= 5 ? 'bg-error/10 text-error' : (r.diasRestantes <= 10 ? 'bg-tertiary-container text-on-tertiary-container' : 'bg-secondary-container text-on-secondary-container')}"
+                                  th:text="${r.diasRestantes == 0 ? 'Vence hoy' : (r.diasRestantes == 1 ? '1 día' : r.diasRestantes + ' días')}">— días</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
