@@ -5,6 +5,7 @@ import com.scholarstay.app.model.Notificacion;
 import com.scholarstay.app.model.Usuario;
 import com.scholarstay.app.security.CustomUserDetails;
 import com.scholarstay.app.service.NotificacionService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,9 @@ public class NotificacionRestController {
 
     private final NotificacionService notificacionService;
 
-    public NotificacionRestController(NotificacionService notificacionService) {
+    public NotificacionRestController(
+            NotificacionService notificacionService) {
+
         this.notificacionService = notificacionService;
     }
 
